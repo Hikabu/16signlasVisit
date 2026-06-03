@@ -1,127 +1,63 @@
-import { Container, PrimaryButton, SectionLabel, SectionTitle } from "./ui";
+import { Container, SectionLabel, SectionTitle } from "./ui";
 
-const steps = [
-  { n: "1", title: "Submit", body: "Upload a CV or paste a link. No ATS integration required." },
+const problems = [
   {
-    n: "2",
-    title: "Verify",
-    body: "P7 authenticity, employment verification, AI analysis, and commit history run automatically.",
+    code: "P-01",
+    title: "AI-inflated profiles",
+    symptom: "Applications look precise, current, and senior while the underlying work history is thin or borrowed.",
+    signal: "Authorship patterns, commit depth, and AI leverage quality are checked before the first screen.",
   },
   {
-    n: "3",
-    title: "Read",
-    body: "Evidence Brief delivered: signal score, red flags, probes, role-match, and AI leverage on one page.",
+    code: "P-02",
+    title: "Interview time burn",
+    symptom: "Senior engineers spend the first call discovering whether the resume was worth reading.",
+    signal: "The brief turns interviews into confirmation of specific evidence gaps.",
   },
   {
-    n: "4",
-    title: "Decide",
-    body: "Know what you are hiring before the first call — not after it.",
+    code: "P-03",
+    title: "Seniority distortion",
+    symptom: "Candidates present as architects when their verified trajectory shows lateral repetition.",
+    signal: "Technical depth and systems evolution are scored independently of self-reported level.",
   },
-];
-
-const featureMap = [
-  { problem: "AI-inflated CVs", fix: "Commit inflation detection + LLM style discontinuity analysis" },
-  {
-    problem: "Employment claims you cannot verify",
-    fix: "3-rung verification: email domain, org membership, contribution fingerprint",
-  },
-  { problem: "Seniority inflation", fix: "Seniority-adjusted primitive weighting + Systems Evolution trajectory" },
-  { problem: "200 applicants eating TA bandwidth", fix: "Light Mode batch processing + ranked output" },
-  { problem: "Expensive first interviews", fix: "Deep Mode interview intelligence + Section E/F/D reports" },
-  { problem: "No signal on AI tool usage", fix: "P6 AI Leverage Quality + configuration file detection" },
-];
-
-const callouts = [
-  "Signal Score",
-  "P7 Authenticity",
-  "Seniority Rating",
-  "Interview Probes",
-  "Role Match",
-  "AI Leverage",
 ];
 
 export function FeatureDemo() {
   return (
-    <section id="how-it-works" className="section scroll-mt-[var(--nav-height)] bg-[color:var(--surface)]">
+    <section id="problems" className="section scroll-mt-[var(--nav-height)]">
       <Container>
-        <SectionTitle className="max-w-[28ch]">Two speeds. One pipeline. No wasted interviews.</SectionTitle>
-
-        <div className="mt-[var(--space-8)] grid gap-[var(--space-8)] md:grid-cols-2">
-          <div className="card p-[var(--space-6)]">
-            <h3 className="text-[length:var(--text-md)] font-medium leading-[var(--leading-heading)] text-[color:var(--foreground)]">
-              Light Mode
-            </h3>
-            <p className="body-md mt-[var(--space-3)]">
-              Process your full applicant backlog. Sub-3-minute Evidence Brief per candidate. Ranked by signal,
-              authenticity pre-filtered, AI patterns flagged.
-            </p>
+        <div className="grid gap-[var(--space-8)] lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <SectionLabel>Problems we solve</SectionLabel>
+            <SectionTitle className="mt-4 max-w-[13ch]">Hiring failures leave diagnostic traces.</SectionTitle>
           </div>
-          <div className="card p-[var(--space-6)]">
-            <h3 className="text-[length:var(--text-md)] font-medium leading-[var(--leading-heading)] text-[color:var(--foreground)]">
-              Deep Mode
-            </h3>
-            <p className="body-md mt-[var(--space-3)]">
-              For candidates who make the cut: role and stack fit, seniority calibration, and interview intelligence with
-              probes per red flag.
-            </p>
-          </div>
+          <p className="body-lg max-w-[62ch] lg:pt-10">
+            Resumes and interviews collapse evidence into claims. 16 Signals keeps the evidence separate long enough to
+            test it, weight it, and show where confidence is real.
+          </p>
         </div>
 
-        <div className="mt-[var(--space-12)]">
-          <SectionLabel>Evidence Brief preview</SectionLabel>
-          <div className="relative mt-[var(--space-4)] overflow-hidden rounded-[var(--radius-card)] border border-[color:var(--border)] bg-[color:var(--surface-secondary)] p-[var(--space-6)] md:p-[var(--space-8)]">
-            <div className="grid gap-[var(--space-4)] md:grid-cols-[1fr_auto]">
-              <div className="space-y-[var(--space-3)] rounded-[var(--radius-base)] border border-[color:var(--border)] bg-[color:var(--surface)] p-[var(--space-6)]">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-sm font-medium">Candidate Evidence Brief</span>
-                  <span className="text-xs text-[color:var(--muted)]">2m 47s · Deep Mode</span>
-                </div>
-                <div className="h-2 w-full max-w-[200px] rounded-full bg-[color:var(--surface-secondary)]">
-                  <div className="h-full w-[82%] rounded-full bg-[color:var(--brand)]" />
-                </div>
-                <p className="text-xs text-[color:var(--muted)]">Signal score 82 — ranked #2 in batch</p>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {callouts.map((label) => (
-                    <li
-                      key={label}
-                      className="rounded-[var(--radius-base)] border border-dashed border-[color:var(--border)] px-[var(--space-3)] py-2 text-xs text-[color:var(--muted-strong)]"
-                    >
-                      {label}
-                    </li>
-                  ))}
-                </ul>
+        <div className="mt-[var(--space-12)] grid gap-[var(--space-4)] md:grid-cols-3">
+          {problems.map(({ code, title, symptom, signal }, index) => (
+            <article key={title} className="card relative min-h-[320px] overflow-hidden p-[var(--space-6)]">
+              <div
+                aria-hidden
+                className="absolute left-0 top-0 h-0.5 bg-[color:var(--brand)]/70"
+                style={{ width: `${34 + index * 22}%` }}
+              />
+              <div className="flex items-center justify-between font-mono text-xs text-[color:var(--muted)]">
+                <span>{code}</span>
+                <span>DIAGNOSTIC</span>
               </div>
-              <p className="max-w-[28ch] self-center text-sm text-[color:var(--muted)] md:text-right">
-                Annotated preview — full walkthrough on request.
+              <h3 className="mt-[var(--space-8)] text-xl font-medium leading-tight text-white">{title}</h3>
+              <p className="mt-[var(--space-4)] text-sm leading-[var(--leading-body)] text-[color:var(--muted)]">
+                {symptom}
               </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-[var(--space-12)] grid gap-[var(--space-3)] sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step) => (
-            <article key={step.n} className="card p-[var(--space-6)]">
-              <span className="text-xs font-medium text-[color:var(--brand)]">Step {step.n}</span>
-              <h4 className="mt-2 text-base font-medium text-[color:var(--foreground)]">{step.title}</h4>
-              <p className="mt-2 text-sm leading-[var(--leading-body)] text-[color:var(--muted-strong)]">{step.body}</p>
+              <div className="mt-[var(--space-8)] border-t border-white/10 pt-[var(--space-4)]">
+                <p className="font-mono text-xs uppercase tracking-[0.12em] text-[color:var(--brand)]">Verified signal</p>
+                <p className="mt-3 text-sm leading-[var(--leading-body)] text-white/82">{signal}</p>
+              </div>
             </article>
           ))}
-        </div>
-
-        <ul className="mt-[var(--space-12)] space-y-[var(--space-3)] border-t border-[color:var(--border)] pt-[var(--space-12)]">
-          <li className="section-label">A fix for every way hiring misleads you</li>
-          {featureMap.map(({ problem, fix }) => (
-            <li key={problem} className="grid gap-1 text-sm md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:gap-8">
-              <span className="text-[color:var(--muted-strong)]">{problem}</span>
-              <span className="text-[color:var(--foreground)]">→ {fix}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-[var(--space-8)] flex justify-center">
-          <PrimaryButton href="#verify" variant="secondary">
-            See a real Evidence Brief →
-          </PrimaryButton>
         </div>
       </Container>
     </section>

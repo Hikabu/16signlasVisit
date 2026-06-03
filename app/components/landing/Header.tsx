@@ -28,7 +28,7 @@ export function Header() {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,border-color] duration-200 ${
           scrolled
-            ? "border-b border-[color:var(--border)] bg-[color:var(--surface)]/95 shadow-[var(--shadow-1)] backdrop-blur-md"
+            ? "border-b border-white/10 bg-[#010506]/88 backdrop-blur-md"
             : "border-b border-white/10 bg-transparent text-white"
         }`}
         style={{ height: "var(--nav-height)" }}
@@ -47,7 +47,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={`text-sm transition-colors duration-200 ${
-                  scrolled ? "text-[color:var(--muted)] hover:text-[color:var(--foreground)]" : "text-white/68 hover:text-white"
+                  scrolled ? "text-[color:var(--muted)] hover:text-white" : "text-white/68 hover:text-white"
                 }`}
               >
                 {link.label}
@@ -82,19 +82,19 @@ export function Header() {
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-[color:var(--surface)] pt-[var(--nav-height)] md:hidden">
+        <div className="fixed inset-0 z-40 bg-[#010506] pt-[var(--nav-height)] md:hidden">
           <nav className="container flex flex-col gap-6 py-8" aria-label="Mobile">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-base text-[color:var(--foreground)]"
+                className="text-base text-white"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <a href="#verify" className="btn btn-primary mt-4" onClick={() => setMenuOpen(false)}>
+            <a href="#verify" className="btn btn-accent mt-4" onClick={() => setMenuOpen(false)}>
               {NAV_CTA}
             </a>
           </nav>
@@ -103,7 +103,7 @@ export function Header() {
 
       <a
         href="#verify"
-        className="btn btn-primary fixed bottom-4 left-4 right-4 z-50 shadow-[var(--shadow-2)] md:!hidden"
+        className="btn btn-accent fixed bottom-4 left-4 right-4 z-50 shadow-[0_18px_70px_rgb(0_154_147/0.24)] md:!hidden"
         style={{ maxWidth: "calc(100% - 2rem)", marginInline: "auto" }}
       >
         {NAV_CTA}
