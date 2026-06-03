@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "16 Signals - Verification Layer for Skills",
-  description: "Tokenise your skills so they work for you with verifiable, reusable proof of capability.",
+  title: "16 Signals — Skills Verification for Web3 Teams",
+  description:
+    "Verification layer that surfaces real proof of work — Evidence Briefs, AI authenticity detection, and interview intelligence before your first call.",
 };
 
 export default function RootLayout({
