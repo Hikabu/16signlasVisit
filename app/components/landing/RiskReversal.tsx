@@ -41,14 +41,14 @@ function FaqItem({ q, a }: { q: string; a: string }) {
     <div className="border-b border-[color:var(--border)] last:border-0">
       <button
         type="button"
-        className="flex w-full items-center justify-between gap-4 py-4 text-left text-sm font-medium text-[color:var(--foreground)]"
+        className="flex w-full min-h-[44px] items-center justify-between gap-[var(--space-4)] py-[var(--space-4)] text-left text-sm font-medium text-[color:var(--foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--brand)]"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
       >
         {q}
-        <IconChevronDown className={`shrink-0 transition ${open ? "rotate-180" : ""}`} />
+        <IconChevronDown className={`shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && <p className="pb-4 text-sm leading-relaxed text-[color:var(--muted-strong)]">{a}</p>}
+      {open && <p className="pb-[var(--space-4)] text-sm leading-[var(--leading-body)] text-[color:var(--muted-strong)]">{a}</p>}
     </div>
   );
 }
@@ -56,15 +56,15 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 export function RiskReversal() {
   return (
     <>
-      <section className="bg-[color:var(--surface-secondary)] py-12 md:py-16">
+      <section className="bg-[color:var(--surface-secondary)] py-[var(--space-12)] md:py-[var(--space-16)]">
         <Container>
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-[var(--space-6)] sm:grid-cols-2 lg:grid-cols-3">
             {reassurance.map((line, i) => (
-              <li key={line} className="flex gap-3 text-sm text-[color:var(--muted-strong)]">
+              <li key={line} className="flex gap-[var(--space-3)] text-sm leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
                 {i === 2 || i === 3 ? (
-                  <IconShield className="mt-0.5 shrink-0 text-[color:var(--accent)]" />
+                  <IconShield className="mt-0.5 shrink-0 text-[color:var(--brand)]" />
                 ) : (
-                  <IconCheck className="mt-0.5 shrink-0 text-[color:var(--accent)]" />
+                  <IconCheck className="mt-0.5 shrink-0 text-[color:var(--brand)]" />
                 )}
                 <span className={i === 4 ? "font-medium text-[color:var(--foreground)]" : ""}>{line}</span>
               </li>
@@ -73,29 +73,31 @@ export function RiskReversal() {
         </Container>
       </section>
 
-      <section className="bg-[color:var(--surface)] py-20 md:py-24">
+      <section className="section bg-[color:var(--surface)]">
         <Container>
           <SectionTitle>The questions we get from skeptical engineering leads.</SectionTitle>
-          <div className="mt-10 max-w-[72ch] rounded-lg border border-[color:var(--border)] px-4 md:px-6">
+          <div className="mt-[var(--space-8)] max-w-[72ch] rounded-[var(--radius-card)] border border-[color:var(--border)] px-[var(--space-4)] md:px-[var(--space-6)]">
             {faqs.map((item) => (
               <FaqItem key={item.q} {...item} />
             ))}
           </div>
 
-          <div id="verify" className="mx-auto mt-16 max-w-[52ch] scroll-mt-28 text-center">
-            <h3 className="text-xl font-medium text-[color:var(--foreground)] md:text-2xl">
+          <div id="verify" className="mx-auto mt-[var(--space-12)] max-w-[52ch] scroll-mt-28 text-center">
+            <h2 className="text-[length:var(--text-lg)] font-medium leading-[var(--leading-heading)] text-[color:var(--foreground)] md:text-[length:var(--text-xl)]">
               Try it on a real candidate before you pay anything.
-            </h3>
-            <p className="body-md mt-4">
+            </h2>
+            <p className="body-md mt-[var(--space-4)]">
               Your first 3 Evidence Briefs are free. No credit card. No sales call. Submit a real candidate from your
-              current pipeline and read the output before you decide if this is worth it.
+              current pipeline and read the output before you decide.
             </p>
-            <p className="mt-4 text-sm text-[color:var(--muted)]">
+            <p className="mt-[var(--space-4)] text-sm text-[color:var(--muted)]">
               If you do not find something in that report you would not have found yourself — we have not earned your
               trust yet.
             </p>
-            <div className="mt-8 flex justify-center">
-              <PrimaryButton href="#verify">Get your first 3 verifications</PrimaryButton>
+            <div className="mt-[var(--space-8)] flex justify-center">
+              <PrimaryButton href="#verify" size="large">
+                Get your first 3 verifications →
+              </PrimaryButton>
             </div>
           </div>
         </Container>

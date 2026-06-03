@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "16 Signals — Skills Verification for Web3 Teams",
   description:
     "Verification layer that surfaces real proof of work — Evidence Briefs, AI authenticity detection, and interview intelligence before your first call.",
+  icons: {
+    icon: "/a16zero.png",
+  },
 };
 
 export default function RootLayout({

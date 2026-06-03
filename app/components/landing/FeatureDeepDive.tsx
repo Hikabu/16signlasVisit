@@ -2,21 +2,22 @@
 
 import { useState } from "react";
 import { Container, SectionTitle } from "./ui";
+
 const tabs = [
   {
     id: "verification",
     label: "How verification works",
     content: (
-      <div className="space-y-8">
+      <div className="space-y-[var(--space-8)]">
         <div>
-          <h4 className="font-medium text-[color:var(--foreground)]">3-rung employment verification</h4>
+          <h3 className="text-base font-medium text-[color:var(--foreground)]">3-rung employment verification</h3>
           <p className="body-md mt-2">
             Email domain confirmation → organizational membership check → contribution fingerprint cross-reference. A
             claimed role at a credible protocol takes under 90 seconds to authenticate or flag as unverifiable.
           </p>
         </div>
         <div>
-          <h4 className="font-medium text-[color:var(--foreground)]">AI code laundering detection</h4>
+          <h3 className="text-base font-medium text-[color:var(--foreground)]">AI code laundering detection</h3>
           <p className="body-md mt-2">
             LLM-based style discontinuity analysis compares authorship patterns across a candidate&apos;s full commit
             history. A consistent engineering voice produces consistent stylistic patterns. A laundered portfolio does
@@ -24,7 +25,7 @@ const tabs = [
           </p>
         </div>
         <div>
-          <h4 className="font-medium text-[color:var(--foreground)]">Commit velocity and quality correlation</h4>
+          <h3 className="text-base font-medium text-[color:var(--foreground)]">Commit velocity and quality correlation</h3>
           <p className="body-md mt-2">
             High commit velocity combined with low review engagement and shallow diffs is a distinct signal pattern.
             Candidates who manufacture activity to inflate their profiles produce a recognizable signature.
@@ -34,7 +35,9 @@ const tabs = [
           {["Email domain", "Org membership", "Contribution fingerprint"].map((step, i) => (
             <li key={step} className="flex items-center gap-2">
               {i > 0 && <span className="text-[color:var(--muted)]">→</span>}
-              <span className="rounded border border-[color:var(--border)] px-3 py-1.5">{step}</span>
+              <span className="rounded-[var(--radius-base)] border border-[color:var(--border)] px-[var(--space-3)] py-1.5">
+                {step}
+              </span>
             </li>
           ))}
         </ol>
@@ -45,7 +48,7 @@ const tabs = [
     id: "primitives",
     label: "What the seven primitives catch",
     content: (
-      <dl className="space-y-4">
+      <dl className="space-y-[var(--space-4)]">
         {[
           {
             name: "P2 Systems Evolution",
@@ -75,7 +78,7 @@ const tabs = [
         ].map(({ name, mechanism, failure }) => (
           <div
             key={name}
-            className="grid gap-2 border-b border-[color:var(--border)] pb-4 last:border-0 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-6"
+            className="grid gap-2 border-b border-[color:var(--border)] pb-[var(--space-4)] last:border-0 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-6"
           >
             <dt className="text-sm font-medium text-[color:var(--foreground)]">{name}</dt>
             <dd className="text-sm text-[color:var(--muted-strong)]">{mechanism}</dd>
@@ -89,7 +92,7 @@ const tabs = [
     id: "interview",
     label: "What you get before every interview",
     content: (
-      <ul className="space-y-6">
+      <ul className="space-y-[var(--space-6)]">
         {[
           {
             title: "Section D: Red flags with interview probes",
@@ -105,7 +108,7 @@ const tabs = [
           },
         ].map(({ title, body }) => (
           <li key={title}>
-            <h4 className="font-medium text-[color:var(--foreground)]">{title}</h4>
+            <h3 className="text-base font-medium text-[color:var(--foreground)]">{title}</h3>
             <p className="body-md mt-2">{body}</p>
           </li>
         ))}
@@ -122,15 +125,15 @@ export function FeatureDeepDive() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="bg-[color:var(--surface)] py-20 md:py-24">
+    <section className="section bg-[color:var(--surface)]">
       <Container>
         <SectionTitle className="max-w-[32ch]">Not vibes. Not keywords. Seven verifiable primitives.</SectionTitle>
-        <p className="body-md mt-4 max-w-[62ch]">
-          Every Evidence Brief scores candidates across 7 independently weighted primitives. Each is designed to catch a
+        <p className="body-md mt-[var(--space-4)] max-w-[62ch]">
+          Every Evidence Brief scores candidates across 7 independently weighted primitives — each designed to catch a
           specific class of hiring failure that resumes and interviews miss.
         </p>
 
-        <div className="mt-10 border border-[color:var(--border)] rounded-lg overflow-hidden">
+        <div className="mt-[var(--space-8)] overflow-hidden rounded-[var(--radius-card)] border border-[color:var(--border)]">
           <div
             className="flex flex-col border-b border-[color:var(--border)] sm:flex-row"
             role="tablist"
@@ -142,7 +145,7 @@ export function FeatureDeepDive() {
                 type="button"
                 role="tab"
                 aria-selected={active === i}
-                className={`flex-1 px-4 py-3 text-left text-sm transition sm:text-center ${
+                className={`flex-1 px-[var(--space-4)] py-[var(--space-3)] text-left text-sm transition-colors duration-200 sm:text-center ${
                   active === i
                     ? "bg-[color:var(--foreground)] text-[color:var(--primary-foreground)]"
                     : "bg-[color:var(--surface-secondary)] text-[color:var(--muted-strong)] hover:text-[color:var(--foreground)]"
@@ -153,7 +156,7 @@ export function FeatureDeepDive() {
               </button>
             ))}
           </div>
-          <div className="p-6 md:p-8" role="tabpanel">
+          <div className="p-[var(--space-6)] md:p-[var(--space-8)]" role="tabpanel">
             {tabs[active]?.content}
           </div>
         </div>

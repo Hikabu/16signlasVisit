@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import { NAV_CTA, NAV_LINKS, PRODUCT_NAME } from "@/app/lib/landing/constants";
+import { HERO_SECONDARY_CTA, NAV_CTA, NAV_LINKS } from "@/app/lib/landing/constants";
 import { IconClose, IconMenu } from "./icons";
 
 export function Header() {
@@ -25,24 +26,29 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,border-color] duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,border-color] duration-200 ${
           scrolled
-            ? "border-b border-[color:var(--border)] bg-[color:var(--surface)]/95 shadow-sm backdrop-blur-md"
-            : "border-b border-transparent bg-transparent"
+            ? "border-b border-[color:var(--border)] bg-[color:var(--surface)]/95 shadow-[var(--shadow-1)] backdrop-blur-md"
+            : "border-b border-white/10 bg-transparent text-white"
         }`}
         style={{ height: "var(--nav-height)" }}
       >
         <div className="container flex h-full items-center justify-between gap-4">
-          <a href="#" className="text-sm font-medium tracking-tight text-[color:var(--foreground)]">
-            {PRODUCT_NAME}
+          <a href="#" className="flex shrink-0 items-center gap-2" aria-label="16 Signals home">
+            <Image src="/a16zero.png" alt="" width={32} height={32} className="h-8 w-8" priority />
+            <span className={`text-sm font-medium tracking-tight ${scrolled ? "text-[color:var(--foreground)]" : "text-white"}`}>
+              16 Signals
+            </span>
           </a>
 
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-normal text-[color:var(--muted)] transition hover:text-[color:var(--foreground)]"
+                className={`text-sm transition-colors duration-200 ${
+                  scrolled ? "text-[color:var(--muted)] hover:text-[color:var(--foreground)]" : "text-white/68 hover:text-white"
+                }`}
               >
                 {link.label}
               </a>
@@ -50,12 +56,21 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a href="#verify" className="btn-primary hidden md:inline-flex">
-              {NAV_CTA}
+            <a
+              href="#how-it-works"
+              className={`btn hidden md:inline-flex ${
+                scrolled
+                  ? "btn-secondary"
+                  : "border border-white/12 bg-white/8 text-white shadow-none backdrop-blur-md hover:bg-white/14"
+              }`}
+            >
+              {HERO_SECONDARY_CTA}
             </a>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[color:var(--border)] md:hidden"
+              className={`inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-base)] border md:hidden ${
+                scrolled ? "border-[color:var(--border)] text-[color:var(--foreground)]" : "border-white/12 text-white"
+              }`}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               onClick={() => setMenuOpen((o) => !o)}
@@ -73,19 +88,22 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-lg text-[color:var(--foreground)]"
+                className="text-base text-[color:var(--foreground)]"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
               </a>
             ))}
+            <a href="#verify" className="btn btn-primary mt-4" onClick={() => setMenuOpen(false)}>
+              {NAV_CTA}
+            </a>
           </nav>
         </div>
       )}
 
       <a
         href="#verify"
-        className="btn-primary fixed bottom-4 left-4 right-4 z-50 shadow-lg md:hidden"
+        className="btn btn-primary fixed bottom-4 left-4 right-4 z-50 shadow-[var(--shadow-2)] md:!hidden"
         style={{ maxWidth: "calc(100% - 2rem)", marginInline: "auto" }}
       >
         {NAV_CTA}

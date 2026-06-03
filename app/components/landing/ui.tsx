@@ -4,20 +4,42 @@ export function Container({ children, className = "" }: { children: ReactNode; c
   return <div className={`container ${className}`.trim()}>{children}</div>;
 }
 
+type ButtonProps = {
+  children: ReactNode;
+  href?: string;
+  className?: string;
+  size?: "default" | "large";
+  variant?: "primary" | "secondary" | "accent";
+};
+
 export function PrimaryButton({
   children,
   href = "#verify",
   className = "",
   size = "default",
+  variant = "primary",
+}: ButtonProps) {
+  const variantClass =
+    variant === "secondary" ? "btn-secondary" : variant === "accent" ? "btn-accent" : "btn-primary";
+  const sizeClass = size === "large" ? "btn-primary-lg" : "";
+  return (
+    <a href={href} className={`btn ${variantClass} ${sizeClass} ${className}`.trim()}>
+      {children}
+    </a>
+  );
+}
+
+export function SecondaryButton({
+  children,
+  href,
+  className = "",
 }: {
   children: ReactNode;
-  href?: string;
+  href: string;
   className?: string;
-  size?: "default" | "large";
 }) {
-  const sizeClass = size === "large" ? "btn-primary btn-primary-lg" : "btn-primary";
   return (
-    <a href={href} className={`${sizeClass} ${className}`.trim()}>
+    <a href={href} className={`btn btn-secondary ${className}`.trim()}>
       {children}
     </a>
   );

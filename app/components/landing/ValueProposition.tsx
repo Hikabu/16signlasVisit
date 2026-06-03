@@ -31,37 +31,37 @@ const blocks = [
 
 export function ValueProposition() {
   return (
-    <section id="verification-layer" className="bg-[color:var(--surface-secondary)] py-20 md:py-24">
+    <section id="verification-layer" className="section scroll-mt-[var(--nav-height)] bg-[color:var(--surface-secondary)]">
       <Container>
         <div className="mx-auto max-w-[72ch] text-center">
           <p className="body-lg text-pretty">
             Every other part of your stack runs on verifiable truth. On-chain data is immutable. Commit history is
             signed. Code either passes the test suite or it does not.
           </p>
-          <p className="body-lg mt-4 text-pretty">
-            Hiring has always been the exception — a social ritual built on self-reported claims, coached answers, and HR
-            job posts that do not reflect what you actually need.
+          <p className="body-lg mt-[var(--space-4)] text-pretty">
+            Hiring has always been the exception — self-reported claims, coached answers, and job posts that do not
+            reflect what you need.
           </p>
-          <p className="body-lg mt-4 text-pretty">
-            {PRODUCT_NAME} closes the gap. It is a verification layer that sits between a candidate&apos;s claims and
-            your decision — authenticating real work, flagging AI inflation, confirming employment history, and
-            calibrating seniority against what the role demands.
+          <p className="body-lg mt-[var(--space-4)] text-pretty">
+            {PRODUCT_NAME} closes the gap: a verification layer between claims and your decision — authenticating work,
+            flagging AI inflation, and calibrating seniority against the role.
           </p>
-          <p className="mt-6 text-base font-medium text-[color:var(--foreground)]">
-            The result: you make hiring decisions the same way you make every other technical decision. On proof, not
-            promises.
+          <p className="mt-[var(--space-6)] text-base font-medium text-[color:var(--foreground)]">
+            Make hiring decisions on proof, not promises.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-4 md:grid-cols-3">
+        <div className="mt-[var(--space-12)] grid gap-[var(--space-4)] md:grid-cols-3">
           {blocks.map(({ icon: Icon, problem, benefit, payoff }) => (
-            <article key={problem.slice(0, 24)} className="card flex flex-col p-6">
-              <Icon className="mb-4 text-[color:var(--muted)]" />
-              <p className="text-sm leading-relaxed text-[color:var(--muted)]">{problem}</p>
-              <hr className="divider my-4" />
-              <p className="text-sm leading-relaxed text-[color:var(--foreground)]">{benefit}</p>
-              <hr className="divider my-4" />
-              <p className="mt-auto text-sm italic leading-relaxed text-[color:var(--accent)]">{payoff}</p>
+            <article key={problem.slice(0, 24)} className="card flex flex-col p-[var(--space-6)]">
+              <Icon className="mb-[var(--space-4)] text-[color:var(--muted)]" />
+              <p className="text-sm leading-[var(--leading-body)] text-[color:var(--muted)]">{problem}</p>
+              <hr className="divider my-[var(--space-4)]" />
+              <p className="text-sm leading-[var(--leading-body)] text-[color:var(--foreground)]">{benefit}</p>
+              <hr className="divider my-[var(--space-4)]" />
+              <p className="mt-auto text-sm font-medium leading-[var(--leading-body)] text-[color:var(--brand)]">
+                {payoff}
+              </p>
             </article>
           ))}
         </div>

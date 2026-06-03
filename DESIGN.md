@@ -1,283 +1,307 @@
 ---
 version: alpha
-name: Vercel
-description: Minimal, high-contrast marketing and product landing system for vercel.com. Uses Geist typography, near-black text, white/light surfaces, thin neutral borders, pill CTAs, and large airy layouts with subtle gradient-led visual emphasis.
+name: Raycast
+description: Dark, minimal marketing system for raycast.com with high-contrast typography, soft inset card/button treatments, and a product-led layout centered on fast downloads and extension discovery.
 colors:
- colors:
-  background: "#000000"       # Pure Vercel black for the main backdrop
-  text: "#edd5d5"             # (See note: recommended fallback "#f5f5f5" for pure white text)
-  accent: "#009A93"           # Your main color used as a vibrant interactive accent
-  primary: "#ffffff"          # Crisp white for primary headings and main buttons
-  secondary: "#888888"        # Muted gray for secondary text, descriptions, and subtitles
-  tertiary: "#333333"         # Medium gray for subtle borders, dividers, and disabled states
-  neutral: "#0a0a0a"          # Extremely dark gray for secondary sections/footers
-  surface: "#111111"          # Slightly lighter elevated black for cards, code blocks, and dropdowns
-  on-surface: "#f5f5f5"       # High-contrast off-white for text sitting on top of cards
-  error: "#f87171"            # A slightly brighter, desaturated red that passes WCAG contrast on dark surfaces
+  background: "#07080a"
+  surface: "#07080a"
+  on-surface: "#ffffff"
+  primary: "#e6e6e6"
+  accent: "#009A93"  
+  secondary: "#9c9c9d"
+  tertiary: "#2f3031"
+  neutral: "#07080a"
+  accent: "#ffffff"
+  error: "#ff5a5f"
 typography:
-  fontFamily: "Geist"
+  fontFamily: "Inter"
   headline-display:
-    fontFamily: "Geist"
-    fontSize: "35px"
-    lineHeight: 46.0687px
+    fontFamily: "Inter, Inter Fallback, sans-serif"
+    fontSize: "64px"
+    lineHeight: "70.4px"
     fontWeight: 600
-    letterSpacing: "-1.945px"
+    letterSpacing: "0px"
   headline-lg:
-    fontFamily: "Geist"
-    fontSize: "29px"
-    lineHeight: 35px
+    fontFamily: "Inter, Inter Fallback, sans-serif"
+    fontSize: "47px"
+    lineHeight: "56px"
     fontWeight: 500
-    letterSpacing: "-0.28px"
+    letterSpacing: "0.2px"
   headline-md:
-    fontFamily: "Geist"
-    fontSize: "24px"
-    lineHeight: 32px
+    fontFamily: "Inter, Inter Fallback, sans-serif"
+    fontSize: "34px"
+    lineHeight: "41px"
     fontWeight: 500
-    letterSpacing: "-0.96px"
+    letterSpacing: "0.2px"
   body-lg:
-    fontFamily: "Geist"
-    fontSize: "16px"
-    lineHeight: 24px
+    fontFamily: "Inter, Inter Fallback, sans-serif"
+    fontSize: "18px"
+    lineHeight: normal
     fontWeight: 400
-    letterSpacing: "0px"
+    letterSpacing: "0.2px"
   body-md:
-    fontFamily: "Geist"
-    fontSize: "16px"
-    lineHeight: 24px
+    fontFamily: "Inter, Inter Fallback, sans-serif"
+    fontSize: "18px"
+    lineHeight: normal
     fontWeight: 400
-    letterSpacing: "0px"
+    letterSpacing: "0.2px"
   body-sm:
-    fontFamily: "Geist"
+    fontFamily: "Inter, Inter Fallback, sans-serif"
     fontSize: "14px"
-    lineHeight: 20px
-    fontWeight: 400
-    letterSpacing: "0px"
+    lineHeight: normal
+    fontWeight: 500
+    letterSpacing: "0.2px"
   label-lg:
-    fontFamily: "Geist"
+    fontFamily: "Inter, Inter Fallback, sans-serif"
     fontSize: "14px"
-    lineHeight: 20px
+    lineHeight: normal
     fontWeight: 500
     letterSpacing: "0px"
   label-md:
-    fontFamily: "Geist"
+    fontFamily: "Inter, Inter Fallback, sans-serif"
     fontSize: "14px"
-    lineHeight: 20px
+    lineHeight: normal
     fontWeight: 500
     letterSpacing: "0px"
   label-sm:
-    fontFamily: "Geist"
-    fontSize: "12px"
-    lineHeight: 16px
+    fontFamily: "Inter, Inter Fallback, sans-serif"
+    fontSize: "14px"
+    lineHeight: normal
     fontWeight: 500
     letterSpacing: "0px"
 rounded:
   none: "0px"
-  sm: "8px"
-  md: "12px"
-  lg: "16px"
-  xl: "24px"
-  full: "100px"
+  sm: "4px"
+  md: "8px"
+  lg: "12px"
+  xl: "16px"
+  full: "9999px"
 spacing:
-  xs: "2px"
-  sm: "6px"
-  md: "16px"
-  lg: "22px"
-  xl: "40px"
+  xs: "6px"
+  sm: "14px"
+  md: "24px"
+  lg: "48px"
+  xl: "120px"
 components:
   button:
     primary:
-      backgroundColor: "#171717"
-      color: "#ffffff"
-      borderRadius: "100px"
-      borderWidth: "0px"
-      borderStyle: "none"
-      padding: "13px 14px"
-      minWidth: "181px"
-      minHeight: "40px"
-      fontFamily: "Geist"
+      backgroundColor: "{colors.primary}"
+      color: "{colors.tertiary}"
+      borderRadius: "{rounded.md}"
+      padding: "8px 12px"
+      minWidth: "173px"
+      minHeight: "36px"
+      fontFamily: "{typography.fontFamily}"
       fontSize: "14px"
       fontWeight: 500
       textDecoration: "none"
-      boxShadow: "none"
+      boxShadow: "rgba(0, 0, 0, 0.5) 0px 0px 0px 2px, rgba(255, 255, 255, 0.19) 0px 0px 14px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0.4px 0px inset, rgb(255, 255, 255) 0px 1px 0.4px 0px inset"
     secondary:
-      backgroundColor: "#ffffff"
-      color: "#171717"
-      borderRadius: "100px"
-      borderWidth: "0px"
-      borderStyle: "none"
-      padding: "13px 14px"
-      minWidth: "181px"
-      minHeight: "40px"
-      fontFamily: "Geist"
+      backgroundColor: "{colors.primary}"
+      color: "{colors.tertiary}"
+      borderRadius: "{rounded.md}"
+      padding: "8px 12px"
+      minWidth: "173px"
+      minHeight: "36px"
+      fontFamily: "{typography.fontFamily}"
       fontSize: "14px"
       fontWeight: 500
       textDecoration: "none"
-      boxShadow: "rgba(0, 0, 0, 0.08) 0px 0px 0px 1px"
+      boxShadow: "rgba(0, 0, 0, 0.5) 0px 0px 0px 2px, rgba(255, 255, 255, 0.19) 0px 0px 14px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0.4px 0px inset, rgb(255, 255, 255) 0px 1px 0.4px 0px inset"
     link:
       backgroundColor: "transparent"
-      color: "#171717"
-      borderRadius: "0px"
-      borderWidth: "0px"
-      borderStyle: "none"
+      color: "{colors.secondary}"
+      borderRadius: "{rounded.none}"
       padding: "0px"
       minWidth: "0px"
       minHeight: "0px"
-      fontFamily: "Geist"
+      fontFamily: "{typography.fontFamily}"
       fontSize: "14px"
-      fontWeight: 400
+      fontWeight: 500
       textDecoration: "underline"
       boxShadow: "none"
   card:
-    backgroundColor: "#fafafa"
-    color: "#171717"
-    borderRadius: "8px"
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.on-surface}"
+    borderRadius: "{rounded.lg}"
     borderWidth: "1px"
     borderStyle: "solid"
-    borderColor: "#e5e7eb"
-    padding: "16px"
-    boxShadow: "none"
+    borderColor: "#ffffff0f"
+    padding: "24px"
+    boxShadow: "rgba(255, 255, 255, 0.15) 0px 1px 1px 0px inset"
 ---
 
 # Overview
 
-Vercel.com is a clean, high-contrast, product-led marketing site. The page uses a very light neutral canvas, near-black text, and generous whitespace. Visual energy comes from a restrained gradient field and a geometric hero illustration, not from heavy chrome or decorative UI.
+Raycast.com uses a restrained dark theme with a strong product-marketing hierarchy: oversized headline, short supporting copy, and two primary download calls to action. The page is designed to feel fast, precise, and native. Surfaces stay near-black, while interactive controls rely on light gray fills, subtle borders, and soft inset shadows for a tactile desktop-app feel.
 
-Primary goals:
-- Communicate speed, confidence, and technical sophistication.
-- Keep calls to action obvious and compact.
-- Use simple, familiar controls with very light elevation.
-- Favor expansive sections, centered hero content, and minimal borders.
+Primary traits:
+- Dark, minimal canvas with almost no chroma
+- Large centered hero and generous vertical whitespace
+- Typography-led layout with compact supporting copy
+- Buttons that look physical rather than flat
+- Utility navigation and download actions prioritized over decoration
 
 # Colors
 
-Use a mostly monochrome system with a light surface and near-black copy.
+Use a near-black base with white text and muted gray secondary text. Accent color is effectively white; any warm or colored treatment should remain rare and purpose-driven.
 
-## Core tokens
-- `background`: `#fafafa`
-- `surface`: `#ffffff`
-- `text` / `on-surface`: `#171717`
-- `accent` / `primary`: `#171717`
-- `secondary`: `#ffffff`
-- `tertiary`: `#e5e7eb`
+## Tokens
+- `background`: `#07080a`
+- `surface`: `#07080a`
+- `on-surface`: `#ffffff`
+- `primary`: `#e6e6e6`
+- `secondary`: `#9c9c9d`
+- `tertiary`: `#2f3031`
+- `neutral`: `#07080a`
+- `accent`: `#ffffff`
+- `error`: `#ff5a5f`
 
-## Guidance
-- Treat `#fafafa` as the page base and `#ffffff` as the main content surface.
-- Use `#171717` for headings, body text, icons, and primary CTA fills.
-- Use thin neutral borders rather than tinted outlines.
-- Reserve saturated color for decorative gradients and product visuals; no brand color token is provided in the extracted payload, so avoid introducing a new semantic accent token unless necessary.
+## Usage guidance
+- Use white for headlines and key labels.
+- Use muted gray for secondary navigation and metadata.
+- Keep card and page surfaces nearly identical; separation comes from border, inset shadow, and spacing rather than color contrast.
+- Reserve any red/pink tint for brand moments and destructive states.
 
 # Typography
 
-The system is built on Geist with tight, modern spacing and compact display headings.
+The system is set in Inter and uses weight and size to create hierarchy, not color variation.
 
-## Token set
-- `headline-display`: 35px / 46.0687px, 600, `-1.945px`
-- `headline-lg`: 29px / 35px, 500, `-0.28px`
-- `headline-md`: 24px / 32px, 500, `-0.96px`
-- `body-lg`: 16px / 24px, 400, `0px`
-- `body-md`: 16px / 24px, 400, `0px`
-- `body-sm`: 14px / 20px, 400, `0px`
-- `label-lg`: 14px / 20px, 500, `0px`
-- `label-md`: 14px / 20px, 500, `0px`
-- `label-sm`: 12px / 16px, 500, `0px`
+## Tokens
+- `headline-display`: `64px / 70.4px`, weight `600`, letter spacing `0px`
+- `headline-lg`: `47px / 56px`, weight `500`, letter spacing `0.2px`
+- `headline-md`: `34px / 41px`, weight `500`, letter spacing `0.2px`
+- `body-lg`: `18px`, weight `400`, letter spacing `0.2px`
+- `body-md`: `18px`, weight `400`, letter spacing `0.2px`
+- `body-sm`: `14px`, weight `500`, letter spacing `0.2px`
+- `label-lg`: `14px`, weight `500`, letter spacing `0px`
+- `label-md`: `14px`, weight `500`, letter spacing `0px`
+- `label-sm`: `14px`, weight `500`, letter spacing `0px`
 
 ## Guidance
-- Use `headline-display` for the homepage hero and major campaign statements.
-- Use `headline-lg` and `headline-md` for section titles and product callouts.
-- Keep body copy short and scannable.
-- Preserve the negative letter spacing on display text; it is part of the brand feel.
-- Buttons and nav labels should use 14px Geist with medium weight.
+- Use `headline-display` for the hero statement.
+- Use `body-lg` for short supporting paragraphs; keep line lengths narrow and centered.
+- Use `body-sm` and label styles for navigation, version text, and button copy.
+- Keep tracking subtle; avoid wide letter spacing or all-caps styling unless the content is truly navigational or technical.
+- Prefer sentence case.
 
 # Layout
 
-The page layout is open, centered, and editorial.
+The homepage uses a centered, vertically stacked structure with substantial empty space around the hero content.
 
-## Structural patterns
-- Wide top navigation with left-aligned logo and compact text links.
-- Centered hero block with a constrained max width.
-- Large vertical spacing between hero, feature blocks, and supporting sections.
-- Content often sits on a subtle grid or within a faint structural frame.
+## Structure
+- Top navigation sits in a floating, rounded container aligned to the page top center.
+- Hero content is centered horizontally and vertically dominant.
+- Primary CTAs sit beneath the hero copy in a compact horizontal row.
+- Supporting metadata appears as a small single-line cluster under the CTAs.
+- Secondary promotional link sits below, separated by spacing rather than a divider.
+
+## Spacing
+- Use `xl` for major section breathing room and page-scale separation.
+- Use `lg` between hero heading, description, and CTA groups.
+- Use `md` for local grouping.
+- Use `sm` for tight UI clusters like nav items and inline metadata.
+- Use `xs` only for micro-adjustments.
 
 ## Guidance
-- Prefer generous outer padding and strong horizontal centering.
-- Keep section widths comfortable for reading, typically medium-wide rather than full bleed.
-- Use layout as a frame for the hero and product messaging, not as a decorative system.
-- Maintain clear hierarchy with large headline, short paragraph, then two CTA buttons.
+- Preserve large negative space; do not crowd the hero.
+- Keep content centered unless presenting dense product listings or extension grids.
+- Prefer short horizontal rows for actions, metadata, and nav links.
+- Let the page feel broad and calm, not dense or dashboard-like.
 
 # Elevation & Depth
 
-Depth is minimal and mostly implicit.
+Depth is subtle and tactile rather than dramatic.
 
-- Primary buttons are solid and flat.
-- Secondary buttons use a subtle 1px shadow ring rather than a heavy border.
-- Cards use light gray borders and no shadow.
-- Avoid layered shadows, frosted effects, or strong z-depth.
+## System
+- Cards use a 1px translucent border and a light inner highlight.
+- Buttons use a layered shadow stack that creates a soft raised appearance.
+- Avoid large blur shadows or floating glass effects.
+- The page background itself should remain visually flat.
 
-Use depth only to clarify interactivity, not to add visual drama.
+## Guidance
+- Use inset highlight to suggest native controls.
+- Use shadow sparingly on interactive controls only.
+- Do not introduce bright glows, heavy neon, or obvious material-style elevation.
 
 # Shapes
 
-Vercel favors rounded pills for actions and small rounded rectangles for content containers.
+Rounded corners are modest and consistent.
 
 ## Tokens
 - `none`: `0px`
-- `sm`: `8px`
-- `md`: `12px`
-- `lg`: `16px`
-- `xl`: `24px`
-- `full`: `100px`
+- `sm`: `4px`
+- `md`: `8px`
+- `lg`: `12px`
+- `xl`: `16px`
+- `full`: `9999px`
 
 ## Guidance
-- Use `full` for buttons and nav-like pills.
-- Use `sm` for cards and utility containers.
-- Avoid aggressive corner radii on large surfaces unless the component is specifically a pill CTA.
+- Use `md` for buttons.
+- Use `lg` for cards and floating containers when a more substantial frame is needed.
+- Avoid overly pill-shaped controls unless the content is explicitly compact and badge-like.
+- Maintain crisp geometry; shapes should support the desktop utility aesthetic.
 
 # Components
 
 ## Buttons
-### Primary
-- Dark fill, white text, pill radius.
-- Minimum width: `181px`.
-- Minimum height: `40px`.
-- Padding: `13px 14px`.
-- Font: Geist, 14px, 500.
+Primary and secondary buttons are visually identical in the captured source: light gray fill, dark text, rounded 8px corners, and a tactile inset/outline shadow. Link buttons are minimal, gray, and underlined.
 
-### Secondary
-- White fill, dark text, pill radius.
-- Uses a subtle shadow ring instead of a prominent border.
-- Matches primary button sizing for paired CTA treatment.
+### Primary / Secondary
+- Minimum width: `173px`
+- Minimum height: `36px`
+- Padding: `8px 12px`
+- Background: `#e6e6e6`
+- Text: `#2f3031`
+- Radius: `8px`
+- Font: Inter, `14px`, weight `500`
 
 ### Link
-- Transparent background.
-- Underlined text.
-- 14px, normal weight.
-- Use for inline actions and secondary navigation, not as a main hero CTA.
+- Transparent background
+- Underlined text
+- Muted gray color
+- No border or shadow
 
-## Cards
-- `#fafafa` background with `1px solid #e5e7eb`.
-- `8px` radius.
-- `16px` padding.
-- No shadow.
-- Use for content previews, feature modules, and simple information tiles.
+## Card
+Cards are dark surfaces with a translucent border and light inset top highlight.
+
+- Background: `#07080a`
+- Border: `1px solid #ffffff0f`
+- Radius: `12px`
+- Padding: `24px`
+- Inner highlight: `rgba(255, 255, 255, 0.15) 0px 1px 1px 0px inset`
+
+## Navigation
+Navigation is compact, text-only, and secondary in visual priority.
+- Use muted gray text
+- Keep spacing tight and aligned on a single row
+- Reserve the strongest visual treatment for the Download action
+
+## Hero
+The hero pairs a large centered headline with a short supporting paragraph and two CTA buttons.
+- Headline should fit in 1–2 lines
+- Supporting copy should stay concise and pragmatic
+- CTA row should remain compact and centered
 
 # Do's and Don'ts
 
 ## Do
-- Do use Geist everywhere; keep the typographic voice consistent.
-- Do set hero headlines large, bold, and tightly tracked.
-- Do keep text color near-black and surfaces very light.
-- Do pair a filled primary button with a white secondary button in major hero sections.
-- Do use thin borders and ample whitespace instead of chrome-heavy cards.
-- Do keep CTAs short: action-first phrasing works best.
-- Do center important marketing content and allow it to breathe.
-- Do preserve the restrained, technical tone shown in the homepage excerpt.
+- Do use a nearly black full-page background with white content on top.
+- Do keep the hero centered with generous whitespace around it.
+- Do use Inter everywhere.
+- Do make the main headline large, bold, and concise.
+- Do use light gray button fills with dark text for primary actions.
+- Do keep secondary text muted and visually subordinate.
+- Do use subtle borders and inset shadows to imply tactile controls.
+- Do keep nav links compact and low-contrast relative to the Download button.
+- Do center supporting metadata under the CTA row.
 
 ## Don't
-- Don't introduce bright brand colors as core UI tokens.
-- Don't use gradients as container backgrounds for text-heavy blocks.
-- Don't add deep shadows, glassmorphism, or noisy borders.
-- Don't make buttons rectangular or heavily outlined.
-- Don't crowd sections with too many links or dense descriptive copy.
-- Don't rely on decorative icons to carry meaning; keep labels explicit.
-- Don't use multiple display fonts or mixed typographic systems.
-- Don't overcomplicate the layout; simplicity is a brand feature.
+- Don't introduce bright backgrounds, gradients, or colorful sections.
+- Don't use thin, delicate type for primary messaging.
+- Don't turn buttons into flat rectangles without shadow or border treatment.
+- Don't crowd the top navigation or the hero with dense utility links.
+- Don't use large card radii, glassmorphism, or heavy drop shadows.
+- Don't add unnecessary icons, badges, or illustration-heavy elements.
+- Don't make all text the same weight or color.
+- Don't spread the CTA row into a wide, dashboard-like layout.

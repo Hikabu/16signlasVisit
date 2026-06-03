@@ -7,8 +7,10 @@ export const NAV_LINKS = [
   { label: "Pricing", href: "#pricing" },
 ] as const;
 
-export const NAV_CTA = "See a verified candidate brief";
+export const NAV_CTA = "See a sample brief";
 
-export const HERO_CTA = "Verify your next candidate free";
+export const HERO_CTA = "Get your first 3 verifications free →";
+
+export const HERO_SECONDARY_CTA = "See how verification works";
 
 export const SOCIAL_PROOF_PROTOCOLS = "Protocol A, Protocol B, and Protocol C";
