@@ -13,7 +13,10 @@ export function SectionHeader({ body, className, eyebrow, title, titleClassName 
   return (
     <div className={cn("section-header", className)}>
       {eyebrow ? <p className="section-label">{eyebrow}</p> : null}
-      <h2 className={cn("section-title", eyebrow && "mt-4", titleClassName)}>{title}</h2>
+      {/* Change this line 👇 */}
+      <h2 className={cn("section-title", eyebrow ? "mt-4" : undefined, titleClassName)}>
+        {title}
+      </h2>
       {body ? <p className="body-lg mt-[var(--space-6)]">{body}</p> : null}
     </div>
   );
