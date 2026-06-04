@@ -193,4 +193,15 @@ export function HeroFanCanvas() {
   }, []);
 
   return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />;
+//   return (
+//   <div className="absolute inset-0 overflow-hidden bg-[#009A93]/10 blur-xl opacity-90">
+//     <canvas
+//       ref={canvasRef}
+//       className="absolute inset-0 h-full w-full"
+//       aria-hidden
+//     />
+
+//     <div className="pointer-events-none absolute inset-0 bg-[#009A93]/10 blur-3xl opacity-0" />
+//   </div>
+// );
 }
