@@ -1,6 +1,3 @@
-Use something like this as the prompt/specification for another AI or frontend developer:
-
----
 
 # Hero Background Animation Specification
 
