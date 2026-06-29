@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import { PRODUCT_NAME } from "@/app/features/landing/data/content";
+import { PRODUCT_NAME } from "@/app/lib/landing/constants";
 import { cn } from "@/app/lib/cn";
 
 type BrandMarkProps = {

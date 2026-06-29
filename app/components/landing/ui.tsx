@@ -14,7 +14,7 @@ type ButtonProps = {
 
 export function PrimaryButton({
   children,
-  href = "#verify",
+  href = "#book-call",
   className = "",
   size = "default",
   variant = "primary",

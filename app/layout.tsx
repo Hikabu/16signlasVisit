@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "16 Signals — Skills Verification for Web3 Teams",
+  title: "16 Signals - Verified Engineering Shortlists",
   description:
-    "Verification layer that surfaces real proof of work — Evidence Briefs, AI authenticity detection, and interview intelligence before your first call.",
+    "Verification layer that filters candidate pools into evidence-backed engineering shortlists before your first interview.",
   icons: {
     icon: "/a16zero.png",
   },
@@ -27,10 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -1,10 +1,8 @@
 import { Header } from "./components/landing/Header";
 import { Hero } from "./components/landing/Hero";
-import { ValueProposition } from "./components/landing/ValueProposition";
-import { FeatureDemo } from "./components/landing/FeatureDemo";
-import { FeatureDeepDive } from "./components/landing/FeatureDeepDive";
-import { FinalCta } from "./components/landing/FinalCta";
-import { Footer } from "./components/landing/Footer";
+import { ProblemValue } from "./components/landing/ProblemValue";
+import { HowItWorks } from "./components/landing/HowItWorks";
+import { BookCall } from "./components/landing/BookCall";
 
 export default function Home() {
   return (
@@ -18,11 +16,9 @@ export default function Home() {
       <Header />
       <main id="main" className="page-shell pb-[var(--space-16)] md:pb-0">
         <Hero />
-        <ValueProposition />
-        <FeatureDemo />
-        <FeatureDeepDive />
-        <FinalCta />
-        <Footer />
+        <ProblemValue />
+        <HowItWorks />
+        <BookCall />
       </main>
     </>
   );

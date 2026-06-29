@@ -1,4 +1,7 @@
 :root {
+  --font-geist-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-geist-mono: "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
   --neutral-0: #ffffff;
   --neutral-50: #fafafa;
   --neutral-100: #f4f4f5;
@@ -10,8 +13,12 @@
   --neutral-950: #010506;
 
   --teal-300: #40e0d8;
+  --teal-200: #b9fffb;
   --teal-500: #009a93;
   --teal-600: #008580;
+  --deep-teal-700: #09524f;
+  --deep-teal-800: #073a39;
+  --deep-teal-950: #0c1b1c;
 
   --success: #047857;
   --success-muted: #ecfdf5;
@@ -32,6 +39,7 @@
   --border-subtle: rgb(255 255 255 / 0.08);
   --accent: var(--teal-500);
   --accent-hover: var(--teal-600);
+  --accent-soft: var(--teal-200);
   --accent-foreground: var(--neutral-0);
   --primary: var(--neutral-0);
   --primary-hover: #e6eeee;
@@ -87,6 +95,10 @@
   --hero-bg: #020304;
   --hero-overlay: linear-gradient(180deg, rgb(1 5 6 / 0.1), rgb(1 5 6 / 0.32) 48%, rgb(1 5 6 / 0.96) 100%);
   --hero-glow: radial-gradient(ellipse 80% 60% at 50% -20%, rgb(0 154 147 / 0.07), transparent 70%);
+  --page-gradient: radial-gradient(circle at 30% 20%, var(--deep-teal-700) 0%, var(--deep-teal-800) 50%, var(--deep-teal-950) 100%);
+  --folder-foreground: rgb(255 255 255 / 0.82);
+  --folder-muted: rgb(255 255 255 / 0.54);
+  --folder-line: rgb(255 255 255 / 0.12);
   --blueprint-grid: linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
 }

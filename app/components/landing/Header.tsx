@@ -94,7 +94,7 @@ export function Header() {
                 {link.label}
               </a>
             ))}
-            <a href="#verify" className="btn btn-accent mt-4" onClick={() => setMenuOpen(false)}>
+            <a href="#book-call" className="btn btn-accent mt-4" onClick={() => setMenuOpen(false)}>
               {NAV_CTA}
             </a>
           </nav>
@@ -102,7 +102,7 @@ export function Header() {
       )}
 
       <a
-        href="#verify"
+        href="#book-call"
         className="btn btn-accent fixed bottom-4 left-4 right-4 z-50 shadow-[0_18px_70px_rgb(0_154_147/0.24)] md:!hidden"
         style={{ maxWidth: "calc(100% - 2rem)", marginInline: "auto" }}
       >
