@@ -5,6 +5,7 @@ import {
 import { Container, PrimaryButton } from "./ui";
 import { HeroFanCanvas } from "./HeroFanCanvas";
 import { LargeWord } from "./LargeWord";
+import { Reveal } from "./Reveal";
 
 export function Hero() {
   return (
@@ -19,10 +20,10 @@ export function Hero() {
       />
 
       <Container className="relative z-10 flex min-h-[calc(100svh-var(--nav-height))] flex-col justify-center py-[var(--space-16)]">
-        <div className="fade-in-up max-w-4xl">
-          <h1 className="hero-display max-w-[11ch] text-white">Only verified engineers.</h1>
+        <Reveal className="hero-reveal max-w-4xl" rootMargin="0px 0px -18% 0px" threshold={0.2}>
+          <h1 className="hero-display reveal-child max-w-[11ch] text-white">Only verified engineers.</h1>
 
-          <div className="mt-[var(--space-8)] max-w-2xl space-y-3 text-base leading-[var(--leading-body)] text-white/72 md:text-[19px]">
+          <div className="reveal-child mt-[var(--space-8)] max-w-2xl space-y-3 text-base leading-[var(--leading-body)] text-white/72 md:text-[19px]">
             <p>We filter candidates before your team interviews.</p>
             <p>Every shortlist is backed by real work signals.</p>
             <p>Inflated profiles are removed early.</p>
@@ -30,7 +31,7 @@ export function Hero() {
             <p>You spend time confirming, not guessing.</p>
           </div>
 
-          <div className="mt-[var(--space-8)] flex flex-col gap-[var(--space-3)] sm:flex-row">
+          <div className="reveal-child mt-[var(--space-8)] flex flex-col gap-[var(--space-3)] sm:flex-row">
             <PrimaryButton href="#book-call" size="large" variant="accent" className="shadow-[var(--shadow-accent)]">
               {HERO_CTA}
             </PrimaryButton>
@@ -41,7 +42,7 @@ export function Hero() {
               {HERO_SECONDARY_CTA}
             </a>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

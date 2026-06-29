@@ -99,34 +99,62 @@ body {
   position: sticky;
   top: var(--folder-top);
   z-index: calc(10 + var(--folder-index));
-  overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 0.74);
+  /* overflow visible so the index tab can protrude above the top edge */
+  overflow: visible;
+  border: 1px solid #e6e8e8;
   border-radius: var(--radius-card);
   background: linear-gradient(135deg, #fffafa 0%, #fff3f5 48%, #ffffff 100%);
   box-shadow:
     0 36px 90px rgb(1 5 6 / 0.32),
     0 1px 0 rgb(255 255 255 / 0.82) inset;
-  transform: translateY(var(--folder-shift));
 }
 
+/* ------------------------------------------------------------------
+   File-folder index tab (FIX.md — Custom Folder-Tab Section Container)
+   Asymmetric trapezoid that protrudes above the card's top edge:
+   - left side slopes up & outward to the right (smooth diagonal)
+   - top edge is flat / horizontal
+   - right side mirrors back down to the body (diagonal)
+   - all corners are softly rounded; thin light-gray outline + soft shadow
+   The shape is drawn as an inline <svg> path (see ProblemValue.tsx) so the
+   outline follows the slanted cuts; the <span> carries the label text.
+   ------------------------------------------------------------------ */
 .verification-folder__tab {
-  margin-left: var(--folder-tab-offset);
-  height: 34px;
-  width: min(220px, 48%);
-  border-right: 1px solid rgb(9 82 79 / 0.12);
-  border-bottom: 1px solid rgb(9 82 79 / 0.12);
-  border-bottom-right-radius: var(--radius-base);
-  background: #ffe6eb;
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.74) inset;
+  position: absolute;
+  top: -43px;
+  left: var(--folder-tab-offset);
+  width: clamp(150px, 36%, 220px);
+  height: 44px;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.verification-folder__tab span {
+.verification-folder__tab-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.verification-folder__tab-shape path {
+  fill: #ffe1e8;
+  stroke: #e6e8e8;
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.verification-folder__tab-label {
+  position: relative;
   display: inline-flex;
   align-items: center;
   height: 100%;
-  padding-inline: 18px;
+  padding-inline: 26px 16px;
   font-size: 12px;
-  color: rgb(9 82 79 / 0.66);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgb(9 82 79 / 0.72);
 }
 
 .timeline-section {
@@ -537,6 +565,73 @@ body {
   }
 }
 
+/* ------------------------------------------------------------------
+   Scroll-driven reveal system (FIX.md §3 — Scroll-Driven Section Reveal)
+   - Container surfaces from depth (opacity + translateY + scale).
+   - Children choreograph with a small stagger (badge → heading → … → buttons).
+   - Only transform & opacity are animated → GPU-friendly, 60fps.
+   - Floating ease gives a slight settling sensation, never linear.
+   Triggered by IntersectionObserver in <Reveal>, which toggles
+   [data-visible="true"]. See app/components/landing/Reveal.tsx.
+   ------------------------------------------------------------------ */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition:
+    opacity 700ms var(--ease-reveal),
+    transform 700ms var(--ease-reveal);
+  will-change: transform, opacity;
+}
+
+.scroll-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Folder cards preserve their subtle parallax shift when surfaced,
+   so the sticky stack keeps its stair-step depth. */
+.verification-folder.scroll-reveal {
+  transform: translateY(calc(var(--folder-shift, 0px) + 40px)) scale(0.96);
+}
+
+.verification-folder.scroll-reveal[data-visible="true"] {
+  transform: translateY(var(--folder-shift, 0px)) scale(1);
+}
+
+.scroll-reveal .reveal-child {
+  opacity: 0;
+  transform: translateY(28px) scale(0.97);
+  transition:
+    opacity 700ms var(--ease-reveal),
+    transform 700ms var(--ease-reveal);
+  will-change: transform, opacity;
+}
+
+.scroll-reveal[data-visible="true"] .reveal-child {
+  opacity: 1;
+  transform: none;
+}
+
+/* Naturally choreographed entrance — each child enters slightly later. */
+.scroll-reveal[data-visible="true"] .reveal-child:nth-child(1) {
+  transition-delay: 0ms;
+}
+.scroll-reveal[data-visible="true"] .reveal-child:nth-child(2) {
+  transition-delay: 90ms;
+}
+.scroll-reveal[data-visible="true"] .reveal-child:nth-child(3) {
+  transition-delay: 180ms;
+}
+.scroll-reveal[data-visible="true"] .reveal-child:nth-child(4) {
+  transition-delay: 270ms;
+}
+.scroll-reveal[data-visible="true"] .reveal-child:nth-child(5) {
+  transition-delay: 360ms;
+}
+.scroll-reveal[data-visible="true"] .reveal-child:nth-child(6) {
+  transition-delay: 450ms;
+}
+
 @keyframes pageGradientDrift {
   to {
     background-position: 44% 34%;
@@ -582,6 +677,20 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .scroll-reveal,
+  .scroll-reveal[data-visible="true"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+
+  .scroll-reveal .reveal-child,
+  .scroll-reveal[data-visible="true"] .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
   }
 
   .btn,

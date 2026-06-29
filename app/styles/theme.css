@@ -84,6 +84,8 @@
   --shadow-glow: 0 0 18px rgb(0 154 147 / 0.8);
 
   --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Slight floating/settling ease for scroll reveals (FIX.md §3). */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 150ms;
   --duration-ui: 200ms;
   --duration-slow: 700ms;

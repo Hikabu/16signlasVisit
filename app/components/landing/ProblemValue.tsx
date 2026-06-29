@@ -1,4 +1,5 @@
 import { LargeWord } from "./LargeWord";
+import { Reveal } from "./Reveal";
 import type { CSSProperties } from "react";
 
 const folders = [
@@ -39,46 +40,57 @@ export function ProblemValue() {
     <section id="problem-value" className="landing-section relative isolate overflow-clip">
       <LargeWord className="left-[4vw] top-0">FILTER</LargeWord>
       <div className="container">
-        <div className="max-w-3xl">
-          <p className="section-label">Problem / Value</p>
-          <h2 className="section-title mt-4 text-white">The applicant pile arrives already sorted.</h2>
-          <p className="mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
+        <Reveal className="max-w-3xl">
+          <p className="section-label reveal-child">Problem / Value</p>
+          <h2 className="section-title reveal-child mt-4 text-white">The applicant pile arrives already sorted.</h2>
+          <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
             Each layer removes a different hiring risk, until your team is left with people worth speaking to.
           </p>
-        </div>
+        </Reveal>
 
         <div className="verification-folder-stack mt-16 space-y-8">
           {folders.map((folder, index) => (
-            <article
+            <Reveal
+              as="article"
               key={folder.title}
               className="verification-folder"
+              threshold={0.22}
               style={
                 {
                   "--folder-index": index,
                   "--folder-total": folders.length,
                   "--folder-top": `${88 + index * 10}px`,
                   "--folder-shift": `${index * 2}px`,
+                  "--reveal-delay": `${index * 70}ms`,
                   "--folder-tab-offset": folder.tabOffset,
                 } as CSSProperties
               }
             >
-              <div className="verification-folder__tab">
-                <span>{folder.label}</span>
+              <div className="verification-folder__tab reveal-child">
+                <svg
+                  className="verification-folder__tab-shape"
+                  viewBox="0 0 200 44"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <path d="M2 44 L20 10 Q24 6 30 6 L170 6 Q176 6 180 10 L198 44 Z" />
+                </svg>
+                <span className="verification-folder__tab-label">{folder.label}</span>
               </div>
               <div className="grid min-h-[360px] content-between gap-12 p-7 md:grid-cols-[0.86fr_1.14fr] md:p-10 lg:p-12">
                 <div>
-                  <p className="text-sm font-medium uppercase text-[#09524f]/70">{folder.label}</p>
-                  <h3 className="mt-5 max-w-[12ch] text-4xl font-medium leading-[1.05] text-[#132426] md:text-6xl">
+                  <p className="reveal-child text-sm font-medium uppercase text-[#09524f]/70">{folder.label}</p>
+                  <h3 className="reveal-child mt-5 max-w-[12ch] text-4xl font-medium leading-[1.05] text-[#132426] md:text-6xl">
                     {folder.title}
                   </h3>
                 </div>
                 <div className="flex flex-col justify-end">
-                  <p className="max-w-xl text-xl leading-[1.45] text-[color:var(--folder-foreground)]">{folder.body}</p>
-                  <div className="mt-10 h-px w-full bg-[color:var(--folder-line)]" />
-                  <p className="mt-5 text-sm text-[color:var(--folder-muted)]">Verified before the first interview.</p>
+                  <p className="reveal-child max-w-xl text-xl leading-[1.45] text-[color:var(--folder-foreground)]">{folder.body}</p>
+                  <div className="reveal-child mt-10 h-px w-full bg-[color:var(--folder-line)]" />
+                  <p className="reveal-child mt-5 text-sm text-[color:var(--folder-muted)]">Verified before the first interview.</p>
                 </div>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>

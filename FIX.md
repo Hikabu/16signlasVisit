@@ -1,232 +1,247 @@
-# UI Revision — Fix Existing Implementation
+# UI Revision — Motion & Interaction Polish
 
-Do **NOT** redesign the landing page.
+Do **not** redesign the landing page.
 
-The structure is correct.
+Do **not** change the page structure, typography, spacing, or colors unless required for the fixes below.
 
-Only fix the following implementation issues while preserving all existing animations, layout and component architecture.
+This iteration is focused entirely on interaction quality, motion design, and premium scrolling behavior.
 
 ---
 
-# 1. Background Gradient
+# 1. Sticky Header Behavior
 
 ## Current Problem
-
-The current background looks flat and almost black.
-
-It lost the visual depth from the design reference.
-
-## Required Fix
-
-Replace the existing background with the exact radial gradient below.
-
-```css
-background:
-radial-gradient(
-circle at 30% 20%,
-#09524f 0%,
-#073a39 50%,
-#0c1b1c 100%
-);
-```
-
-Requirements
-
-* rich teal glow
-* dark edges
-* smooth transitions
-* premium depth
-* no harsh color stops
-* one global background for the entire page
-* extremely subtle animated movement is allowed
-
-The background should become part of the visual identity instead of feeling like a flat color.
-
----
-
-# 2. Folder Section Width
-
-## Current Problem
-
-The stacked folders stretch almost full width.
-
-This destroys the illusion of physical folders.
-
-## Required Fix
-
-Center the entire folder stack horizontally.
-
-Add a reasonable max-width.
-
-The folders should feel like premium floating cards.
-
-Leave generous whitespace on both sides.
-
-The layout should resemble a document stack sitting in the center of the screen.
-
-Do not allow the folders to span edge-to-edge.
-
----
-
-# 3. Folder Tab Positioning
-
-## Current Problem
-
-Every folder tab is positioned in exactly the same place.
-
-The folders look artificial.
-
-## Required Fix
-
-Stagger every folder tab horizontally.
-
-Example
-
-Folder 1 → left
-
-Folder 2 → slightly right
-
-Folder 3 → center
-
-Folder 4 → slightly left
-
-Folder 5 → right
-
-The tabs should feel like real office folders placed on top of each other.
-
-The positions should look intentional but slightly irregular.
-
-Never perfectly align all tabs.
-
----
-
-# 4. Folder Colors
-
-## Current Problem
-
-The folders blend into the background.
-
-There is almost no visual hierarchy.
-
-## Required Fix
-
-Increase contrast.
-
-The folders should immediately become the visual focus.
-
-Preferred options
-
-* clean premium white
-* or soft pink / blush matching the existing accent color
-
-Avoid grey.
-
-Avoid dark cards.
-
-Avoid transparent backgrounds.
-
-The folders must clearly separate from the teal background while keeping the premium minimal aesthetic.
-
----
-
-# 5. Hero Fan Animation (Highest Priority)
 DO NOT CHANGE THE EXISTING FAN SHAPE.
 
 The fan is part of the brand.
 
 Before changing anything inspect how it is built.
 
-This is currently the biggest issue.
+The header feels permanently visible and lacks a premium transition.
 
-Do not keep the existing implementation.
+It should evolve as the user scrolls instead of remaining static.
 
-Rewrite the reveal animation.
-
-## Current Problem
-
-The fan behaves like a single rectangle being uncovered by a curtain moving upward.
-
-It looks mechanical.
-
-It does not feel alive.
-
-## Required Behavior
-
-The fan should appear to emerge naturally from darkness.
-
-The reveal starts at the central hub of the fan.
-
-From that point, every rib/blade gradually becomes visible while expanding outward.
-
-The movement should feel organic.
-
-Imagine watching a traditional folding fan slowly appear from shadow.
-
-It is **not** a vertical mask animation.
-
-It is an outward reveal originating from the center.
-
-## Motion Requirements
-
-Each blade must have its own animation timing.
-
-Never animate every blade simultaneously.
-
-Introduce small random offsets.
-
-Some blades reveal
-
-* slightly earlier
-* slightly later
-* slightly faster
-* slightly slower
-
-The differences should be subtle.
-
-The result should resemble a handcrafted object unfolding instead of a synchronized loading animation.
-
-The animation should feel calm, elegant and premium.
-
-Never fast.
-
-Never bouncy.
-
-Never linear.
-
-Use ease-in-out curves.
-
-## Technical Suggestions
-
-Inspect how the current fan is built before changing anything.
-
-If the blades are individual elements:
-
-* animate each element independently
-* use Framer Motion staggerChildren or custom delays
-* animate opacity + scale + clip-path (or mask)
-
-If the current CSS implementation prevents achieving this effect cleanly,
-
-refactor the implementation while preserving the exact geometry of the fan.
-
-Do **not** change the shape.
-
-Do **not** change proportions.
-
-Do **not** redesign the fan.
-
-Only improve how it is revealed.
 
 ---
 
-# Final Goal
+## Initial State
 
-The landing page should immediately feel more premium.
+When the page first loads:
 
-The background should have depth.
+* header background must be completely transparent
+* no blur
+* no shadow
+* no dark overlay
+* logo displayed at its larger hero size
+* navigation spacing should feel open and spacious
 
-The folders should become clear focal points.
+The header should visually blend into the hero.
 
-The hero animation should feel handcrafted and cinematic instead of looking like a simple sliding mask.
+---
 
-Do not modify any other sections unless necessary to support these fixes.
+## Scroll State
+
+As soon as the user starts scrolling, transform the header into a compact sticky navigation.
+
+Animate:
+
+* reduce vertical padding
+* slightly scale down the logo
+* reduce spacing between navigation items
+* add a subtle dark translucent background
+* add a very soft shadow or backdrop blur to separate it from the page
+
+The transition should feel seamless.
+
+Use approximately:
+
+```css
+transition: all 0.3s ease-in-out;
+```
+
+Never make the transition abrupt.
+
+The user should almost not notice it happening.
+
+---
+
+# 2. Hero Background Lines Animation
+
+## Current Problem
+
+The background sticks/ribs simply fade into view.
+
+This makes the hero feel static.
+
+---
+
+## Required Behavior
+
+The background sticks should rise upward from below while fading in.
+
+Do not simply animate opacity.
+
+Each stick should translate upward while becoming visible.
+
+Example motion:
+
+Initial
+
+* opacity: 0
+* translateY(40-60px)
+
+Final
+
+* opacity: 1
+* translateY(0)
+
+---
+
+## Staggering
+
+Every stick should have a slightly different timing.
+
+Never animate every line simultaneously.
+
+Introduce small randomized delays.
+
+Some lines:
+
+* begin earlier
+* begin later
+* rise slightly faster
+* rise slightly slower
+
+Keep the variation subtle.
+
+The effect should resemble depth emerging from darkness rather than UI elements loading.
+
+Avoid obvious sequential animations.
+
+The movement should feel organic.
+
+---
+
+# 3. Scroll-Driven Section Reveal
+
+## Current Problem
+
+Every section appears too abruptly.
+
+Scrolling lacks momentum.
+
+The page feels flat.
+
+---
+
+## Required Behavior
+
+Every major content block should appear as if it is slowly surfacing from below.
+
+The animation should feel soft and elegant.
+
+Never flashy.
+
+Never exaggerated.
+
+---
+
+## Initial State
+
+Before entering the viewport:
+
+```css
+opacity: 0;
+transform: translateY(40px) scale(0.95);
+```
+
+---
+
+## Final State
+
+Once visible:
+
+```css
+opacity: 1;
+transform: translateY(0) scale(1);
+```
+
+Use smooth easing.
+
+Prefer a cubic-bezier curve that gives a slight floating sensation instead of a linear transition.
+
+The motion should communicate weight and confidence.
+
+---
+
+## Trigger
+
+Use one of the following:
+
+* Framer Motion whileInView
+* Framer Motion useInView
+* Intersection Observer API
+
+Avoid manual scroll listeners.
+
+Trigger once when approximately 20–30% of the section enters the viewport.
+
+---
+
+## Animation Timing
+
+Duration:
+
+500–800ms
+
+Small stagger between child elements.
+
+Typical order:
+
+1. badge
+2. heading
+3. description
+4. illustration
+5. buttons
+
+Everything should feel naturally choreographed.
+
+---
+
+# Performance
+
+Maintain 60fps.
+
+Animate only:
+
+* transform
+* opacity
+
+Avoid:
+
+* width
+* height
+* top
+* left
+* expensive layout recalculations
+
+Use GPU-accelerated transforms wherever possible.
+
+---
+Custom Folder-Tab Section Container
+The Shape Requirement: Wrap the section or content cards in a container that mimics a physical folder with a single top tab.
+Tab Top Border: The top of the container should not be a flat line. Instead, it must feature a pronounced, asymmetric tab on the top-left (resembling a file folder index tab).
+The Slanted Geometric Cuts: * The left side of the tab should angle upward and outward to the right using a smooth diagonal slope.
+The top edge of the tab is flat and horizontal.
+The right side of the tab should slope downward and outward to the right at a mirrored diagonal angle before meeting the main body of the container.
+Border Radii & Styling: All intersecting sharp corners of the tab (where it meets the top horizontal edge and where it connects back down to the main card container) must have a subtle, smooth border-radius to look clean and modern. The entire folder container needs a thin, light gray outline and a soft, diffused drop shadow behind it to give it depth.
+
+# Overall Motion Language
+
+Every interaction should communicate calm confidence.
+
+Nothing should feel mechanical or template-like.
+
+The page should give the impression that elements are emerging from depth rather than simply appearing.
+
+Motion should be subtle enough that users feel the quality without consciously noticing the animation itself.
