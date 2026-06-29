@@ -95,10 +95,10 @@
   --hero-bg: #020304;
   --hero-overlay: linear-gradient(180deg, rgb(1 5 6 / 0.1), rgb(1 5 6 / 0.32) 48%, rgb(1 5 6 / 0.96) 100%);
   --hero-glow: radial-gradient(ellipse 80% 60% at 50% -20%, rgb(0 154 147 / 0.07), transparent 70%);
-  --page-gradient: radial-gradient(circle at 30% 20%, var(--deep-teal-700) 0%, var(--deep-teal-800) 50%, var(--deep-teal-950) 100%);
-  --folder-foreground: rgb(255 255 255 / 0.82);
-  --folder-muted: rgb(255 255 255 / 0.54);
-  --folder-line: rgb(255 255 255 / 0.12);
+  --page-gradient: radial-gradient(circle at 30% 20%, #09524f 0%, #073a39 50%, #0c1b1c 100%);
+  --folder-foreground: rgb(26 38 40 / 0.78);
+  --folder-muted: rgb(26 38 40 / 0.52);
+  --folder-line: rgb(9 82 79 / 0.14);
   --blueprint-grid: linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
 }

@@ -4,26 +4,31 @@ import type { CSSProperties } from "react";
 const folders = [
   {
     label: "01",
+    tabOffset: "7%",
     title: "Proof of Work",
     body: "We separate shipped work from polished claims, so the shortlist starts with evidence instead of presentation.",
   },
   {
     label: "02",
+    tabOffset: "18%",
     title: "Real Contributions",
     body: "Commits, projects, ownership patterns, and technical context are mapped before anyone reaches your calendar.",
   },
   {
     label: "03",
+    tabOffset: "38%",
     title: "Consistency",
     body: "Seniority, depth, and trajectory are checked across time, not guessed from a single resume snapshot.",
   },
   {
     label: "04",
+    tabOffset: "12%",
     title: "Anti-Fraud",
     body: "Borrowed work, inflated authorship, and weak provenance are flagged early, while strong candidates keep moving.",
   },
   {
     label: "05",
+    tabOffset: "48%",
     title: "Technical Signals",
     body: "The output is a verified brief: strengths, risks, and interview probes ready for your engineering team.",
   },
@@ -42,7 +47,7 @@ export function ProblemValue() {
           </p>
         </div>
 
-        <div className="mt-16 space-y-8">
+        <div className="verification-folder-stack mt-16 space-y-8">
           {folders.map((folder, index) => (
             <article
               key={folder.title}
@@ -53,6 +58,7 @@ export function ProblemValue() {
                   "--folder-total": folders.length,
                   "--folder-top": `${88 + index * 10}px`,
                   "--folder-shift": `${index * 2}px`,
+                  "--folder-tab-offset": folder.tabOffset,
                 } as CSSProperties
               }
             >
@@ -61,8 +67,8 @@ export function ProblemValue() {
               </div>
               <div className="grid min-h-[360px] content-between gap-12 p-7 md:grid-cols-[0.86fr_1.14fr] md:p-10 lg:p-12">
                 <div>
-                  <p className="text-sm font-medium uppercase text-[color:var(--accent-soft)]">{folder.label}</p>
-                  <h3 className="mt-5 max-w-[12ch] text-4xl font-medium leading-[1.05] text-white md:text-6xl">
+                  <p className="text-sm font-medium uppercase text-[#09524f]/70">{folder.label}</p>
+                  <h3 className="mt-5 max-w-[12ch] text-4xl font-medium leading-[1.05] text-[#132426] md:text-6xl">
                     {folder.title}
                   </h3>
                 </div>
