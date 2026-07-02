@@ -21,7 +21,7 @@ export function Hero() {
 
       <Container className="relative z-10 flex min-h-[calc(100svh-var(--nav-height))] flex-col justify-center py-[var(--space-16)]">
         <Reveal className="hero-reveal max-w-4xl" rootMargin="0px 0px -18% 0px" threshold={0.2}>
-          <h1 className="hero-display reveal-child max-w-[11ch] text-white">Only verified engineers.</h1>
+          <h1 className="hero-display reveal-child max-w-[11ch] text-[color:var(--fill-title)]">Only verified engineers.</h1>
 
           <div className="reveal-child mt-[var(--space-8)] max-w-2xl space-y-3 text-base leading-[var(--leading-body)] text-white/72 md:text-[19px]">
             <p>We filter candidates before your team interviews.</p>

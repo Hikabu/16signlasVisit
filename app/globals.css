@@ -139,9 +139,14 @@ body {
 }
 
 .verification-folder__tab-shape path {
-  fill: #ffe1e8;
-  stroke: #e6e8e8;
-  stroke-width: 1;
+  /* fill: #a0688a !important; */
+  /* fill: #D9A752; */
+  /* fill: #E5BA73; */
+  fill: #FA8072;
+  /* fill: #FFF5E4; */
+  /* stroke: #078787; */
+  stroke: none !important; 
+  /* stroke-width: 1; */
   stroke-linejoin: round;
 }
 
@@ -506,7 +511,7 @@ body {
 }
 
 .blueprint-panel {
-  position: relative;
+  position  : relative;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
