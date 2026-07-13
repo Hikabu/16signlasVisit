@@ -12,22 +12,14 @@
 }
 
 body {
-  background:
-    radial-gradient(
-      circle at 30% 20%,
-      #09524f 0%,
-      #073a39 50%,
-      #0c1b1c 100%
-    );
-  background-attachment: fixed;
-  background-position: 30% 20%;
-  background-size: 140% 140%;
+  /* Flat ink-dark base — the hero spec requires a perfectly still, flat field.
+     Sections below the hero inherit this dark base; they add their own surface treatments. */
+  background: #08090b;
   color: var(--foreground);
   font-size: var(--text-base);
   line-height: var(--leading-body);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;
-  animation: pageGradientDrift 34s var(--ease-standard) infinite alternate;
 }
 
 .page-shell {
@@ -57,6 +49,55 @@ body {
 
 .hero-section {
   background: transparent;
+}
+
+/* ── Hero field: spec-enforced flat dark ground ──
+   #08090b: ink-dark with warmth, not void-black.
+   Perfectly flat — no gradient, no noise, no vignette, no radial anything.
+   All motion law: one event only (receipt-pull), never ambient.
+   ── */
+.hero-field {
+  background: #08090b !important;
+  /* Stillness is the loudest element. */
+}
+
+/* ── Hero layout rhythm ──
+   Proportional vertical rhythm per spec:
+   ~12% quiet zone (nav), ~18% empty field, headline, gap, CTAs, artifact (40-45%).
+   ── */
+.hero-nav-offset {
+  height: var(--nav-height, 64px);
+}
+
+.hero-empty-field {
+  height: clamp(32px, 10vh, 96px);
+}
+
+.hero-gap {
+  /* Larger than any gap inside the artifact — sentence detached from everything below */
+  height: clamp(24px, 4.5vh, 52px);
+}
+
+.hero-artifact-spacer {
+  height: clamp(16px, 2.5vh, 32px);
+}
+
+.hero-headline-block {
+  /* Central 8 columns — headline centered */
+  max-width: min(100% - 2rem, 900px);
+  margin-inline: auto;
+}
+
+.hero-ctas {
+  /* CTAs centered as a pair */
+  width: 100%;
+  justify-content: center;
+  padding-inline: 1rem;
+}
+
+.hero-artifact {
+  /* Central 10 columns */
+  margin-inline: auto;
 }
 
 .hero-fan-curtain {
@@ -637,11 +678,7 @@ body {
   transition-delay: 450ms;
 }
 
-@keyframes pageGradientDrift {
-  to {
-    background-position: 44% 34%;
-  }
-}
+/* pageGradientDrift removed — body background is now flat per hero spec */
 
 @keyframes fanBreath {
   from {
@@ -702,16 +739,11 @@ body {
   .text-link,
   .blueprint-panel::after,
   body,
-  .hero-fan-curtain,
   .timeline-track__fill,
   .timeline-step,
   .timeline-illustration {
     transition: none;
     animation: none;
-  }
-
-  .hero-fan-curtain {
-    transform: none;
   }
 
   .timeline-track__fill,
