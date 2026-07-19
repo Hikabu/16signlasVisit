@@ -23,7 +23,7 @@ export function EvidenceParticles() {
     const random = seededRandom(16);
     const glyphs = ["›", "››", "·", "/", "×", "+", "01", "↗"];
     const points = Array.from({ length: 620 }, (_, index) => {
-      const angle = random() * TAU;
+      const angle = (index / 620) * TAU;
       const radius = 0.73 + (random() - 0.5) * 0.34;
       return {
         angle,
@@ -35,7 +35,7 @@ export function EvidenceParticles() {
       };
     });
 
-    const draw = () => {
+    const draw = (offset = 0) => {
       const bounds = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const width = Math.max(1, Math.round(bounds.width));
@@ -55,7 +55,7 @@ export function EvidenceParticles() {
       const ry = height * 0.36;
 
       for (const point of points) {
-        const angle = point.angle;
+        const angle = (point.angle + offset) % TAU;
         const radius = point.radius;
         const lowerPull = Math.max(0, Math.sin(angle)) * Math.max(0, -Math.cos(angle)) * height * 0.11;
         const x = cx + Math.cos(angle) * rx * radius;
@@ -75,10 +75,30 @@ export function EvidenceParticles() {
       }
     };
 
-    draw();
-    const resizeObserver = new ResizeObserver(draw);
+    let animationFrameId: number;
+    let currentOffset = 0;
+    const speed = 0.00008; // Radians per millisecond (slow and smooth)
+    let lastTime = performance.now();
+
+    const tick = (time: number) => {
+      const delta = time - lastTime;
+      lastTime = time;
+      currentOffset = (currentOffset + delta * speed) % TAU;
+      draw(currentOffset);
+      animationFrameId = requestAnimationFrame(tick);
+    };
+
+    animationFrameId = requestAnimationFrame(tick);
+
+    const resizeObserver = new ResizeObserver(() => {
+      draw(currentOffset);
+    });
     resizeObserver.observe(canvas);
-    return () => resizeObserver.disconnect();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      resizeObserver.disconnect();
+    };
   }, []);
 
   return <canvas ref={canvasRef} aria-hidden="true" />;

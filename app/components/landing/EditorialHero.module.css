@@ -3,7 +3,7 @@
   min-height: 720px;
   padding: clamp(18px, 5.2vh, 48px) clamp(14px, 4.1vw, 66px) clamp(12px, 2.2vh, 20px);
   background: #000;
-  color: #151515;
+  color: #fff;
 }
 
 .frame {
@@ -12,7 +12,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 5px;
-  background: #f2f1e8;
+  background: #000;
 }
 
 .header {
@@ -22,7 +22,7 @@
   align-items: center;
   gap: 32px;
   padding: 0 clamp(24px, 2.65vw, 42px);
-  border-bottom: 1px solid rgba(21, 21, 21, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand {
@@ -30,7 +30,7 @@
   align-items: center;
   justify-self: start;
   gap: 10px;
-  color: #101010;
+  color: #ffffff;
   font-size: clamp(21px, 1.75vw, 28px);
   font-weight: 500;
   line-height: 1;
@@ -54,7 +54,7 @@
 .nav a,
 .contactLink,
 .headerCta {
-  color: #161616;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 460;
   line-height: 1;
@@ -77,11 +77,11 @@
 
 .headerCta {
   padding: 9px 12px;
-  background: rgba(21, 21, 21, 0.045);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .headerCta:hover {
-  background: rgba(0, 159, 172, 0.1);
+  background: rgba(0, 159, 172, 0.2);
 }
 
 .heroGrid {
@@ -103,7 +103,7 @@
 
 .headline {
   margin: 0;
-  color: #171717;
+  color: #ffffff;
   font-size: clamp(48px, 4.45vw, 72px);
   font-weight: 450;
   line-height: 0.985;
@@ -153,7 +153,7 @@
 
 .reportHeading p {
   margin-bottom: 2px;
-  color: rgba(21, 21, 21, 0.58);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 11px;
   font-weight: 520;
   letter-spacing: 0.02em;
@@ -179,7 +179,7 @@
 }
 
 .reportStamp {
-  color: rgba(21, 21, 21, 0.38);
+  color: rgba(255, 255, 255, 0.4);
   white-space: nowrap;
 }
 
@@ -188,16 +188,16 @@
   align-items: center;
   gap: 12px;
   padding: 9px 0;
-  border-top: 1px solid rgba(21, 21, 21, 0.16);
-  border-bottom: 1px solid rgba(21, 21, 21, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .manifest span {
-  color: #007d87;
+  color: #00b8c4;
 }
 
 .manifest strong {
-  color: rgba(21, 21, 21, 0.58);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 10px;
   font-weight: 470;
   letter-spacing: -0.015em;
@@ -213,7 +213,7 @@
   grid-template-columns: 52px minmax(0, 1fr) auto;
   align-items: center;
   gap: 14px;
-  border-bottom: 1px solid rgba(21, 21, 21, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .reportGlyph {
@@ -239,14 +239,14 @@
 .claimCopy span {
   display: block;
   margin-bottom: 2px;
-  color: rgba(21, 21, 21, 0.42);
+  color: rgba(255, 255, 255, 0.45);
   font-size: 8px;
 }
 
 .claimCopy p {
   margin: 0;
   overflow: hidden;
-  color: #202020;
+  color: #ffffff;
   font-size: 12px;
   line-height: 1.2;
   letter-spacing: -0.022em;
@@ -256,16 +256,16 @@
 
 .claimRow > a {
   padding: 5px 7px;
-  border: 1px solid rgba(0, 159, 172, 0.32);
-  color: #007c86;
+  border: 1px solid rgba(0, 184, 196, 0.32);
+  color: #00b8c4;
   text-decoration: none;
   white-space: nowrap;
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 
 .claimRow > a:hover {
-  border-color: rgba(0, 159, 172, 0.62);
-  background: rgba(0, 159, 172, 0.08);
+  border-color: rgba(0, 184, 196, 0.62);
+  background: rgba(0, 184, 196, 0.08);
 }
 
 .narrative {
@@ -278,7 +278,7 @@
 .narrative > p {
   max-width: 650px;
   margin: 0;
-  color: #191919;
+  color: #ffffff;
   font-size: clamp(23px, 2.05vw, 34px);
   font-weight: 440;
   line-height: 1.07;
@@ -298,7 +298,7 @@
   display: inline-flex;
   align-items: center;
   gap: 13px;
-  color: #171717;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 510;
   line-height: 1;
@@ -312,7 +312,7 @@
   height: 30px;
   display: inline-grid;
   place-items: center;
-  background: rgba(21, 21, 21, 0.055);
+  background: rgba(255, 255, 255, 0.08);
   font-size: 14px;
   transition: color 160ms ease, background-color 160ms ease;
 }
@@ -320,14 +320,14 @@
 .primaryCta:hover span,
 .secondaryCta:hover span {
   background: #009fac;
-  color: #f2f1e8;
+  color: #ffffff;
 }
 
 .transitionLink {
   display: inline-flex;
   gap: 8px;
   margin-top: 17px;
-  color: rgba(21, 21, 21, 0.5);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -335,7 +335,7 @@
 }
 
 .transitionLink:hover {
-  color: #007d87;
+  color: #00b8c4;
 }
 
 @media (max-width: 1180px) {
