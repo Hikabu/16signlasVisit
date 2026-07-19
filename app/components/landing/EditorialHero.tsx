@@ -24,22 +24,6 @@ function SignalMark() {
   );
 }
 
-function ReportGlyph({ variant = 0 }: { variant?: number }) {
-  return (
-    <span className={styles.reportGlyph} aria-hidden="true">
-      {variant === 0 ? (
-        <>
-          <i>››</i><i>›››</i><i>››</i>
-        </>
-      ) : (
-        <>
-          <i>›››</i><i>››</i><i>›››</i>
-        </>
-      )}
-    </span>
-  );
-}
-
 export function EditorialHero() {
   return (
     <section id="hero" className={styles.outer} aria-labelledby="hero-title">
@@ -80,45 +64,6 @@ export function EditorialHero() {
             <EvidenceParticles />
           </div>
 
-          <article id="evidence-report" className={styles.report} aria-label="Evidence report preview">
-            <div className={styles.reportHeading}>
-              <div>
-                <p>Evidence report</p>
-                <h2>Candidate 16–4812</h2>
-              </div>
-              <span className={styles.reportStamp}>Snapshot 9F2A · rubric v1.4</span>
-            </div>
-
-            <div className={styles.manifest}>
-              <span>Evidence manifest</span>
-              <strong>3 repositories · 47 merged PRs · 26 months</strong>
-            </div>
-
-            <div className={styles.claimList}>
-              <div className={styles.claimRow}>
-                <ReportGlyph />
-                <div className={styles.claimCopy}>
-                  <span>Fact</span>
-                  <p>Refactored the authentication module across 14 files.</p>
-                </div>
-                <a href="#how-it-works" aria-label="Open pull request 184 citation">
-                  PR 184 ↗
-                </a>
-              </div>
-
-              <div className={styles.claimRow}>
-                <ReportGlyph variant={1} />
-                <div className={styles.claimCopy}>
-                  <span>Inference · established</span>
-                  <p>Handles cross-cutting changes with deliberate review.</p>
-                </div>
-                <a href="#how-it-works" aria-label="Open review 32 citation">
-                  Review 32 ↗
-                </a>
-              </div>
-            </div>
-          </article>
-
           <div className={styles.narrative}>
             <p>
               This is hiring built on the work itself. Every conclusion compiles upward
@@ -128,7 +73,7 @@ export function EditorialHero() {
             </p>
 
             <div className={styles.ctas} role="group" aria-label="Primary actions">
-              <a className={styles.primaryCta} href="#evidence-report">
+              <a className={styles.primaryCta} href="#evidence-report-section">
                 Explore a real report
                 <span aria-hidden="true">↘</span>
               </a>
@@ -138,8 +83,8 @@ export function EditorialHero() {
               </a>
             </div>
 
-            <a className={styles.transitionLink} href="#problem-value">
-              What changed in engineering? <span aria-hidden="true">↓</span>
+            <a className={styles.transitionLink} href="#evidence-report-section">
+              Explore the evidence report <span aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
