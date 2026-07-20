@@ -11,7 +11,7 @@ export function EvidenceParticles() {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
-
+  
     let animId: number;
     let startTime = performance.now();
 
