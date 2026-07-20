@@ -753,3 +753,306 @@ body {
     transform: none;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   Section 2 — The Shift
+   Premium horizontal timeline. Two parallel tracks: Engineering
+   (dense, accumulating) and Hiring (sparse, frozen).
+   Black background, editorial rhythm, muted-teal evidence only.
+   ══════════════════════════════════════════════════════════════════ */
+
+.shift-section {
+  background: #000;
+  color: rgb(255 255 255 / 0.82);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(80px, 12vh, 140px);
+  position: relative;
+}
+
+.shift-inner {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(24px, 6vw, 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.shift-index {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.22);
+  text-transform: uppercase;
+  margin-bottom: clamp(40px, 6vh, 64px);
+  font-variant-numeric: tabular-nums;
+}
+
+.shift-headline-block {
+  max-width: 720px;
+  margin-bottom: clamp(40px, 6vh, 64px);
+}
+
+.shift-headline {
+  font-size: clamp(28px, 3.8vw, 52px);
+  font-weight: 450;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: rgb(255 255 255 / 0.92);
+  margin: 0 0 20px;
+}
+
+.shift-subtext {
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.7;
+  color: rgb(255 255 255 / 0.38);
+  max-width: 56ch;
+  margin: 0;
+  font-weight: 350;
+}
+
+.shift-rule {
+  height: 1px;
+  background: rgb(255 255 255 / 0.1);
+  border: none;
+  margin: 0 0 clamp(40px, 6vh, 64px);
+}
+
+.shift-rule--subtle {
+  background: rgb(255 255 255 / 0.06);
+  margin: 0 0 24px;
+}
+
+.shift-timeline-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-bottom: clamp(56px, 8vh, 96px);
+}
+
+.shift-timeline-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.shift-track {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-block: 28px 20px;
+  min-width: max-content;
+}
+
+.shift-track--sparse {
+  padding-block: 24px 28px;
+}
+
+.shift-track-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.3);
+  padding-left: 2px;
+  margin-bottom: 4px;
+}
+
+.shift-track-label--dim {
+  color: rgb(255 255 255 / 0.14);
+}
+
+.shift-rail-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.shift-rail {
+  height: 1px;
+  background: rgb(255 255 255 / 0.12);
+  position: relative;
+  overflow: hidden;
+  min-width: 900px;
+}
+
+.shift-rail--dim {
+  background: rgb(255 255 255 / 0.06);
+}
+
+.shift-rail-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgb(79 209 197 / 0.6), rgb(79 209 197 / 0.2));
+  transition: width 40ms linear;
+  will-change: width;
+}
+
+.shift-rail-fill--dim {
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.06));
+}
+
+.shift-nodes {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  min-width: 900px;
+  position: relative;
+}
+
+.shift-nodes--sparse {
+  gap: 0;
+}
+
+.shift-node-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding-right: 12px;
+  transition: opacity 80ms linear;
+  will-change: opacity;
+  min-width: 130px;
+}
+
+.shift-node-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(79 209 197 / 0.9);
+  box-shadow: 0 0 8px rgb(79 209 197 / 0.5);
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.shift-node-dot--dim {
+  background: rgb(255 255 255 / 0.22);
+  box-shadow: none;
+}
+
+.shift-node-name {
+  font-size: 12px;
+  font-weight: 450;
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 0.7);
+  white-space: nowrap;
+}
+
+.shift-node-name--dim {
+  color: rgb(255 255 255 / 0.28);
+}
+
+.shift-marks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 6px;
+}
+
+.shift-mark {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  transition: opacity 60ms linear;
+  will-change: opacity;
+}
+
+.shift-mark-tick {
+  display: inline-block;
+  width: 5px;
+  height: 1px;
+  background: rgb(255 255 255 / 0.2);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.shift-mark--teal .shift-mark-tick {
+  background: rgb(79 209 197 / 0.7);
+}
+
+.shift-mark-text {
+  font-size: 10.5px;
+  letter-spacing: 0.01em;
+  color: rgb(255 255 255 / 0.32);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-weight: 350;
+}
+
+.shift-mark--teal .shift-mark-text {
+  color: rgb(79 209 197 / 0.82);
+  font-weight: 400;
+}
+
+.shift-mark-sub {
+  font-size: 9.5px;
+  color: rgb(255 255 255 / 0.2);
+  margin-left: 2px;
+  white-space: nowrap;
+}
+
+.shift-track-divider {
+  height: 1px;
+  background: rgb(255 255 255 / 0.05);
+  margin-block: 0;
+}
+
+.shift-transition {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.shift-transition-text {
+  font-size: clamp(13px, 1.1vw, 15px);
+  color: rgb(255 255 255 / 0.28);
+  margin: 0;
+  font-weight: 350;
+  letter-spacing: 0.01em;
+  font-style: italic;
+}
+
+@media (max-width: 767px) {
+  .shift-section {
+    padding-block: 72px;
+  }
+
+  .shift-headline {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+
+  .shift-nodes,
+  .shift-rail {
+    min-width: 700px;
+  }
+
+  .shift-node-col {
+    min-width: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shift-rail-fill,
+  .shift-node-col,
+  .shift-mark {
+    transition: none;
+  }
+
+  .shift-rail-fill {
+    width: 100% !important;
+  }
+
+  .shift-node-col,
+  .shift-mark {
+    opacity: 1 !important;
+  }
+}
