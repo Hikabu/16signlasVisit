@@ -12,4 +12,12 @@ export const HERO_CTA = "Explore a real report";
 
 export const HERO_SECONDARY_CTA = "Run it on your own work";
 
+// Kept for the alternate editorial hero draft in this workspace.
+export const HERO_TOP_CTA_PRIMARY = HERO_CTA;
+export const HERO_TOP_CTA_SECONDARY = "See how it works";
+export const HERO_TOP_HEADLINE = "Software engineering changed.\nHiring didn't.";
+export const HERO_TOP_EYEBROW = "Evidence before interviews";
+export const HERO_TOP_BODY =
+  "A capability report built from the work itself, with every conclusion linked to evidence.";
+
 export const SOCIAL_PROOF_PROTOCOLS = "engineering teams that need proof before interviews";

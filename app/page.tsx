@@ -1,5 +1,5 @@
-import { Header } from "./components/landing/Header";
-import { Hero } from "./components/landing/Hero";
+import { EditorialHero } from "./components/landing/EditorialHero";
+import { EvidenceReportSection } from "./components/landing/Hero";
 import { ProblemValue } from "./components/landing/ProblemValue";
 import { HowItWorks } from "./components/landing/HowItWorks";
 import { BookCall } from "./components/landing/BookCall";
@@ -13,9 +13,9 @@ export default function Home() {
       >
         Skip to content
       </a>
-      <Header />
       <main id="main" className="page-shell pb-[var(--space-16)] md:pb-0">
-        <Hero />
+        <EditorialHero />
+        <EvidenceReportSection />
         <ProblemValue />
         <HowItWorks />
         <BookCall />
