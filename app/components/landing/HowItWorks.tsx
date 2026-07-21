@@ -51,7 +51,7 @@ function StepIllustration({ index }: { index: number }) {
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="timeline-section relative isolate overflow-clip">
+    <section id="how-it-works" className="timeline-section relative isolate overflow-clip section-transition section-edge-highlight">
       <LargeWord className="right-[-2vw] top-10">SIGNALS</LargeWord>
       <div className="container grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
         <aside className="timeline-sticky">

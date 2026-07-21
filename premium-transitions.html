@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Section Transitions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #050607;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: overlay;
+        }
+
+        .section {
+            position: relative;
+            min-height: 100vh;
+            padding: 4rem 0;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: center;
+        }
+
+        .section--hidden {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        .section-heading {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .section-engineering {
+            position: relative;
+            background: linear-gradient(
+                180deg,
+                #050607 0%,
+                #0B0D10 320px,
+                #0E1114 100%
+            );
+        }
+
+        .section-engineering::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 500px;
+            background: radial-gradient(
+                60% 100% at 50% 0%,
+                rgba(148, 163, 184, 0.06),
+                transparent 70%
+            );
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-engineering::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.07) 25%,
+                rgba(255, 255, 255, 0.07) 75%,
+                transparent
+            );
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-engineering.visible::before,
+        .section-engineering.visible::after {
+            opacity: 1;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-wrapper {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .timeline {
+            position: relative;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.08);
+            margin-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            mask-image: linear-gradient(180deg, transparent, black 120px);
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-engineering.visible .timeline::before {
+            opacity: 1;
+        }
+
+        .timeline-content {
+            margin-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline .accent {
+            position: absolute;
+            left: -0.5px;
+            top: 0;
+            width: 2px;
+            height: 45%;
+            background: linear-gradient(180deg, transparent, #7A87E8 60%, #9AA5F5);
+            box-shadow: 0 0 12px rgba(122, 135, 232, 0.45);
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-engineering.visible .timeline .accent {
+            opacity: 1;
+        }
+
+        .timeline .node {
+            position: absolute;
+            left: -3.5px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #C7CDF9;
+            box-shadow:
+                0 0 0 5px rgba(122, 135, 232, 0.10),
+                0 0 20px 3px rgba(122, 135, 232, 0.5);
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-engineering.visible .timeline .node {
+            opacity: 1;
+        }
+
+        .node-content {
+            margin-left: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-engineering.visible .node-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            color: #6B7280;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .section-wrapper {
+                flex-direction: column;
+            }
+
+            .timeline {
+                margin-left: 0;
+                width: 1px;
+            }
+
+            .timeline::before {
+                left: 0;
+            }
+
+            .timeline .accent {
+                left: -0.5px;
+            }
+
+            .timeline .node {
+                left: -3.5px;
+            }
+
+            .timeline-content,
+            .node-content {
+                margin-left: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="section section-engineering visible">
+        <div class="section-content">
+            <div class="eyebrow">ARCHITECTURE</div>
+            <h1 class="section-heading">Engineering Excellence</h1>
+            <div class="section-wrapper">
+                <div class="timeline">
+                    <div class="accent"></div>
+                    <div class="node"></div>
+                </div>
+                <div class="timeline-content">
+                    <div class="eyebrow">Q1 2024</div>
+                    <h2>Platform Modernization</h2>
+                    <p>Transitioned our infrastructure from legacy systems to a modern, scalable platform, reducing deployment time by 60% while maintaining 99.9% uptime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-engineering">
+        <div class="section-content">
+            <div class="eyebrow">SECURITY</div>
+            <h1 class="section-heading">Defense in Depth</h1>
+            <div class="section-wrapper">
+                <div class="timeline">
+                    <div class="accent"></div>
+                    <div class="node"></div>
+                </div>
+                <div class="node-content">
+                    <div class="eyebrow">Q2 2024</div>
+                    <h2>Zero-Trust Architecture</h2>
+                    <p>Implemented comprehensive security layers including identity verification, data encryption, and continuous monitoring across all service boundaries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-engineering">
+        <div class="section-content">
+            <div class="eyebrow">COMPLIANCE</div>
+            <h1 class="section-heading">Regulatory Excellence</h1>
+            <div class="section-wrapper">
+                <div class="timeline">
+                    <div class="accent"></div>
+                    <div class="node"></div>
+                </div>
+                <div class="node-content">
+                    <div class="eyebrow">Q3 2024</div>
+                    <h2>Global Compliance Framework</h2>
+                    <p>Established a unified compliance framework supporting GDPR, SOC 2, ISO 27001, and industry-specific regulations across all operational regions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section-engineering');
+
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= -100 &&
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 100
+                );
+            }
+
+            function handleScroll() {
+                sections.forEach(section => {
+                    if (isInViewport(section) && !section.classList.contains('visible')) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+
+            handleScroll();
+            window.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', handleScroll);
+        });
+    </script>
+</body>
+</html>

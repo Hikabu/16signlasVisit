@@ -1,4 +1,5 @@
 import { EditorialHero } from "./components/landing/EditorialHero";
+import { TheShift } from "./components/landing/TheShift";
 import { EvidenceReportSection } from "./components/landing/Hero";
 import { ProblemValue } from "./components/landing/ProblemValue";
 import { HowItWorks } from "./components/landing/HowItWorks";
@@ -15,6 +16,7 @@ export default function Home() {
       </a>
       <main id="main" className="page-shell pb-[var(--space-16)] md:pb-0">
         <EditorialHero />
+        <TheShift />
         <EvidenceReportSection />
         <ProblemValue />
         <HowItWorks />

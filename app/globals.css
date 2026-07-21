@@ -22,6 +22,17 @@ body {
     sans-serif;
 }
 
+/* ── Noise grain overlay — kills banding on dark gradients, adds "printed" texture ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 999;
+}
+
 .page-shell {
   min-height: 100dvh;
 }
@@ -59,6 +70,60 @@ body {
 .hero-field {
   background: #08090b !important;
   /* Stillness is the loudest element. */
+}
+
+/* ── Section transitions — premium dark transitions (Linear/Vercel/Stripe style) ──
+   Every section boundary uses three layers:
+   A. Gradient stretch over 400px so color change is gradual
+   B. Light spill at boundary (radial glow from new section)
+   C. Hairline highlight that fades at edges (never full-width solid)
+   ── */
+
+/* Gradient stretch — color eases in over 400px */
+.section-transition::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: linear-gradient(180deg,
+      #08090b 0%,
+      #0B0D10 200px,
+      #0E1114 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Light spill — soft radial glow at top of new section */
+.section-transition::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 500px;
+  background: radial-gradient(60% 100% at 50% 0%,
+      rgba(148, 163, 184, 0.06),
+      transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Hairline highlight — fades at edges, never full-width solid */
+.section-edge-highlight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.07) 25%,
+      rgba(255, 255, 255, 0.07) 75%,
+      transparent);
+  z-index: 3;
 }
 
 /* ── Hero layout rhythm ──
@@ -186,7 +251,7 @@ body {
   fill: #FA8072;
   /* fill: #FFF5E4; */
   /* stroke: #078787; */
-  stroke: none !important; 
+  stroke: none !important;
   /* stroke-width: 1; */
   stroke-linejoin: round;
 }
@@ -214,9 +279,10 @@ body {
 .timeline-track {
   position: relative;
   height: 260px;
-  width: 2px;
+  width: 1px;
   overflow: hidden;
-  background: rgb(255 255 255 / 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  mask-image: linear-gradient(180deg, transparent, black 80px);
 }
 
 .timeline-track__fill {
@@ -226,7 +292,8 @@ body {
   height: 100%;
   transform: scaleY(0.2);
   transform-origin: top;
-  background: linear-gradient(var(--accent-soft), var(--accent));
+  background: linear-gradient(180deg, transparent, #5E6AD2 60%, #7A87E8);
+  box-shadow: 0 0 12px rgba(122, 135, 232, 0.45);
   animation: timelineFill linear both;
   animation-timeline: view();
   animation-range: entry 12% exit 72%;
@@ -269,18 +336,20 @@ body {
   right: 12%;
   top: 50%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(185 255 251 / 0.72), transparent);
+  background: linear-gradient(90deg, transparent, rgba(199, 205, 249, 0.5), transparent);
 }
 
 .timeline-illustration__node {
   position: absolute;
   left: var(--node-left);
   top: var(--node-top);
-  height: 12px;
-  width: 12px;
+  height: 7px;
+  width: 7px;
   border-radius: 999px;
-  background: var(--accent-soft);
-  box-shadow: 0 0 34px rgb(64 224 216 / 0.72);
+  background: #C7CDF9;
+  box-shadow:
+    0 0 0 5px rgba(122, 135, 232, 0.10),
+    0 0 20px 3px rgba(122, 135, 232, 0.5);
   opacity: var(--node-opacity);
 }
 
@@ -302,7 +371,7 @@ body {
   background: rgb(255 255 255 / 0.24);
 }
 
-.timeline-illustration__brief span + span {
+.timeline-illustration__brief span+span {
   margin-top: 10px;
   width: 74%;
 }
@@ -343,6 +412,7 @@ body {
 }
 
 @media (max-width: 767px) {
+
   .landing-section,
   .timeline-section {
     padding-block: 84px;
@@ -473,6 +543,7 @@ body {
 }
 
 @media (min-width: 768px) {
+
   .btn-lg,
   .btn-primary-lg {
     min-width: 260px;
@@ -552,7 +623,7 @@ body {
 }
 
 .blueprint-panel {
-  position  : relative;
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
@@ -576,9 +647,11 @@ body {
     stroke-dashoffset: 36;
     opacity: 0.16;
   }
+
   50% {
     opacity: 0.72;
   }
+
   100% {
     stroke-dashoffset: 0;
     opacity: 0.16;
@@ -589,6 +662,7 @@ body {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(100%);
   }
@@ -662,18 +736,23 @@ body {
 .scroll-reveal[data-visible="true"] .reveal-child:nth-child(1) {
   transition-delay: 0ms;
 }
+
 .scroll-reveal[data-visible="true"] .reveal-child:nth-child(2) {
   transition-delay: 90ms;
 }
+
 .scroll-reveal[data-visible="true"] .reveal-child:nth-child(3) {
   transition-delay: 180ms;
 }
+
 .scroll-reveal[data-visible="true"] .reveal-child:nth-child(4) {
   transition-delay: 270ms;
 }
+
 .scroll-reveal[data-visible="true"] .reveal-child:nth-child(5) {
   transition-delay: 360ms;
 }
+
 .scroll-reveal[data-visible="true"] .reveal-child:nth-child(6) {
   transition-delay: 450ms;
 }
@@ -684,6 +763,7 @@ body {
   from {
     transform: translateY(0) rotate(-0.2deg) scale(1);
   }
+
   to {
     transform: translateY(-8px) rotate(0.24deg) scale(1.01);
   }
@@ -696,11 +776,13 @@ body {
 }
 
 @keyframes stepReveal {
+
   45%,
   78% {
     opacity: 1;
     transform: translateY(0);
   }
+
   100% {
     opacity: 0.64;
     transform: translateY(-12px);
@@ -708,6 +790,7 @@ body {
 }
 
 @keyframes illustrationScale {
+
   40%,
   80% {
     transform: scale(1);
@@ -751,5 +834,348 @@ body {
   .timeline-illustration {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Section 2 — The Shift (Vertical Timeline, v2)
+   Two-column layout: sticky left text + scroll-driven vertical rail.
+   iPhone picker-style opacity/scale/blur per item.
+   Background: #08090a. Rail gradient: #003462 → #18E7CE.
+   ══════════════════════════════════════════════════════════════════ */
+
+.ts-section {
+  background: #08090a;
+  color: #f3f4f6;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+.ts-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: clamp(24px, 6vw, 80px);
+  padding-block: clamp(80px, 10vh, 140px);
+}
+
+/* ── Block: two-column ── */
+.ts-block {
+  display: grid;
+  grid-template-columns: 40% 10% 50%;
+  align-items: start;
+  min-height: 100vh;
+}
+
+/* ── Left sticky column ── */
+.ts-left {
+  position: sticky;
+  top: 30vh;
+  align-self: start;
+  padding-right: 40px;
+}
+
+.ts-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6B7280;
+  margin-bottom: 20px;
+}
+
+.ts-headline {
+  font-size: clamp(48px, 5.5vw, 80px);
+  font-weight: 450;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  color: #f3f4f6;
+  margin: 0 0 24px;
+}
+
+.ts-body {
+  font-size: 18px;
+  line-height: 1.55;
+  color: #a1a1aa;
+  max-width: 520px;
+  margin: 0;
+}
+
+/* Calm, line-by-line editorial reveal for the sticky section copy. */
+.ts-copy-line {
+  overflow: hidden;
+}
+
+.ts-copy-line__inner {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.ts-left--revealed .ts-copy-line__inner {
+  animation: ts-copy-line-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-left--revealed .ts-copy-line:nth-child(1) .ts-copy-line__inner {
+  animation-delay: 0ms;
+}
+
+.ts-left--revealed .ts-copy-line:nth-child(2) .ts-copy-line__inner {
+  animation-delay: 110ms;
+}
+
+.ts-left--revealed .ts-copy-line:nth-child(3) .ts-copy-line__inner {
+  animation-delay: 220ms;
+}
+
+@keyframes ts-copy-line-rise {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Right timeline column ── */
+.ts-right {
+  grid-column: 3;
+  position: relative;
+  padding-block: 15vh;
+}
+
+/* ── Vertical rail — premium hairline with fade-in from above ── */
+.ts-rail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  mask-image: linear-gradient(180deg, transparent, black 120px);
+}
+
+.ts-rail-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(180deg, transparent, #5E6AD2 60%, #7A87E8);
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(122, 135, 232, 0.45);
+  transition: height 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: height;
+}
+
+/* ── Items ── */
+.ts-items {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+}
+
+.ts-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding-block: 48px;
+  position: relative;
+}
+
+/* ── Dot on rail — small dot, ring, halo ── */
+.ts-dot {
+  position: absolute;
+  left: -3.5px;
+  /* (7px dot - 1px rail) / 2 = 3px offset */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  transition: background 400ms ease, box-shadow 400ms ease;
+}
+
+.ts-dot--active {
+  background: #C7CDF9;
+  box-shadow:
+    0 0 0 5px rgba(122, 135, 232, 0.10),
+    0 0 20px 3px rgba(122, 135, 232, 0.5);
+}
+
+.ts-dot--revealed {
+  animation: ts-node-rise 800ms 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ts-node-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) translateY(-50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ts-copy-line__inner,
+  .ts-dot--revealed,
+  .ts-stage-content--reveal > *,
+  .ts-rail-fill {
+    transition: none;
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Content ── */
+.ts-content {
+  margin-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ts-stage-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* One-shot stage reveal. The section copy remains completely static. */
+.ts-stage-content--reveal .ts-stage-num,
+.ts-stage-content--reveal .ts-proof,
+.ts-stage-content--reveal .ts-meta {
+  animation: ts-stage-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-stage-content--reveal .ts-stage-num {
+  animation-delay: 200ms;
+}
+
+.ts-stage-content--reveal .ts-title {
+  animation-delay: 260ms;
+}
+
+.ts-stage-content--reveal .ts-proof {
+  animation-delay: 320ms;
+}
+
+.ts-stage-content--reveal .ts-meta {
+  animation-delay: 380ms;
+}
+
+.ts-stage-content--revealed > * {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes ts-stage-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stage number — desaturated indigo */
+.ts-stage-num {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #7A87E8;
+}
+
+/* Title */
+.ts-title--active {
+  color: #C7CDF9;
+}
+
+.ts-title {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transition: color 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ts-title--inactive {
+  color: #4a4a52;
+}
+
+/* Proof line */
+.ts-proof {
+  font-size: 18px;
+  color: #d4d4d8;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* Meta lines */
+.ts-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.ts-meta-line {
+  font-size: 14px;
+  color: #71717a;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Spacer between blocks */
+.ts-spacer {
+  height: 160px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .ts-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: auto;
+  }
+
+  .ts-left {
+    position: static;
+    padding-right: 0;
+    padding-bottom: 48px;
+  }
+
+  .ts-headline {
+    font-size: clamp(36px, 9vw, 56px);
+  }
+
+  .ts-right {
+    width: 100%;
+    padding-block: 8vh;
+  }
+
+  .ts-spacer {
+    height: 80px;
+  }
+
+  .ts-title--active {
+    font-size: 26px;
+  }
+
+  .ts-title--inactive {
+    font-size: 18px;
   }
 }

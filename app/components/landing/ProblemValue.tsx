@@ -37,7 +37,7 @@ const folders = [
 
 export function ProblemValue() {
   return (
-    <section id="problem-value" className="landing-section relative isolate overflow-clip">
+    <section id="problem-value" className="landing-section relative isolate overflow-clip section-transition section-edge-highlight">
       <LargeWord className="left-[4vw] top-0">FILTER</LargeWord>
       <div className="container">
         <Reveal className="max-w-3xl">
