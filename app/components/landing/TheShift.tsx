@@ -104,10 +104,10 @@ const HIRING_STAGES: Stage[] = [
 
 function getItemStyle(delta: number): React.CSSProperties {
   const abs = Math.abs(delta);
-  if (abs === 0) return { opacity: 1, transform: "scale(1)", filter: "none" };
-  if (abs === 1) return { opacity: 0.35, transform: "scale(0.97)", filter: "none" };
-  if (abs === 2) return { opacity: 0.12, transform: "scale(0.94)", filter: "blur(1px)" };
-  return { opacity: 0.05, transform: "scale(0.92)", filter: "blur(2px)" };
+  if (abs === 0) return { opacity: 1, filter: "none" };
+  if (abs === 1) return { opacity: 0.35, filter: "none" };
+  if (abs === 2) return { opacity: 0.12, filter: "blur(1px)" };
+  return { opacity: 0.05, filter: "blur(2px)" };
 }
 
 // ─── Vertical Timeline Block ──────────────────────────────────────────────────
@@ -126,7 +126,14 @@ function VerticalTimeline({
   id: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [revealedStages, setRevealedStages] = useState<Set<number>>(() => new Set());
+  const [animatingStages, setAnimatingStages] = useState<Set<number>>(() => new Set());
+  const [completedAnimations, setCompletedAnimations] = useState<Set<number>>(() => new Set());
+  const [leftCopyRevealed, setLeftCopyRevealed] = useState(false);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const revealedStagesRef = useRef(new Set<number>());
+  const animationStartedRef = useRef(new Set<number>());
+  const leftRef = useRef<HTMLDivElement>(null);
   const railFillRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const railRef = useRef<HTMLDivElement>(null);
@@ -140,6 +147,23 @@ function VerticalTimeline({
     const fillH = dotRect.top - railRect.top + dotRect.height / 2;
     railFillRef.current.style.height = `${Math.max(0, fillH)}px`;
   }, []);
+
+  useEffect(() => {
+    const left = leftRef.current;
+    if (!left || leftCopyRevealed) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setLeftCopyRevealed(true);
+        observer.disconnect();
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -12% 0px" },
+    );
+
+    observer.observe(left);
+    return () => observer.disconnect();
+  }, [leftCopyRevealed]);
 
   useEffect(() => {
     const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -179,6 +203,62 @@ function VerticalTimeline({
   }, [updateRailFill]);
 
   useEffect(() => {
+    const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const newlyRevealed = entries.reduce<number[]>((indices, entry) => {
+          if (!entry.isIntersecting) return indices;
+          const idx = items.indexOf(entry.target as HTMLDivElement);
+          if (idx !== -1 && !revealedStagesRef.current.has(idx)) indices.push(idx);
+          return indices;
+        }, []);
+
+        if (!newlyRevealed.length) return;
+        setRevealedStages((current) => {
+          const next = new Set(current);
+          newlyRevealed.forEach((idx) => {
+            next.add(idx);
+            revealedStagesRef.current.add(idx);
+          });
+          return next;
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!revealedStages.has(activeIndex) || animationStartedRef.current.has(activeIndex)) return;
+    animationStartedRef.current.add(activeIndex);
+
+    setAnimatingStages((current) => {
+      const next = new Set(current);
+      next.add(activeIndex);
+      return next;
+    });
+
+    const timeout = window.setTimeout(() => {
+      setAnimatingStages((current) => {
+        const next = new Set(current);
+        next.delete(activeIndex);
+        return next;
+      });
+      setCompletedAnimations((current) => {
+        const next = new Set(current);
+        next.add(activeIndex);
+        return next;
+      });
+    }, 1100);
+
+    return () => window.clearTimeout(timeout);
+  }, [activeIndex, revealedStages]);
+
+  useEffect(() => {
     const recalc = () => updateRailFill(activeIndex);
     window.addEventListener("scroll", recalc, { passive: true });
     window.addEventListener("resize", recalc, { passive: true });
@@ -191,10 +271,16 @@ function VerticalTimeline({
   return (
     <div className="ts-block" id={id}>
       {/* Left sticky column */}
-      <div className="ts-left">
-        <div className="ts-label">{label}</div>
-        <h2 className="ts-headline">{headline}</h2>
-        <p className="ts-body">{body}</p>
+      <div className={`ts-left${leftCopyRevealed ? " ts-left--revealed" : ""}`} ref={leftRef}>
+        <div className="ts-copy-line">
+          <div className="ts-copy-line__inner ts-label">{label}</div>
+        </div>
+        <div className="ts-copy-line">
+          <h2 className="ts-copy-line__inner ts-headline">{headline}</h2>
+        </div>
+        <div className="ts-copy-line">
+          <p className="ts-copy-line__inner ts-body">{body}</p>
+        </div>
       </div>
 
       {/* Right timeline column */}
@@ -210,6 +296,9 @@ function VerticalTimeline({
             const delta = i - activeIndex;
             const style = getItemStyle(delta);
             const isActive = delta === 0;
+            const shouldAnimateContent = isActive && animatingStages.has(i);
+            const hasCompletedReveal = isActive && completedAnimations.has(i);
+            const isRevealed = revealedStages.has(i);
 
             return (
               <div
@@ -221,25 +310,25 @@ function VerticalTimeline({
               >
                 {/* Dot */}
                 <div
-                  className="ts-dot"
+                  className={`ts-dot${isActive ? " ts-dot--active" : ""}${isRevealed ? " ts-dot--revealed" : ""}`}
                   ref={(el) => { dotRefs.current[i] = el; }}
                 />
 
                 {/* Content */}
                 <div className="ts-content">
-                  {isActive ? (
-                    <>
+                  <div className={`ts-title ${isActive ? "ts-title--active" : "ts-title--inactive"}`}>
+                    {stage.title}
+                  </div>
+                  {isActive && (
+                    <div className={`ts-stage-content${shouldAnimateContent ? " ts-stage-content--reveal" : ""}${hasCompletedReveal ? " ts-stage-content--revealed" : ""}`}>
                       <div className="ts-stage-num">{stage.number}</div>
-                      <div className="ts-title ts-title--active">{stage.title}</div>
                       <div className="ts-proof">{stage.proof}</div>
                       <div className="ts-meta">
                         {stage.meta.map((m, mi) => (
                           <span key={mi} className="ts-meta-line">{m}</span>
                         ))}
                       </div>
-                    </>
-                  ) : (
-                    <div className="ts-title ts-title--inactive">{stage.title}</div>
+                    </div>
                   )}
                 </div>
               </div>
