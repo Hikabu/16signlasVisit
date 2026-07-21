@@ -22,6 +22,17 @@ body {
     sans-serif;
 }
 
+/* ── Noise grain overlay — kills banding on dark gradients, adds "printed" texture ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 999;
+}
+
 .page-shell {
   min-height: 100dvh;
 }
@@ -59,6 +70,66 @@ body {
 .hero-field {
   background: #08090b !important;
   /* Stillness is the loudest element. */
+}
+
+/* ── Section transitions — premium dark transitions (Linear/Vercel/Stripe style) ──
+   Every section boundary uses three layers:
+   A. Gradient stretch over 400px so color change is gradual
+   B. Light spill at boundary (radial glow from new section)
+   C. Hairline highlight that fades at edges (never full-width solid)
+   ── */
+
+/* Gradient stretch — color eases in over 400px */
+.section-transition::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: linear-gradient(
+    180deg,
+    #08090b 0%,
+    #0B0D10 200px,
+    #0E1114 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Light spill — soft radial glow at top of new section */
+.section-transition::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 500px;
+  background: radial-gradient(
+    60% 100% at 50% 0%,
+    rgba(148, 163, 184, 0.06),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Hairline highlight — fades at edges, never full-width solid */
+.section-edge-highlight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.07) 25%,
+    rgba(255, 255, 255, 0.07) 75%,
+    transparent
+  );
+  z-index: 3;
 }
 
 /* ── Hero layout rhythm ──
@@ -214,9 +285,10 @@ body {
 .timeline-track {
   position: relative;
   height: 260px;
-  width: 2px;
+  width: 1px;
   overflow: hidden;
-  background: rgb(255 255 255 / 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  mask-image: linear-gradient(180deg, transparent, black 80px);
 }
 
 .timeline-track__fill {
@@ -226,7 +298,8 @@ body {
   height: 100%;
   transform: scaleY(0.2);
   transform-origin: top;
-  background: linear-gradient(var(--accent-soft), var(--accent));
+  background: linear-gradient(180deg, transparent, #5E6AD2 60%, #7A87E8);
+  box-shadow: 0 0 12px rgba(122, 135, 232, 0.45);
   animation: timelineFill linear both;
   animation-timeline: view();
   animation-range: entry 12% exit 72%;
@@ -269,18 +342,20 @@ body {
   right: 12%;
   top: 50%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(185 255 251 / 0.72), transparent);
+  background: linear-gradient(90deg, transparent, rgba(199, 205, 249, 0.5), transparent);
 }
 
 .timeline-illustration__node {
   position: absolute;
   left: var(--node-left);
   top: var(--node-top);
-  height: 12px;
-  width: 12px;
+  height: 7px;
+  width: 7px;
   border-radius: 999px;
-  background: var(--accent-soft);
-  box-shadow: 0 0 34px rgb(64 224 216 / 0.72);
+  background: #C7CDF9;
+  box-shadow:
+    0 0 0 5px rgba(122, 135, 232, 0.10),
+    0 0 20px 3px rgba(122, 135, 232, 0.5);
   opacity: var(--node-opacity);
 }
 
@@ -792,10 +867,10 @@ body {
 }
 
 .ts-label {
-  font-size: 12px;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #5e646b;
+  color: #6B7280;
   margin-bottom: 20px;
 }
 
@@ -823,15 +898,16 @@ body {
   padding-block: 15vh;
 }
 
-/* ── Vertical rail ── */
+/* ── Vertical rail — premium hairline with fade-in from above ── */
 .ts-rail {
   position: absolute;
   left: 0;
   top: 0;
-  width: 1.5px;
+  width: 1px;
   height: 100%;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 1px;
+  mask-image: linear-gradient(180deg, transparent, black 120px);
 }
 
 .ts-rail-fill {
@@ -840,9 +916,10 @@ body {
   left: 0;
   width: 100%;
   height: 0;
-  background: linear-gradient(180deg, #003462 0%, #0a6b6a 40%, #18E7CE 100%);
+  background: linear-gradient(180deg, transparent, #5E6AD2 60%, #7A87E8);
   border-radius: 1px;
-  transition: height 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 12px rgba(122, 135, 232, 0.45);
+  transition: height 200ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: height;
 }
 
@@ -866,14 +943,14 @@ body {
   transform-origin: left center;
 }
 
-/* ── Dot on rail ── */
+/* ── Dot on rail — small dot, ring, halo ── */
 .ts-dot {
   position: absolute;
-  left: -3.25px; /* (8px dot - 1.5px rail) / 2 = 3.25px offset */
+  left: -3.5px; /* (7px dot - 1px rail) / 2 = 3px offset */
   top: 50%;
   transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
   flex-shrink: 0;
@@ -881,8 +958,10 @@ body {
 }
 
 .ts-dot--active {
-  background: #18E7CE;
-  box-shadow: 0 0 12px rgba(24, 231, 206, 0.4);
+  background: #C7CDF9;
+  box-shadow:
+    0 0 0 5px rgba(122, 135, 232, 0.10),
+    0 0 20px 3px rgba(122, 135, 232, 0.5);
   animation: ts-dot-pulse 2s ease-in-out infinite;
 }
 
@@ -909,16 +988,13 @@ body {
   gap: 6px;
 }
 
-/* Stage number */
+/* Stage number — desaturated indigo */
 .ts-stage-num {
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
-  background: linear-gradient(90deg, #003462, #18E7CE);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #7A87E8;
 }
 
 /* Title */
