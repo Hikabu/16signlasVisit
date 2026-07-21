@@ -22,80 +22,75 @@ const ENGINEERING_STAGES: Stage[] = [
   },
   {
     number: "02",
-    title: "Version Control",
+    title: "Version History",
     proof: "42 commits across 11 days",
-    meta: ["branch created", "3 authors"],
+    meta: ["3 contributors", "changes across 8 files"],
   },
   {
     number: "03",
-    title: "Pull Request",
+    title: "Pull Requests",
     proof: "PR #284 opened",
-    meta: ["+1,847 −392 lines", "3 linked issues", "description: detailed"],
+    meta: ["+1,847 −392 lines", "3 linked issues", "detailed rationale"],
   },
   {
     number: "04",
-    title: "Reviews",
+    title: "Code Reviews",
     proof: "14 inline comments",
     meta: ["2 reviewers", "12 resolved", "approved"],
   },
   {
     number: "05",
-    title: "CI / CD",
+    title: "Delivery",
     proof: "847 tests passed",
-    meta: ["pipeline triggered", "coverage 91%", "lint clean", "build 2m 14s"],
+    meta: ["coverage 91%", "lint clean", "build 2m 14s"],
   },
   {
     number: "06",
-    title: "Deployment",
-    proof: "Deployed to production",
-    meta: [
-      "merged 2024-03-14 09:12 UTC",
-      "canary 5% traffic",
-      "p99 latency −18ms",
-      "rollback plan confirmed",
-    ],
+    title: "Production",
+    proof: "Deployed successfully",
+    meta: ["canary release", "p99 latency −18ms", "rollback plan documented"],
   },
 ];
 
-const HIRING_STAGES: Stage[] = [
+const SIGNAL_STAGES: Stage[] = [
   {
     number: "01",
-    title: "Résumé",
-    proof: "Application received",
-    meta: ["parsed skills", "matched to role requirements", "flagged experience gaps"],
+    title: "Evidence Collected",
+    proof: "Work history connected",
+    meta: ["commits", "pull requests", "reviews", "delivery activity"],
   },
   {
     number: "02",
-    title: "Phone Screen",
-    proof: "30-minute technical screen",
-    meta: ["communication score", "technical depth rating", "culture alignment note"],
+    title: "Context Reconstructed",
+    proof: "Changes examined over time",
+    meta: ["project complexity", "contribution scope", "collaborator context"],
   },
   {
     number: "03",
-    title: "Whiteboard",
-    proof: "System design exercise",
-    meta: ["problem breakdown score", "architecture quality", "time management"],
+    title: "Capability Signals",
+    proof: "Observable patterns identified",
+    meta: ["ownership", "technical depth", "consistency", "collaboration"],
   },
   {
     number: "04",
-    title: "Technical Review",
-    proof: "Code review submission",
-    meta: ["PR quality", "test coverage", "documentation clarity"],
+    title: "Claims Verified",
+    proof: "Every conclusion checked",
+    meta: ["linked evidence", "timestamped activity", "source traceability"],
   },
   {
     number: "05",
-    title: "Interview Panel",
-    proof: "4 interviewers, structured rubric",
-    meta: ["individual scores", "consensus rating", "debrief notes recorded"],
+    title: "Risks Identified",
+    proof: "Evidence gaps made visible",
+    meta: ["limited ownership", "unclear impact", "insufficient evidence"],
   },
   {
     number: "06",
-    title: "Decision",
-    proof: "Offer extended",
+    title: "Capability Report",
+    proof: "Decision-ready evidence",
     meta: [
-      "total evaluation time: 12 days",
-      "6 documented touchpoints",
-      "decision audit trail complete",
+      "verified strengths",
+      "role-relevant risks",
+      "evidence-linked interview questions",
     ],
   },
 ];
@@ -360,12 +355,12 @@ export function TheShift() {
 
         <div className="ts-spacer" aria-hidden="true" />
 
-        <VerticalTimeline
-          id="ts-hiring"
-          stages={HIRING_STAGES}
-          label="Hiring"
-          headline="Hiring finally had evidence."
-          body="Every evaluation step recorded — not reconstructed after the fact."
+       <VerticalTimeline
+          id="ts-signals"
+          stages={SIGNAL_STAGES}
+          label="16Signals Analysis"
+          headline="16Signals turns record into capability evidence."
+          body="The platform examines real engineering activity and produces a report in which every conclusion links back to observable work."
         />
       </div>
     </section>
