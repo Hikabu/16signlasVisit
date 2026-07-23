@@ -997,7 +997,7 @@
   }
 }
 
-/* Linear-style desktop workspace treatment for section two. */
+/* 16signals-style desktop workspace treatment for section two. */
 .section { background: #08090b; padding-top: clamp(96px, 12vw, 150px); }
 .sectionGlow { display: none; }
 .inner { width: min(100%, 1430px); }
@@ -1015,7 +1015,7 @@
 .productName { color: #c7ccd2; }
 .chromeLocation { color: #737983; }
 .chromeStatus { gap: 14px; }
-.issueCount, .chromeIcon { color: #737983; font-size: 12px; }
+.issueCount, .chromeIcon { color: #737983; font-size: 12px; } 
 .sidebar { position: relative; padding: 16px 12px 16px; background: #0e0f11; border-right-color: #24262a; }
 .workspaceBrand { display: flex; align-items: center; gap: 8px; padding: 4px 8px 20px; color: #c8cdd4; font-size: 13px; }
 .workspaceBrand strong { font-weight: 600; }
@@ -1122,12 +1122,13 @@
   .detailPanel { display: none; }
 }
 
+
 @media (max-width: 760px) {
   .reportHeader h3 { gap: 8px; }
   .assistantCard { left: 12px; width: calc(100vw - 48px); min-height: 500px; }
 }
 
-/* Compact, docked Linear-style evidence assistant. */
+/* Compact, docked 16signlas-style evidence assistant. */
 .assistantCard { top: auto; right: 14px; bottom: 14px; left: 14px; width: auto; min-height: 0; border-radius: 10px; box-shadow: 0 16px 36px rgba(0, 0, 0, .28); }
 .assistantHeader { min-height: 44px; padding-inline: 12px; gap: 7px; border-bottom-color: #282b30; }
 .assistantHeader small { font-size: 9px; }
@@ -1355,4 +1356,156 @@
   .reportMain {
     padding: 28px 18px 24px;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Final floating-window geometry: independent of the report grid. */
+.report { position: relative; }
+.reportWorkspace { grid-template-columns: 210px minmax(0, 1fr); }
+.floatingAssistant {
+  position: absolute;
+  z-index: 20;
+  right: 18px;
+  bottom: 18px;
+  width: 452px;
+  min-height: 472px;
+  overflow: hidden;
+  border: 1px solid #292d32;
+  border-radius: 12px;
+  background: #151719;
+  box-shadow: 0 22px 52px rgba(0, 0, 0, .42), 0 0 0 1px rgba(255,255,255,.02);
+  opacity: 0;
+  transform: translateY(26px);
+}
+.reportRevealed .floatingAssistant { animation: assistantEnter 520ms 80ms var(--ease-standard) forwards; }
+.floatingAssistant .assistantHeader { min-height: 54px; padding: 0 16px; }
+.floatingAssistant .assistantContent { padding: 15px 16px 82px; }
+.floatingAssistant .evidenceFeed { gap: 8px; }
+.floatingAssistant .evidenceCard { padding: 11px 12px; border-radius: 7px; }
+.floatingAssistant .promptBox { right: 16px; bottom: 16px; left: 16px; min-height: 66px; }
+@keyframes assistantEnter { to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 760px) {
+  .floatingAssistant {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatingAssistant,
+  .reportRevealed .floatingAssistant { opacity: 1; transform: none; animation: none; }
+}
+
+
+/* Reference proportions: the issue detail rail remains visible behind the
+   compact analysis window, as it does in the desktop 16signlas view. */
+.brandAsset,
+.assistantBrandAsset {
+  filter: invert(67%) sepia(82%) saturate(1050%) hue-rotate(132deg) brightness(86%) contrast(104%);
+}
+
+.reportWorkspace {
+  grid-template-columns: 216px minmax(0, 1fr) 274px;
+  min-height: 742px;
+}
+
+.detailPanel {
+  display: block;
+  min-width: 0;
+  border-left: 1px solid #25282d;
+  background: #111214;
+}
+
+.detailTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 0 18px;
+  border-bottom: 1px solid #25282d;
+  color: #737b85;
+  font-size: 12px;
+}
+
+.detailTopline span:first-child {
+  color: #8d949e;
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+}
+
+.detailTopline span:last-child { color: #5f6670; font-size: 17px; }
+
+.detailBody {
+  display: grid;
+  gap: 22px;
+  padding: 48px 18px 24px;
+  color: #aeb5bd;
+  font-size: 13px;
+}
+
+.detailItem { display: flex; align-items: center; gap: 11px; }
+.detailItemMuted { padding-left: 32px; color: #aeb5bd; }
+.detailItemMuted img { width: 18px; height: 18px; }
+.detailDivider { height: 1px; margin: 4px 0 0; background: #25282d; }
+.detailValue { margin-left: auto; color: #78808a; font-family: var(--font-geist-mono); font-size: 10px; }
+.statusDot { color: #d2af00; font-size: 18px; line-height: 1; }
+.priorityBars { color: #737b85; font-size: 11px; letter-spacing: -2px; }
+.avatar { display: inline-grid; width: 21px; height: 21px; place-items: center; flex: 0 0 auto; border-radius: 50%; background: #a89c85; color: #29261f; font-size: 10px; }
+.muted { color: #6f7781; }
+
+.floatingAssistant {
+  right: 18px;
+  bottom: 18px;
+  width: min(452px, calc(100% - 36px));
+  min-height: 500px;
+}
+
+.floatingAssistant .evidenceFeed { gap: 0; }
+.floatingAssistant .evidenceCard {
+  display: block;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.floatingAssistant .evidenceCard strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c4cad2;
+  font-size: 13px;
+  font-weight: 450;
+  line-height: 1.45;
+}
+
+.floatingAssistant .evidenceCard small { display: block; margin-top: 13px; color: #868e98; font-size: 12px; }
+.floatingAssistant .changeCard { margin-top: 8px; padding: 14px; border-color: #2c3036; border-radius: 7px; background: #1b1d20; }
+.floatingAssistant .changeCard strong { color: #c8ced6; font-size: 13px; }
+.floatingAssistant .changeCard span { color: #b2bac4; font-size: 12px; }
+.floatingAssistant .changeCard code { color: #747c86; font-size: 10px; }
+
+@media (max-width: 1100px) {
+  .reportWorkspace { grid-template-columns: 190px minmax(0, 1fr); }
+  .detailPanel { display: none; }
 }
