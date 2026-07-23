@@ -270,22 +270,11 @@ export function PreparedInterview() {
                 <p className={styles.navSection}>Workspace</p>
                 <a href="#prepared-interview"><img src="/icons/interviews.svg" alt="" /><span>Initiatives</span></a>
                 <a href="#prepared-interview"><img src="/icons/project.svg" alt="" /><span>Projects</span></a>
-                <a className={styles.activeNav} href="#prepared-interview"><span className={styles.activeDot}>◷</span><span>Faster app launch</span></a>
-                <a href="#prepared-interview"><span className={styles.tealDot}>⌁</span><span>UI Refresh</span></a>
+                <a className={styles.activeNav} href="#prepared-interview"><img src="/icons/progress.svg" alt="" /><span>Faster app launch</span></a>
+                <a href="#prepared-interview"><img src="/icons/project.svg" alt="" /><span>UI Refresh</span></a>
+                {/* <a className={styles.activeNav} href="#prepared-interview"><span className={styles.activeDot}>◷</span><span>Faster app launch</span></a>
+                <a href="#prepared-interview"><span className={styles.tealDot}>⌁</span><span>UI Refresh</span></a> */}
               </nav>
-
-              <div className={styles.sourceScope}>
-                <p className={styles.sidebarLabel}>Favorites</p>
-                <div>
-                  <span>◷　Faster app launch</span>
-                </div>
-                <div>
-                  <span>⌁　Agent tasks</span>
-                </div>
-                <div>
-                  <span>⌁　Agents Insights</span>
-                </div>
-              </div>
             </aside>
 
             <div className={styles.reportMain}>
@@ -348,7 +337,7 @@ export function PreparedInterview() {
                 </div>
               </div>
 
-              <div className={styles.interviewPlan}>
+            <div className={styles.interviewPlan}>
                 <div>
                   <span className={styles.planLabel}>45 min interview</span>
                   <span className={styles.planState}>Agenda prepared</span>
@@ -366,46 +355,47 @@ export function PreparedInterview() {
                 </div>
               </div>
             </div>
-
-            <aside className={styles.detailPanel} aria-label="Evidence collection progress">
+            <aside className={styles.detailPanel} aria-label="Issue details">
               <div className={styles.detailTopline}>
-                <span>Evidence processing</span>
-                <span>Live</span>
+                <span>ENG-2703</span>
+                <span>⋯</span>
               </div>
-              <div className={styles.assistantCard}>
-                <div className={styles.assistantHeader}><img className={styles.assistantBrandAsset} src="/icons/a16zero.svg" alt="" /><span>16Signals</span><small>Analysis</small><b>×</b></div>
-                <div className={styles.assistantContent}>
-                  <div className={styles.evidenceFeed}>
-                    <article className={styles.evidenceCard}>
-                      <strong>Evidence sources indexed</strong>
-                      <div className={styles.evidenceChips}><code className={styles.commitChip}>112 commits</code><code>28 PRs</code><code>64 reviews</code><code>4 releases</code></div>
-                      <small>Broad history makes the assessment harder to stage.</small>
-                    </article>
-                    <article className={styles.evidenceCard}>
-                      <strong>Capability signals extracted</strong>
-                      <div className={styles.evidenceChips}><code>ownership</code><code>judgment</code><code>delivery</code></div>
-                      <small>Repeated behavior is visible across the work record.</small>
-                    </article>
-                    <article className={styles.evidenceCard}>
-                      <strong>Confidence increased to 82%</strong>
-                      <div className={styles.evidenceChips}><code>46 linked artifacts</code><code>3 patterns</code></div>
-                      <small>Each conclusion is supported by more than one source.</small>
-                    </article>
-                    <article className={styles.evidenceCard}>
-                      <strong>Interview priorities generated</strong>
-                      <div className={styles.evidenceChips}><code>mentorship</code><code>trade-offs</code><code>production impact</code></div>
-                      <small>Use the time to test judgment, not basic competence.</small>
-                    </article>
-                    <article className={`${styles.evidenceCard} ${styles.evidenceCardFinal}`}>
-                      <strong>Interview brief ready</strong>
-                      <div className={styles.evidenceChips}><code>3 focus areas</code><code>evidence trace</code></div>
-                      <small>The report is ready to guide a sharper conversation.</small>
-                    </article>
-                  </div>
-                </div>
+              <div className={styles.detailBody}>
+                <div className={styles.detailItem}><span className={styles.statusDot}>◷</span><span>In Progress</span></div>
+                <div className={styles.detailItem}><span className={styles.priorityBars}>▂▅▇</span><span>High</span></div>
+                <div className={styles.detailItem}><span className={styles.avatar}>J</span><span>jori</span></div>
+                <div className={`${styles.detailItem} ${styles.detailItemMuted}`}><img src="/icons/a16zero.svg" alt="" /><span>16Signals</span></div>
+                <div className={styles.detailDivider} />
+                <div className={styles.detailItem}><span className={styles.muted}>Evidence</span><span className={styles.detailValue}>46 linked</span></div>
+                <div className={styles.detailItem}><span className={styles.muted}>Confidence</span><span className={styles.detailValue}>82%</span></div>
               </div>
             </aside>
           </div>
+          <aside className={styles.floatingAssistant} aria-label="16Signals hiring analysis">
+            <div className={styles.assistantHeader}>
+              <img className={styles.assistantBrandAsset} src="/icons/a16zero.svg" alt="" />
+              <span>16Signals</span>
+              <small>Analysis</small>
+              <b>−　↗　×</b>
+            </div>
+            <div className={styles.assistantContent}>
+              <div className={styles.evidenceFeed}>
+                <article className={styles.evidenceCard}>
+                  <strong><span className={styles.avatar}>J</span> jori connected 16Signals to ENG-2703</strong>
+                </article>
+                <article className={styles.evidenceCard}>
+                  <strong>Examining the startup path…</strong>
+                  <small>Worked for 7s</small>
+                </article>
+                <article className={styles.evidenceCard}>
+                  <strong>Pushed and opened a draft PR. Changes:</strong>
+                  <small>• useRideHistory.ts: build a waitingStatusById map<br />• RideHistoryPage.tsx: dimmed rows reset</small>
+                </article>
+                <div className={styles.changeCard}><strong>Changed 2 files <em>+4 -4</em></strong><span>⑂　Draft Update homepage H1</span><code>master ← ride/drv-899-update-homepage-h1-65a6</code></div>
+              </div>
+            </div>
+            <div className={styles.promptBox}>Tell 16Signals what to do next… <span>◌　⌕　↑</span></div>
+          </aside>
         </div>
 
         <div className={styles.transition}>
