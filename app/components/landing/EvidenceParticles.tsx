@@ -13,7 +13,7 @@ export function EvidenceParticles() {
     if (!canvas || !context) return;
   
     let animId: number;
-    let startTime = performance.now();
+    const startTime = performance.now();
 
     const draw = (now: number) => {
       const elapsed = (now - startTime) / 1000; // seconds
