@@ -7,6 +7,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 type Stage = {
   number: string;
   title: string;
+  hiringQuestion: string;
+  reveals: string;
   proof: string;
   meta: string[];
 };
@@ -17,36 +19,48 @@ const ENGINEERING_STAGES: Stage[] = [
   {
     number: "01",
     title: "Code",
+    hiringQuestion: "What kind of change is being made, and how is it bounded?",
+    reveals: "The change record makes the implementation focus and the selected surface area visible. It preserves the relationship between the stated change and the amount of code touched.",
     proof: "feat: auth refactor",
     meta: ["commit a3f9b", "1,847 lines changed"],
   },
   {
     number: "02",
     title: "Version History",
+    hiringQuestion: "How does the work develop across time and contributors?",
+    reveals: "The sequence of commits shows how an implementation took shape rather than only its final state. It provides context about timing, participation, and the files that changed along the way.",
     proof: "42 commits across 11 days",
     meta: ["3 contributors", "changes across 8 files"],
   },
   {
     number: "03",
     title: "Pull Requests",
+    hiringQuestion: "How is a proposed change explained before it is merged?",
+    reveals: "The pull request records the problem being addressed, the reasoning offered, and the scope presented for review. Linked issues and the change set keep that explanation connected to the work itself.",
     proof: "PR #284 opened",
     meta: ["+1,847 −392 lines", "3 linked issues", "detailed rationale"],
   },
   {
     number: "04",
     title: "Code Reviews",
+    hiringQuestion: "How does the work change in response to review?",
+    reveals: "The review thread makes questions, responses, and subsequent resolutions observable. It documents how multiple people examined the same implementation before approval.",
     proof: "14 inline comments",
     meta: ["2 reviewers", "12 resolved", "approved"],
   },
   {
     number: "05",
     title: "Delivery",
+    hiringQuestion: "What checks stand between a code change and release?",
+    reveals: "The delivery record shows which automated checks ran and what they covered at the point of release. It preserves the relationship between the change, the test result, and the build process.",
     proof: "847 tests passed",
     meta: ["coverage 91%", "lint clean", "build 2m 14s"],
   },
   {
     number: "06",
     title: "Production",
+    hiringQuestion: "What happens after the change reaches a live system?",
+    reveals: "The deployment record shows how the change was introduced and what operational signals followed. It also documents the recovery path that was prepared alongside the release.",
     proof: "Deployed successfully",
     meta: ["canary release", "p99 latency −18ms", "rollback plan documented"],
   },
@@ -56,36 +70,48 @@ const SIGNAL_STAGES: Stage[] = [
   {
     number: "01",
     title: "Evidence Collected",
+    hiringQuestion: "What source material is available for examination?",
+    reveals: "The connected work history identifies which engineering records are in scope. It makes the source set visible before any interpretation is made.",
     proof: "Work history connected",
     meta: ["commits", "pull requests", "reviews", "delivery activity"],
   },
   {
     number: "02",
     title: "Context Reconstructed",
+    hiringQuestion: "What surrounding context is visible around each change?",
+    reveals: "The record is read across projects, time, and collaborators rather than as isolated events. This preserves the conditions around a contribution, including its complexity and scope.",
     proof: "Changes examined over time",
     meta: ["project complexity", "contribution scope", "collaborator context"],
   },
   {
     number: "03",
     title: "Capability Signals",
+    hiringQuestion: "Which recurring engineering behaviors can be observed in the record?",
+    reveals: "Repeated patterns across artifacts make particular forms of work visible over time. The record can show how ownership, technical depth, consistency, and collaboration appear in context.",
     proof: "Observable patterns identified",
     meta: ["ownership", "technical depth", "consistency", "collaboration"],
   },
   {
     number: "04",
     title: "Claims Verified",
+    hiringQuestion: "Can each report statement be traced to source artifacts?",
+    reveals: "Each conclusion is checked against the activity and records that support it. The links preserve a path from an interpreted signal back to the underlying work.",
     proof: "Every conclusion checked",
     meta: ["linked evidence", "timestamped activity", "source traceability"],
   },
   {
     number: "05",
     title: "Risks Identified",
+    hiringQuestion: "Where does the record leave questions unanswered?",
+    reveals: "Gaps in the available work are recorded as limits of what can be observed. The report distinguishes an absent record from a conclusion about the person who created it.",
     proof: "Evidence gaps made visible",
     meta: ["limited ownership", "unclear impact", "insufficient evidence"],
   },
   {
     number: "06",
     title: "Capability Report",
+    hiringQuestion: "What can a hiring team take into an interview from the record?",
+    reveals: "The report organizes observed patterns, open questions, and the evidence connected to each one. It gives the interview a documented starting point without replacing the conversation.",
     proof: "Decision-ready evidence",
     meta: [
       "verified strengths",
@@ -317,11 +343,22 @@ function VerticalTimeline({
                   {isActive && (
                     <div className={`ts-stage-content${shouldAnimateContent ? " ts-stage-content--reveal" : ""}${hasCompletedReveal ? " ts-stage-content--revealed" : ""}`}>
                       <div className="ts-stage-num">{stage.number}</div>
-                      <div className="ts-proof">{stage.proof}</div>
-                      <div className="ts-meta">
-                        {stage.meta.map((m, mi) => (
-                          <span key={mi} className="ts-meta-line">{m}</span>
-                        ))}
+                      <div className="ts-evidence-block">
+                        <div className="ts-evidence-label">Hiring Question</div>
+                        <p className="ts-question">{stage.hiringQuestion}</p>
+                      </div>
+                      <div className="ts-evidence-block">
+                        <div className="ts-evidence-label">What This Reveals</div>
+                        <p className="ts-reveals">{stage.reveals}</p>
+                      </div>
+                      <div className="ts-evidence-block">
+                        <div className="ts-evidence-label">Observed Evidence</div>
+                        <div className="ts-proof">{stage.proof}</div>
+                        <div className="ts-meta">
+                          {stage.meta.map((m, mi) => (
+                            <span key={mi} className="ts-meta-line">{m}</span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   )}
