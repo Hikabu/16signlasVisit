@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useScrollReveal } from "@/app/hooks/useScrollReveal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -161,11 +162,10 @@ function VerticalTimeline({
   const [revealedStages, setRevealedStages] = useState<Set<number>>(() => new Set());
   const [animatingStages, setAnimatingStages] = useState<Set<number>>(() => new Set());
   const [completedAnimations, setCompletedAnimations] = useState<Set<number>>(() => new Set());
-  const [leftCopyRevealed, setLeftCopyRevealed] = useState(false);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const revealedStagesRef = useRef(new Set<number>());
   const animationStartedRef = useRef(new Set<number>());
-  const leftRef = useRef<HTMLDivElement>(null);
+  const { ref: leftRef, isRevealed: leftCopyRevealed } = useScrollReveal<HTMLDivElement>();
   const railFillRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const railRef = useRef<HTMLDivElement>(null);
@@ -179,23 +179,6 @@ function VerticalTimeline({
     const fillH = dotRect.top - railRect.top + dotRect.height / 2;
     railFillRef.current.style.height = `${Math.max(0, fillH)}px`;
   }, []);
-
-  useEffect(() => {
-    const left = leftRef.current;
-    if (!left || leftCopyRevealed) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setLeftCopyRevealed(true);
-        observer.disconnect();
-      },
-      { threshold: 0.2, rootMargin: "0px 0px -12% 0px" },
-    );
-
-    observer.observe(left);
-    return () => observer.disconnect();
-  }, [leftCopyRevealed]);
 
   useEffect(() => {
     const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -396,9 +379,9 @@ export function TheShift() {
         <VerticalTimeline
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
-          label="Engineering Work"
-          headline="Engineering became observable."
-          body="Every revision, review, decision and deployment now leaves a timestamped record."
+          label="THE PREPARED INTERVIEW"
+          headline="Walk in already knowing where to go deeper."
+          body="Before the conversation begins, see what the work already proves, what remains uncertain and which questions are worth the interview time."
         />
 
         <div className="ts-spacer" aria-hidden="true" />
