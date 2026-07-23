@@ -35,28 +35,30 @@ export function EditorialHero() {
           </a>
 
           <nav className={styles.nav} aria-label="Main navigation">
-            <a href="#evidence-report">Report</a>
-            <a href="#problem-value">Why now</a>
-            <a href="#how-it-works">Method</a>
-            <a href="#book-call">Principles</a>
-          </nav>
-
-          <div className={styles.headerActions}>
-            <a className={styles.headerCta} href="#book-call">
-              Run it on your work
-            </a>
-            <a className={styles.contactLink} href="#book-call">
-              Contact
-            </a>
-          </div>
+          <a href="#evidence-report">Report</a>
+          <a href="#what-work-reveals">What it reveals</a>
+          <a href="#how-it-works">Method</a>
+          <a href="#principles">Principles</a>
+        </nav>
+        <div className={styles.headerActions}>
+          <a className={styles.headerCta} href="#book-call">
+            Run it on your work
+          </a>
+          <a className={styles.contactLink} href="#book-call">
+            Contact
+          </a>
+        </div>
         </header>
 
         <div className={styles.heroGrid}>
           <div className={styles.headlineBlock}>
+            <p className={styles.eyebrow}>
+              Evidence-led engineering hiring
+            </p>
+
             <h1 id="hero-title" className={styles.headline}>
-              <span>Software engineering</span>
-              <span>changed. Hiring didn&apos;t.</span>
-              <span>Built on the work itself.</span>
+              <span>Know how they engineer.</span>
+              <span>Before the interview begins.</span>
             </h1>
           </div>
 
@@ -66,25 +68,26 @@ export function EditorialHero() {
 
           <div className={styles.narrative}>
             <p>
-              This is hiring built on the work itself. Every conclusion compiles upward
-              from evidence: facts from artifacts, inferences from facts. Each claim is
-              one click from the pull request that supports it—and when the evidence is
-              thin, the report says so.
+              16Signals turns real engineering work into a decision-ready capability
+              report - verified strengths, role-relevant risks and evidence-linked
+              questions for the interview ahead.
             </p>
 
             <div className={styles.ctas} role="group" aria-label="Primary actions">
               <a className={styles.primaryCta} href="#evidence-report-section">
-                Explore a real report
+                View a sample report
                 <span aria-hidden="true">↘</span>
               </a>
+
               <a className={styles.secondaryCta} href="#book-call">
-                Run it on your own work
+                Run it on your work
                 <span aria-hidden="true">↗</span>
               </a>
             </div>
 
-            <a className={styles.transitionLink} href="#evidence-report-section">
-              Explore the evidence report <span aria-hidden="true">↓</span>
+            <a className={styles.transitionLink} href="#prepared-interview">
+              See what you know before the interview
+              <span aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
