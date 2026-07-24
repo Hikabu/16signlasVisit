@@ -1,308 +1,235 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
+import { useScrollReveal } from "@/app/hooks/useScrollReveal";
 import styles from "./WorkReveals.module.css";
 
-type ReportState = {
-  number: string;
+type ResearchArticle = {
+  category: string;
   title: string;
-  primary: string;
-  evidence: readonly string[];
-  insight: string;
+  description: string;
+  image: string;
+  href: string;
 };
 
-const REPORT_STATES: readonly ReportState[] = [
+const RESEARCH_ARTICLES: readonly ResearchArticle[] = [
   {
-    number: "01",
-    title: "Judgment under change",
-    primary: "See how they think when the first answer fails.",
-    evidence: [
-      "PR #284",
-      "3 approaches considered",
-      "Implementation revised after review",
-    ],
-    insight:
-      "Reconsiders architecture without losing delivery momentum.",
+    category: "Evidence systems",
+    title: "Why proof beats opinion in technical hiring",
+    description:
+      "A practical account of how work evidence reduces interview noise without reducing engineering judgment to a score.",
+    image: "/articles/1.jpg",
+    href: "/research/why-proof-beats-opinion",
   },
   {
-    number: "02",
-    title: "Collaboration under challenge",
-    primary: "See what happens when their work is challenged.",
-    evidence: [
-      "14 review threads",
-      "4 collaborators",
-      "12 decisions resolved",
-    ],
-    insight:
-      "Turns critical feedback into clearer, safer implementation.",
+    category: "Signal quality",
+    title: "What makes a talent signal trustworthy?",
+    description:
+      "The conditions a hiring signal must meet before it can support a consequential decision about an engineer.",
+    image: "/articles/2.jpg",
+    href: "/research/trustworthy-talent-signals",
   },
   {
-    number: "03",
-    title: "Ownership through production",
-    primary: "See whether responsibility ends at merge.",
-    evidence: [
-      "Canary release",
-      "Rollback prepared",
-      "p99 latency −18 ms",
-    ],
-    insight:
-      "Owns changes through release and production verification.",
+    category: "Decision science",
+    title: "Explainability in hiring: fact, inference, recommendation",
+    description:
+      "A method for separating observed work from interpretation, so every conclusion remains open to review.",
+    image: "/articles/3.jpg",
+    href: "/research/explainability-in-hiring",
+  },
+  {
+    category: "Methodology note",
+    title: "Why “insufficient evidence” is a trust feature",
+    description:
+      "Responsible evaluation should expose what cannot be proven—not fill the gaps with confident prediction.",
+    image: "/articles/5.jpg",
+    href: "/research/insufficient-evidence",
   },
 ] as const;
 
-type TransitionPhase = "idle" | "out" | "in";
+function ArrowIcon({ direction }: { direction: "previous" | "next" }) {
+  const isPrevious = direction === "previous";
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={styles.arrowIcon}
+    >
+      <path
+        d={isPrevious ? "M19 12H5M11 6l-6 6 6 6" : "M5 12h14m-6-6 6 6-6 6"}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export function WorkReveals() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const transitionLockedRef = useRef(false);
-  const timeoutIdsRef = useRef<number[]>([]);
-  const [hasEntered, setHasEntered] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [transitionPhase, setTransitionPhase] =
-    useState<TransitionPhase>("idle");
+  const { ref: sectionRef, isRevealed } = useScrollReveal<HTMLElement>({
+    threshold: 0.14,
+    rootMargin: "0px 0px -8% 0px",
+  });
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [canScrollPrevious, setCanScrollPrevious] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncMotionPreference = () =>
-      setPrefersReducedMotion(mediaQuery.matches);
+  const updateControls = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-    syncMotionPreference();
-    mediaQuery.addEventListener("change", syncMotionPreference);
-
-    return () =>
-      mediaQuery.removeEventListener("change", syncMotionPreference);
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    setCanScrollPrevious(track.scrollLeft > 4);
+    setCanScrollNext(maxScroll > 4 && track.scrollLeft < maxScroll - 4);
   }, []);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    const track = trackRef.current;
+    if (!track) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-        if (entry.isIntersecting) setHasEntered(true);
-      },
-      {
-        threshold: 0.25,
-        rootMargin: "0px 0px -8% 0px",
-      },
+    updateControls();
+    track.addEventListener("scroll", updateControls, { passive: true });
+    window.addEventListener("resize", updateControls);
+
+    return () => {
+      track.removeEventListener("scroll", updateControls);
+      window.removeEventListener("resize", updateControls);
+    };
+  }, [updateControls]);
+
+  const moveCarousel = (direction: -1 | 1) => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const firstCard = track.querySelector<HTMLElement>(
+      "[data-research-card]",
     );
+    const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
+    const distance = firstCard
+      ? firstCard.getBoundingClientRect().width + gap
+      : track.clientWidth * 0.8;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(
-    () => () => {
-      timeoutIdsRef.current.forEach((timeoutId) =>
-        window.clearTimeout(timeoutId),
-      );
-    },
-    [],
-  );
-
-  const changeReport = useCallback(
-    (nextIndex: number) => {
-      if (
-        nextIndex === activeIndex ||
-        nextIndex < 0 ||
-        nextIndex >= REPORT_STATES.length ||
-        transitionLockedRef.current
-      ) {
-        return;
-      }
-
-      if (prefersReducedMotion) {
-        setActiveIndex(nextIndex);
-        setTransitionPhase("idle");
-        return;
-      }
-
-      transitionLockedRef.current = true;
-      setTransitionPhase("out");
-
-      const swapTimeout = window.setTimeout(() => {
-        setActiveIndex(nextIndex);
-        setTransitionPhase("in");
-
-        const settleTimeout = window.setTimeout(() => {
-          setTransitionPhase("idle");
-          transitionLockedRef.current = false;
-        }, 500);
-
-        timeoutIdsRef.current.push(settleTimeout);
-      }, 250);
-
-      timeoutIdsRef.current.push(swapTimeout);
-    },
-    [activeIndex, prefersReducedMotion],
-  );
-
-  useEffect(() => {
-    if (
-      !hasEntered ||
-      !isInView ||
-      transitionPhase !== "idle" ||
-      activeIndex >= REPORT_STATES.length - 1
-    ) {
-      return;
-    }
-
-    const advanceTimeout = window.setTimeout(
-      () => changeReport(activeIndex + 1),
-      5000,
-    );
-
-    return () => window.clearTimeout(advanceTimeout);
-  }, [
-    activeIndex,
-    changeReport,
-    hasEntered,
-    isInView,
-    transitionPhase,
-  ]);
-
-  const activeReport = REPORT_STATES[activeIndex];
+    track.scrollBy({
+      left: distance * direction,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  };
 
   return (
     <section
       ref={sectionRef}
-      id="work-reveals"
+      id="research"
       className={`${styles.section} ${
-        hasEntered ? styles.sectionEntered : ""
+        isRevealed ? styles.sectionRevealed : ""
       }`}
-      aria-labelledby="work-reveals-title"
+      aria-labelledby="research-title"
     >
-      <div className={styles.ambientGlow} aria-hidden="true" />
+      <div className={styles.topRule} aria-hidden="true" />
 
       <div className={styles.inner}>
-        <div className={styles.copy}>
-          <div className={styles.headlineReveal}>
-            <p className={styles.eyebrow}>What work reveals</p>
-            <h2 id="work-reveals-title" className={styles.title}>
-              The record shows how they actually engineer.
-            </h2>
-          </div>
-
-          <p className={styles.subheading}>
-            Not activity counts. Recurring professional behavior reconstructed
-            across time, context and collaborators.
+        <header className={styles.intro}>
+          <p className={styles.eyebrow}>Research</p>
+          <h2 id="research-title" className={styles.title}>
+            Evidence, examined.
+          </h2>
+          <p className={styles.description}>
+            Original research on how real engineering work can make hiring
+            faster, more accurate, and easier to verify.
           </p>
-        </div>
 
-        <div className={styles.viewerReveal}>
-          <div className={styles.viewerShell}>
-            <aside
-              className={styles.progressRail}
-              aria-label="Engineering behavior report sections"
-            >
-              <div className={styles.progressList} role="tablist">
-                {REPORT_STATES.map((report, index) => {
-                  const isActive = index === activeIndex;
-                  const isComplete = index < activeIndex;
-                  const isFinalActive =
-                    isActive && index === REPORT_STATES.length - 1;
-
-                  return (
-                    <button
-                      key={report.number}
-                      type="button"
-                      role="tab"
-                      className={`${styles.progressStep} ${
-                        isActive ? styles.progressStepActive : ""
-                      }`}
-                      aria-selected={isActive}
-                      aria-controls="work-reveals-report"
-                      aria-label={`${report.number} — ${report.title}`}
-                      onClick={() => changeReport(index)}
-                    >
-                      <span className={styles.progressNumber}>
-                        {report.number}
-                      </span>
-                      <span className={styles.progressTrack} aria-hidden="true">
-                        <span
-                          className={`${styles.progressFill} ${
-                            isComplete || isFinalActive
-                              ? styles.progressFillComplete
-                              : ""
-                          } ${
-                            isActive && !isFinalActive
-                              ? styles.progressFillActive
-                              : ""
-                          }`}
-                        />
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </aside>
-
-            <article
-              id="work-reveals-report"
-              role="tabpanel"
-              className={styles.reportPanel}
-              aria-label={`${activeReport.number} — ${activeReport.title}`}
-            >
-              <header className={styles.reportHeader}>
-                <div className={styles.reportIdentity}>
-                  <span className={styles.signalMark} aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </span>
-                  <span>Engineering behavior report</span>
-                </div>
-
-                <span className={styles.reportMeta}>
-                  18 months · 46 linked artifacts
-                </span>
-              </header>
-
-              <div
-                key={activeReport.number}
-                className={`${styles.reportContent} ${
-                  transitionPhase === "out" ? styles.reportContentOut : ""
-                } ${transitionPhase === "in" ? styles.reportContentIn : ""}`}
+          <div className={styles.actions}>
+            <div className={styles.arrowGroup} aria-label="Research carousel">
+              <button
+                type="button"
+                className={styles.arrowButton}
+                onClick={() => moveCarousel(-1)}
+                disabled={!canScrollPrevious}
+                aria-label="Previous research articles"
+                aria-controls="research-track"
               >
-                <div className={styles.reportIntro}>
-                  <p className={styles.reportIndex}>
-                    <span>{activeReport.number}</span>
-                    {activeReport.title}
-                  </p>
-                  <h3 className={styles.reportPrimary}>
-                    {activeReport.primary}
+                <ArrowIcon direction="previous" />
+              </button>
+              <button
+                type="button"
+                className={styles.arrowButton}
+                onClick={() => moveCarousel(1)}
+                disabled={!canScrollNext}
+                aria-label="Next research articles"
+                aria-controls="research-track"
+              >
+                <ArrowIcon direction="next" />
+              </button>
+            </div>
+
+            <a className={styles.viewAllButton} href="/research">
+              View all research
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </header>
+
+        <div className={styles.carousel}>
+          <div
+            ref={trackRef}
+            id="research-track"
+            className={styles.track}
+            aria-label="Featured research"
+          >
+            {RESEARCH_ARTICLES.map((article, index) => (
+              <article
+                key={article.title}
+                className={styles.card}
+                data-research-card
+                style={{ "--card-index": index } as CSSProperties}
+              >
+                <a
+                  className={styles.coverLink}
+                  href={article.href}
+                  aria-label={`Read ${article.title}`}
+                >
+                  <span className={styles.cover}>
+                    <Image
+                      src={article.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 719px) 84vw, (max-width: 1199px) 60vw, 440px"
+                      className={styles.coverImage}
+                    />
+                    <span className={styles.coverTreatment} aria-hidden="true" />
+                    <span className={styles.issueNumber} aria-hidden="true">
+                      16S / 0{index + 1}
+                    </span>
+                  </span>
+                </a>
+
+                <div className={styles.cardBody}>
+                  <p className={styles.category}>{article.category}</p>
+                  <h3 className={styles.cardTitle}>
+                    <a href={article.href}>{article.title}</a>
                   </h3>
+                  <p className={styles.cardDescription}>
+                    {article.description}
+                  </p>
+                  <a className={styles.readButton} href={article.href}>
+                    Read research
+                    <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
-
-                <div className={styles.evidenceBlock}>
-                  <p className={styles.reportLabel}>Observed evidence</p>
-                  <div className={styles.evidenceList}>
-                    {activeReport.evidence.map((item, index) => (
-                      <p key={item} className={styles.evidenceItem}>
-                        <span aria-hidden="true">0{index + 1}</span>
-                        {item}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-
-                <div className={styles.insightBlock}>
-                  <p className={styles.reportLabel}>What this reveals</p>
-                  <p className={styles.insight}>{activeReport.insight}</p>
-                </div>
-              </div>
-
-              <footer className={styles.reportFooter}>
-                <span>
-                  <i aria-hidden="true" />
-                  Evidence linked
-                </span>
-                <span>Professional behavior reconstructed across time</span>
-              </footer>
-            </article>
+              </article>
+            ))}
           </div>
         </div>
       </div>
