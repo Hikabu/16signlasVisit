@@ -11,6 +11,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 84px;
+}
+
 body {
   /* Flat ink-dark base — the hero spec requires a perfectly still, flat field.
      Sections below the hero inherit this dark base; they add their own surface treatments. */

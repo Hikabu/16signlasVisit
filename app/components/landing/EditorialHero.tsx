@@ -1,8 +1,27 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useIsScrolled } from "@/app/hooks/useIsScrolled";
 import { EvidenceParticles } from "./EvidenceParticles";
 import styles from "./EditorialHero.module.css";
+
+const navItems = [
+  { label: "Report", href: "#prepared-interview", section: "prepared-interview" },
+  { label: "What it reveals", href: "#the-shift", section: "the-shift" },
+  { label: "Research", href: "#research", section: "research" },
+  { label: "Method", href: "#how-it-works", section: "how-it-works" },
+  { label: "Principles", href: "#problem-value", section: "problem-value" },
+] as const;
+
+const sectionIds = [
+  "hero",
+  "prepared-interview",
+  "the-shift",
+  "research",
+  "problem-value",
+  "how-it-works",
+  "book-call",
+] as const;
 
 function SignalMark() {
   return (
@@ -31,6 +50,33 @@ export function EditorialHero() {
   const frameRef = useRef<HTMLDivElement>(null);
   const cursorLightRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState("hero");
+  const isScrolled = useIsScrolled(18);
+
+  useEffect(() => {
+    const updateActiveSection = () => {
+      const threshold = window.innerHeight * 0.38;
+      let currentSection = "hero";
+
+      for (const sectionId of sectionIds) {
+        const section = document.getElementById(sectionId);
+        if (section && section.getBoundingClientRect().top <= threshold) {
+          currentSection = sectionId;
+        }
+      }
+
+      setActiveSection((current) => current === currentSection ? current : currentSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
 
   useEffect(() => {
     const frame = frameRef.current;
@@ -79,76 +125,94 @@ export function EditorialHero() {
   }, []);
 
   return (
-    <section id="hero" className={styles.outer} aria-labelledby="hero-title">
-      <div className={styles.frame} ref={frameRef}>
-        <div ref={cursorLightRef} className={styles.cursorLight} aria-hidden="true" />
-        <header className={styles.header}>
+    <>
+      <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}>
+        <div className={styles.headerInner}>
           <a href="#hero" className={styles.brand} aria-label="16 Signals home">
             <SignalMark />
             <span>16 Signals</span>
           </a>
 
           <nav className={styles.nav} aria-label="Main navigation">
-          <a href="#evidence-report">Report</a>
-          <a href="#what-work-reveals">What it reveals</a>
-          <a href="#how-it-works">Method</a>
-          <a href="#principles">Principles</a>
-        </nav>
-        <div className={styles.headerActions}>
-          <a className={styles.headerCta} href="#book-call">
-            Run it on your work
-          </a>
-          <a className={styles.contactLink} href="#book-call">
-            Contact
-          </a>
-        </div>
-        </header>
-
-        <div className={styles.heroGrid}>
-          <div className={styles.headlineBlock}>
-            <p className={styles.eyebrow}>
-              Evidence-led engineering hiring
-            </p>
-
-            <h1 id="hero-title" className={styles.headline} aria-label="Hiring, with the lights on.">
-              {['Hiring,', 'with', 'the', 'lights', 'on.'].map((word, index) => (
-                <span key={word} className={styles.headlineWord} style={{ animationDelay: `${index * 60}ms` }} aria-hidden="true">
-                  {word}{" "}
-                </span>
-              ))}
-            </h1>
-          </div>
-
-          <div ref={visualRef} className={styles.visual} aria-hidden="true">
-            <EvidenceParticles />
-          </div>
-
-          <div className={styles.narrative}>
-            <p className={styles.subhead}>
-              16 Signals reads real engineering work and shows
-              you what it says - strengths, risks, and the
-              questions worth asking next.
-            </p>
-
-            <div className={styles.ctas} role="group" aria-label="Primary actions">
-              <a className={styles.primaryCta} href="#evidence-report-section">
-                View a sample report
-                <span aria-hidden="true">↘</span>
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={activeSection === item.section ? styles.activeNav : undefined}
+                aria-current={activeSection === item.section ? "location" : undefined}
+              >
+                {item.label}
               </a>
+            ))}
+          </nav>
 
-              <a className={styles.secondaryCta} href="#book-call">
-                Run it on your work
-                <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-
-            <a className={styles.transitionLink} href="#prepared-interview">
-              See what you know before the interview
-              <span aria-hidden="true">↓</span>
+          <div className={styles.headerActions}>
+            <a className={styles.headerCta} href="#book-call">
+              Run it on your work
+            </a>
+            <a className={styles.contactLink} href="#book-call">
+              Contact
             </a>
           </div>
         </div>
-      </div>
-    </section>
+      </header>
+
+      <section id="hero" className={styles.outer} aria-labelledby="hero-title">
+        <div className={styles.frame} ref={frameRef}>
+          <div ref={cursorLightRef} className={styles.cursorLight} aria-hidden="true" />
+          <span className={`${styles.decorativeLine} ${styles.decorativeLineTop}`} aria-hidden="true" />
+          <span className={`${styles.decorativeLine} ${styles.decorativeLineBottom}`} aria-hidden="true" />
+
+          <div className={styles.heroGrid}>
+            <div className={styles.headlineBlock}>
+              <p className={styles.eyebrow}>
+                Evidence-led engineering hiring
+              </p>
+
+              <h1 id="hero-title" className={styles.headline} aria-label="Hiring, with the lights on.">
+                <span className={styles.headlineLine}>
+                  <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">Hiring,</span>
+                </span>
+                <span className={styles.headlineLine}>
+                  <span className={styles.headlineWord} style={{ animationDelay: "60ms" }} aria-hidden="true">with</span>{" "}
+                  <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">the</span>{" "}
+                  <span className={styles.headlineWord} style={{ animationDelay: "180ms" }} aria-hidden="true">lights</span>
+                </span>
+                <span className={styles.headlineLine}>
+                  <span className={styles.headlineWord} style={{ animationDelay: "240ms" }} aria-hidden="true">on.</span>
+                </span>
+              </h1>
+            </div>
+
+            <div ref={visualRef} className={styles.visual} aria-hidden="true">
+              <EvidenceParticles />
+            </div>
+
+            <div className={styles.narrative}>
+              <p className={styles.subhead}>
+                16 Signals reads real engineering work and shows you what it says — strengths, risks, and the questions worth asking next.
+              </p>
+
+              <div className={styles.ctas} role="group" aria-label="Primary actions">
+                <a className={styles.primaryCta} href="#prepared-interview">
+                  View a sample report
+                  <span aria-hidden="true">↘</span>
+                </a>
+
+                <a className={styles.secondaryCta} href="#book-call">
+                  Run it on your work
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+
+              <a className={styles.transitionLink} href="#prepared-interview">
+                See what you know before the interview
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
