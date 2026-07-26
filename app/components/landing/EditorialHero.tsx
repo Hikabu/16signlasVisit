@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { EvidenceParticles } from "./EvidenceParticles";
 import styles from "./EditorialHero.module.css";
 
@@ -25,9 +28,60 @@ function SignalMark() {
 }
 
 export function EditorialHero() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const cursorLightRef = useRef<HTMLDivElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    const cursorLight = cursorLightRef.current;
+    const visual = visualRef.current;
+    const finePointer = window.matchMedia("(pointer: fine)");
+    if (!frame || !cursorLight || !visual || !finePointer.matches) return;
+
+    let animationFrame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+
+    const updatePointer = () => {
+      const frameBounds = frame.getBoundingClientRect();
+      const visualBounds = visual.getBoundingClientRect();
+      const x = pointerX - frameBounds.left;
+      const y = pointerY - frameBounds.top;
+      const visualCenter = visualBounds.left + visualBounds.width / 2;
+      const tilt = Math.max(-1, Math.min(1, ((pointerX - visualCenter) / visualBounds.width) * 2));
+
+      cursorLight.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      cursorLight.style.opacity = "1";
+      visual.style.setProperty("--ring-tilt", `${tilt.toFixed(2)}deg`);
+      animationFrame = 0;
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!animationFrame) animationFrame = requestAnimationFrame(updatePointer);
+    };
+
+    const onPointerLeave = () => {
+      cursorLight.style.opacity = "0";
+      visual.style.setProperty("--ring-tilt", "0deg");
+    };
+
+    frame.addEventListener("pointermove", onPointerMove);
+    frame.addEventListener("pointerleave", onPointerLeave);
+
+    return () => {
+      frame.removeEventListener("pointermove", onPointerMove);
+      frame.removeEventListener("pointerleave", onPointerLeave);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   return (
     <section id="hero" className={styles.outer} aria-labelledby="hero-title">
-      <div className={styles.frame}>
+      <div className={styles.frame} ref={frameRef}>
+        <div ref={cursorLightRef} className={styles.cursorLight} aria-hidden="true" />
         <header className={styles.header}>
           <a href="#hero" className={styles.brand} aria-label="16 Signals home">
             <SignalMark />
@@ -56,17 +110,21 @@ export function EditorialHero() {
               Evidence-led engineering hiring
             </p>
 
-            <h1 id="hero-title" className={styles.headline}>
-              <span>Hiring, with the lights on.</span>
+            <h1 id="hero-title" className={styles.headline} aria-label="Hiring, with the lights on.">
+              {['Hiring,', 'with', 'the', 'lights', 'on.'].map((word, index) => (
+                <span key={word} className={styles.headlineWord} style={{ animationDelay: `${index * 60}ms` }} aria-hidden="true">
+                  {word}{" "}
+                </span>
+              ))}
             </h1>
           </div>
 
-          <div className={styles.visual} aria-hidden="true">
+          <div ref={visualRef} className={styles.visual} aria-hidden="true">
             <EvidenceParticles />
           </div>
 
           <div className={styles.narrative}>
-            <p>
+            <p className={styles.subhead}>
               16 Signals reads real engineering work and shows
               you what it says - strengths, risks, and the
               questions worth asking next.
