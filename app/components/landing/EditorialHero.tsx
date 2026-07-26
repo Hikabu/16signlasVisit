@@ -160,55 +160,57 @@ export function EditorialHero() {
       <section id="hero" className={styles.outer} aria-labelledby="hero-title">
         <div className={styles.frame} ref={frameRef}>
           <div ref={cursorLightRef} className={styles.cursorLight} aria-hidden="true" />
-          <span className={`${styles.decorativeLine} ${styles.decorativeLineTop}`} aria-hidden="true" />
-          <span className={`${styles.decorativeLine} ${styles.decorativeLineBottom}`} aria-hidden="true" />
 
           <div className={styles.heroGrid}>
-            <div className={styles.headlineBlock}>
-              <p className={styles.eyebrow}>
-                Evidence-led engineering hiring
-              </p>
+            <div className={styles.copyColumn}>
+              <div className={styles.headlineBlock}>
+                <p className={styles.eyebrow}>
+                  Evidence-led engineering hiring
+                </p>
 
-              <h1 id="hero-title" className={styles.headline} aria-label="Hiring, with the lights on.">
-                <span className={styles.headlineLine}>
-                  <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">Hiring,</span>
-                </span>
-                <span className={styles.headlineLine}>
-                  <span className={styles.headlineWord} style={{ animationDelay: "60ms" }} aria-hidden="true">with</span>{" "}
-                  <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">the</span>{" "}
-                  <span className={styles.headlineWord} style={{ animationDelay: "180ms" }} aria-hidden="true">lights</span>
-                </span>
-                <span className={styles.headlineLine}>
-                  <span className={styles.headlineWord} style={{ animationDelay: "240ms" }} aria-hidden="true">on.</span>
-                </span>
-              </h1>
+                <h1 id="hero-title" className={styles.headline} aria-label="Hiring, with the lights on.">
+                  <span className={styles.headlineLine}>
+                    <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">Hiring,</span>
+                  </span>
+                  <span className={styles.headlineLine}>
+                    <span className={styles.headlineWord} style={{ animationDelay: "60ms" }} aria-hidden="true">with</span>{" "}
+                    <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">the</span>{" "}
+                    <span className={styles.headlineWord} style={{ animationDelay: "180ms" }} aria-hidden="true">lights</span>
+                  </span>
+                  <span className={styles.headlineLine}>
+                    <span className={styles.headlineWord} style={{ animationDelay: "240ms" }} aria-hidden="true">on.</span>
+                  </span>
+                </h1>
+              </div>
+
+              <div className={styles.narrative}>
+                <p className={styles.subhead}>
+                  16 Signals reads real engineering work and shows you what it says — strengths, risks, and the questions worth asking next.
+                </p>
+
+                <div className={styles.actionGroup}>
+                  <div className={styles.ctas} role="group" aria-label="Primary actions">
+                    <a className={styles.primaryCta} href="#prepared-interview">
+                      View a sample report
+                      <span aria-hidden="true">↘</span>
+                    </a>
+
+                    <a className={styles.secondaryCta} href="#book-call">
+                      Run it on your work
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+
+                  <a className={styles.transitionLink} href="#prepared-interview">
+                    See what you know before the interview
+                    <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
+              </div>
             </div>
 
             <div ref={visualRef} className={styles.visual} aria-hidden="true">
               <EvidenceParticles />
-            </div>
-
-            <div className={styles.narrative}>
-              <p className={styles.subhead}>
-                16 Signals reads real engineering work and shows you what it says — strengths, risks, and the questions worth asking next.
-              </p>
-
-              <div className={styles.ctas} role="group" aria-label="Primary actions">
-                <a className={styles.primaryCta} href="#prepared-interview">
-                  View a sample report
-                  <span aria-hidden="true">↘</span>
-                </a>
-
-                <a className={styles.secondaryCta} href="#book-call">
-                  Run it on your work
-                  <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-
-              <a className={styles.transitionLink} href="#prepared-interview">
-                See what you know before the interview
-                <span aria-hidden="true">↓</span>
-              </a>
             </div>
           </div>
         </div>
