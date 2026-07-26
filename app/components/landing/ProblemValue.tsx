@@ -69,25 +69,31 @@ export function ProblemValue() {
               <div className="verification-folder__tab reveal-child">
                 <svg
                   className="verification-folder__tab-shape"
-                  viewBox="0 0 200 44"
+                  viewBox="0 0 200 32"
                   preserveAspectRatio="none"
                   aria-hidden="true"
                 >
-                  <path d="M2 44 L20 10 Q24 6 30 6 L170 6 Q176 6 180 10 L198 44 Z" />
+                  <defs>
+                    <linearGradient id="folder-tab-gradient" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#34495e" />
+                      <stop offset="100%" stopColor="#243342" />
+                    </linearGradient>
+                  </defs>
+                  <rect x="0.5" y="0.5" width="199" height="31" rx="2" />
                 </svg>
                 <span className="verification-folder__tab-label">{folder.label}</span>
               </div>
-              <div className="grid min-h-[360px] content-between gap-12 p-7 md:grid-cols-[0.86fr_1.14fr] md:p-10 lg:p-12">
+              <div className="grid min-h-[360px] content-between gap-12 p-8 md:grid-cols-[0.86fr_1.14fr] md:p-10 lg:p-12">
                 <div>
-                  <p className="reveal-child text-sm font-medium uppercase text-[#09524f]/70">{folder.label}</p>
-                  <h3 className="reveal-child mt-5 max-w-[12ch] text-4xl font-medium leading-[1.05] text-[#132426] md:text-6xl">
+                  <p className="reveal-child text-xs font-medium uppercase tracking-[0.14em] text-[#62676b]">{folder.label}</p>
+                  <h3 className="reveal-child mt-5 max-w-[12ch] text-[28px] font-semibold leading-[1.08] text-[#17191b]">
                     {folder.title}
                   </h3>
                 </div>
                 <div className="flex flex-col justify-end">
-                  <p className="reveal-child max-w-xl text-xl leading-[1.45] text-[color:var(--folder-foreground)]">{folder.body}</p>
+                  <p className="reveal-child max-w-xl text-[15px] leading-[1.55] text-[color:var(--folder-foreground)]">{folder.body}</p>
                   <div className="reveal-child mt-10 h-px w-full bg-[color:var(--folder-line)]" />
-                  <p className="reveal-child mt-5 text-sm text-[color:var(--folder-muted)]">Verified before the first interview.</p>
+                  <p className="reveal-child mt-5 text-xs tracking-[0.02em] text-[color:var(--folder-muted)]">Verified before the first interview.</p>
                 </div>
               </div>
             </Reveal>

@@ -57,8 +57,7 @@ export function EditorialHero() {
             </p>
 
             <h1 id="hero-title" className={styles.headline}>
-              <span>Know how they engineer.</span>
-              <span>Before the interview begins.</span>
+              <span>Hiring, with the lights on.</span>
             </h1>
           </div>
 
@@ -68,9 +67,9 @@ export function EditorialHero() {
 
           <div className={styles.narrative}>
             <p>
-              16Signals turns real engineering work into a decision-ready capability
-              report - verified strengths, role-relevant risks and evidence-linked
-              questions for the interview ahead.
+              16 Signals reads real engineering work and shows
+              you what it says - strengths, risks, and the
+              questions worth asking next.
             </p>
 
             <div className={styles.ctas} role="group" aria-label="Primary actions">
