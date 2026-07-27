@@ -4,6 +4,21 @@ import { useEffect, useRef } from "react";
 
 const TAU = Math.PI * 2;
 
+function softEase(progress: number) {
+  const x = Math.max(0, Math.min(1, progress));
+  // Cubic-bezier(.2, .7, .2, 1), solved with a short binary search.
+  let low = 0;
+  let high = 1;
+  for (let step = 0; step < 12; step++) {
+    const t = (low + high) / 2;
+    const xAtT = 3 * (1 - t) * (1 - t) * t * 0.2 + 3 * (1 - t) * t * t * 0.2 + t * t * t;
+    if (xAtT < x) low = t;
+    else high = t;
+  }
+  const t = (low + high) / 2;
+  return 3 * (1 - t) * (1 - t) * t * 0.7 + 3 * (1 - t) * t * t + t * t * t;
+}
+
 export function EvidenceParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -67,7 +82,9 @@ export function EvidenceParticles() {
         const x2 = cx + Math.cos(angle) * rx * tickOuter;
         const y2 = cy + Math.sin(angle) * ry * tickOuter;
 
-        const alpha = isMajor ? 0.45 : isMid ? 0.25 : 0.12;
+        // Tick groups arrive after the copy, finishing within the first 900ms.
+        const tickProgress = softEase((elapsed - 0.44 - (i % 12) * 0.025) / 0.14);
+        const alpha = (isMajor ? 0.45 : isMid ? 0.25 : 0.12) * tickProgress;
         context.strokeStyle = `rgba(255,255,255,${alpha})`;
         context.lineWidth = isMajor ? 1.2 : 0.7;
         context.beginPath();
@@ -151,7 +168,7 @@ export function EvidenceParticles() {
         const t = s / steps2;
         const a = accent2Angle + t * accent2Span;
         const tFade = Math.sin(t * Math.PI);
-        const hAlpha = tFade * 0.22;
+        const hAlpha = tFade * 0.11;
         const px = cx + Math.cos(a) * rx * 0.935;
         const py = cy + Math.sin(a) * ry * 0.935;
         const gradient = context.createRadialGradient(px, py, 0, px, py, rx * 0.09);
@@ -168,9 +185,9 @@ export function EvidenceParticles() {
       context.save();
       context.beginPath();
       context.ellipse(cx, cy, rx * 0.88, ry * 0.88, 0, 0, TAU);
-      context.strokeStyle = "rgba(107,140,174,0.12)";
+      context.strokeStyle = "rgba(107,140,174,0.06)";
       context.lineWidth = 6;
-      context.shadowColor = "rgba(107,140,174,0.35)";
+      context.shadowColor = "rgba(107,140,174,0.175)";
       context.shadowBlur = 12;
       context.stroke();
       context.restore();

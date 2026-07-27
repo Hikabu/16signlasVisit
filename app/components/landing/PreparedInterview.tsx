@@ -202,13 +202,7 @@ export function PreparedInterview() {
           ref={introRef}
           className={`${styles.intro} ${introRevealed ? styles.introRevealed : ""}`}
         >
-          <div className={`${styles.introRevealLine} ${styles.introEyebrow}`}>
-            <p className={styles.eyebrow}>
-              <span>02</span>
-              The evidence brief
-            </p>
-          </div>
-          <div className={styles.introCopy}>
+            <div className={styles.introCopy}>
             <div className={`${styles.introRevealLine} ${styles.introHeadline}`}>
               <h2 id="prepared-interview-title">
                 Skip the investigation. Start with the evidence.

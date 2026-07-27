@@ -11,6 +11,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 84px;
+}
+
 body {
   /* Flat ink-dark base — the hero spec requires a perfectly still, flat field.
      Sections below the hero inherit this dark base; they add their own surface treatments. */
@@ -205,32 +213,21 @@ body::after {
   position: sticky;
   top: var(--folder-top);
   z-index: calc(10 + var(--folder-index));
-  /* overflow visible so the index tab can protrude above the top edge */
   overflow: visible;
-  border: 1px solid #e6e8e8;
-  border-radius: var(--radius-card);
-  background: linear-gradient(135deg, #fffafa 0%, #fff3f5 48%, #ffffff 100%);
+  border: 1px solid #d9dcdf;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #f7f7f5 0%, #eeeeec 52%, #f4f4f2 100%);
   box-shadow:
-    0 36px 90px rgb(1 5 6 / 0.32),
-    0 1px 0 rgb(255 255 255 / 0.82) inset;
+    0 18px 42px rgb(0 0 0 / 0.18),
+    0 1px 0 rgb(255 255 255 / 0.9) inset;
 }
 
-/* ------------------------------------------------------------------
-   File-folder index tab (FIX.md — Custom Folder-Tab Section Container)
-   Asymmetric trapezoid that protrudes above the card's top edge:
-   - left side slopes up & outward to the right (smooth diagonal)
-   - top edge is flat / horizontal
-   - right side mirrors back down to the body (diagonal)
-   - all corners are softly rounded; thin light-gray outline + soft shadow
-   The shape is drawn as an inline <svg> path (see ProblemValue.tsx) so the
-   outline follows the slanted cuts; the <span> carries the label text.
-   ------------------------------------------------------------------ */
 .verification-folder__tab {
   position: absolute;
-  top: -43px;
+  top: -31px;
   left: var(--folder-tab-offset);
-  width: clamp(150px, 36%, 220px);
-  height: 44px;
+  width: clamp(180px, 60%, 520px);
+  height: 32px;
   z-index: 2;
   pointer-events: none;
 }
@@ -244,16 +241,10 @@ body::after {
   overflow: visible;
 }
 
-.verification-folder__tab-shape path {
-  /* fill: #a0688a !important; */
-  /* fill: #D9A752; */
-  /* fill: #E5BA73; */
-  fill: #FA8072;
-  /* fill: #FFF5E4; */
-  /* stroke: #078787; */
-  stroke: none !important;
-  /* stroke-width: 1; */
-  stroke-linejoin: round;
+.verification-folder__tab-shape rect {
+  fill: url("#folder-tab-gradient");
+  stroke: #243342;
+  stroke-width: 1;
 }
 
 .verification-folder__tab-label {
@@ -261,11 +252,11 @@ body::after {
   display: inline-flex;
   align-items: center;
   height: 100%;
-  padding-inline: 26px 16px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: rgb(9 82 79 / 0.72);
+  padding-inline: 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgb(245 245 245 / 0.78);
 }
 
 .timeline-section {
