@@ -163,7 +163,7 @@ export function EditorialHero() {
                     <span className={styles.headlineWord} style={{ animationDelay: "180ms" }} aria-hidden="true">lights</span>
                   </span>
                   <span className={styles.headlineLine}>
-                    <span className={styles.headlineWord} style={{ animationDelay: "240ms" }} aria-hidden="true">on.</span>
+                    <span className={styles.headlineWord} style={{ animationDelay: "240ms",  marginRight: "33px"  }} aria-hidden="true">ON</span>
                   </span>
                 </h1>
               </div>
