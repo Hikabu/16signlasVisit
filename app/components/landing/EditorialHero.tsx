@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useIsScrolled } from "@/app/hooks/useIsScrolled";
 import { EvidenceParticles } from "./EvidenceParticles";
 import styles from "./EditorialHero.module.css";
@@ -22,29 +23,6 @@ const sectionIds = [
   "how-it-works",
   "book-call",
 ] as const;
-
-function SignalMark() {
-  return (
-    <svg
-      className={styles.brandMark}
-      viewBox="0 0 32 32"
-      aria-hidden="true"
-      fill="none"
-    >
-      <circle cx="16" cy="16" r="2.2" fill="currentColor" />
-      {Array.from({ length: 16 }, (_, index) => (
-        <path
-          key={index}
-          d="M16 2.5V10.25"
-          stroke="currentColor"
-          strokeWidth="1.7"
-          strokeLinecap="square"
-          transform={`rotate(${index * 22.5} 16 16)`}
-        />
-      ))}
-    </svg>
-  );
-}
 
 export function EditorialHero() {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -129,7 +107,14 @@ export function EditorialHero() {
       <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}>
         <div className={styles.headerInner}>
           <a href="#hero" className={styles.brand} aria-label="16 Signals home">
-            <SignalMark />
+            <Image
+              className={styles.brandMark}
+              src="/a16zero.png"
+              alt=""
+              width={1024}
+              height={1024}
+              priority
+            />
             <span>16 Signals</span>
           </a>
 
