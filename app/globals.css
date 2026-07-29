@@ -935,132 +935,457 @@ body::after {
   padding-block: 15vh;
 }
 
-/* ── Missing-piece bridge ── */
-.ts-diagram {
+/* ── Full-width missing-piece product explainer ── */
+.ts-bridge {
+  position: relative;
+  min-height: 250svh;
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  background:
+    radial-gradient(60% 52% at 50% 44%, rgba(94, 106, 210, 0.075), transparent 72%),
+    #08090a;
+}
+
+.ts-bridge__sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 100svh;
+  max-width: 1600px;
+  margin-inline: auto;
+  overflow: hidden;
+  flex-direction: column;
+  padding: clamp(26px, 4.5vh, 52px) clamp(22px, 4.5vw, 72px) clamp(20px, 3vh, 36px);
+}
+
+.ts-bridge__sticky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 50% 48%, black, transparent 74%);
+}
+
+.ts-bridge__intro {
   position: relative;
   z-index: 1;
-  padding: 20px 0 72px 32px;
-  color: #d4d4d8;
-}
-
-.ts-diagram__path {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 54px minmax(96px, auto) 54px minmax(0, 1fr);
-  align-items: center;
-  gap: 0;
-}
-
-.ts-diagram__node {
-  display: inline-flex;
-  justify-content: center;
   text-align: center;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1.25;
-  white-space: nowrap;
   opacity: 0;
+  transform: translateY(14px);
 }
 
-.ts-diagram__node--unknown {
-  color: #f3f4f6;
+.ts-bridge__kicker {
+  display: inline-block;
+  margin-bottom: clamp(8px, 1.2vh, 14px);
+  color: #7a87e8;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.2em;
 }
 
-.ts-diagram__connector {
+.ts-bridge__intro h2 {
+  margin: 0;
+  color: #f5f6f8;
+  font-size: clamp(30px, 4vw, 58px);
+  font-weight: 440;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.ts-bridge__intro p {
+  margin: clamp(9px, 1.4vh, 16px) 0 0;
+  color: #7f838d;
+  font-size: clamp(13px, 1.1vw, 16px);
+}
+
+.ts-bridge__path {
+  position: relative;
+  z-index: 2;
+  height: clamp(66px, 9vh, 92px);
+  margin: clamp(16px, 2.5vh, 30px) 1.5% 0;
+  flex: 0 0 auto;
+}
+
+.ts-bridge__path-line {
+  position: absolute;
+  top: 17px;
+  left: 12px;
+  right: 12px;
   height: 1px;
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(173, 180, 238, 0.42) 38%,
+    rgba(173, 180, 238, 0.42) 62%,
+    rgba(255, 255, 255, 0.08)
+  );
+  box-shadow: 0 0 18px rgba(122, 135, 232, 0.14);
+  opacity: 0;
   transform: scaleX(0);
   transform-origin: left center;
-  opacity: 0;
 }
 
-.ts-diagram__connector--second {
-  transform-origin: right center;
-}
-
-.ts-diagram__missing {
+.ts-bridge__path-node {
+  position: absolute;
+  top: 10px;
   display: flex;
-  width: 42%;
-  margin: 0 auto;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding-top: 18px;
-}
-
-.ts-diagram__down-arrow {
-  color: #7a87e8;
-  font-size: 18px;
-  line-height: 1;
+  gap: 11px;
+  color: #80838c;
   opacity: 0;
+  transform: translateY(6px);
 }
 
-.ts-diagram__node--signals {
-  padding: 9px 14px;
-  border: 1px solid rgba(122, 135, 232, 0.55);
-  border-radius: 999px;
-  color: #c7cdf9;
-  background: rgba(122, 135, 232, 0.08);
+.ts-bridge__path-node i {
+  width: 15px;
+  height: 15px;
+  border: 4px solid #08090a;
+  border-radius: 50%;
+  background: #767b87;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
 }
 
-.ts-diagram__node--evidence {
-  color: #a1a1aa;
-  letter-spacing: 0.18em;
-}
-
-.ts-diagram__tools {
-  margin-top: 26px;
-  color: #6b7280;
+.ts-bridge__path-node b {
   font-size: 10px;
-  letter-spacing: 0.12em;
-  line-height: 1.4;
-  text-align: center;
-  text-transform: uppercase;
+  font-style: normal;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+
+.ts-bridge__path-node--hr {
+  left: 0;
+  align-items: flex-start;
+}
+
+.ts-bridge__path-node--technical {
+  right: 0;
+  align-items: flex-end;
+}
+
+.ts-bridge__path-node--unknown {
+  left: 50%;
+  color: #a4a7b0;
+  transform: translateX(-50%) translateY(6px);
+}
+
+.ts-bridge__path-node--unknown i {
+  background: #08090a;
+  box-shadow:
+    0 0 0 1px rgba(173, 180, 238, 0.5),
+    0 0 22px rgba(122, 135, 232, 0.32);
+}
+
+.ts-bridge__drop-line {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  width: 1px;
+  height: calc(100% - 20px);
+  background: linear-gradient(180deg, rgba(173, 180, 238, 0.5), rgba(122, 135, 232, 0.08));
   opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
 }
 
-.ts-diagram--revealed .ts-diagram__node--hr {
-  animation: ts-diagram-enter 600ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.ts-bridge__columns {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  grid-template-columns: minmax(0, 1fr) minmax(270px, 1.05fr) minmax(0, 1fr);
+  gap: clamp(12px, 2vw, 30px);
+  align-items: stretch;
 }
 
-.ts-diagram--revealed .ts-diagram__connector--first {
-  animation: ts-diagram-line-in 500ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.ts-bridge__column,
+.ts-bridge__signals-shell {
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(16px);
 }
 
-.ts-diagram--revealed .ts-diagram__node--unknown {
-  animation:
-    ts-diagram-enter 600ms 420ms cubic-bezier(0.22, 1, 0.36, 1) both,
-    ts-diagram-unknown-highlight 900ms 1.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+.ts-bridge__column {
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+  flex-direction: column;
+  padding: clamp(16px, 2vw, 24px);
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.018);
 }
 
-.ts-diagram--revealed .ts-diagram__connector--second {
-  animation: ts-diagram-line-in 500ms 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.ts-bridge__signals-shell {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  border: 1px solid rgba(151, 162, 239, 0.3);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(122, 135, 232, 0.16), transparent 52%),
+    rgba(19, 21, 29, 0.9);
+  box-shadow:
+    0 22px 80px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(122, 135, 232, 0.03) inset,
+    0 0 50px rgba(94, 106, 210, 0.08);
 }
 
-.ts-diagram--revealed .ts-diagram__node--technical {
-  animation: ts-diagram-enter 600ms 660ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.ts-bridge__signals-shell::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(199, 205, 249, 0.26), transparent 34%, transparent 66%, rgba(122, 135, 232, 0.14));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 1px;
 }
 
-.ts-diagram--revealed .ts-diagram__down-arrow {
-  animation: ts-diagram-fade-in 500ms 1.58s ease both;
+.ts-bridge__signals-shell .ts-bridge__column {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  opacity: 1;
+  transform: none;
 }
 
-.ts-diagram--revealed .ts-diagram__node--signals {
-  animation: ts-diagram-enter 650ms 1.76s cubic-bezier(0.22, 1, 0.36, 1) both;
+.ts-bridge__signals-badge {
+  position: absolute;
+  z-index: 3;
+  top: -13px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border: 1px solid rgba(151, 162, 239, 0.4);
+  border-radius: 999px;
+  color: #d9ddff;
+  background: #11131b;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
-.ts-diagram--revealed .ts-diagram__node--evidence {
-  animation: ts-diagram-fade-in 700ms 2.08s ease both;
+.ts-bridge__signal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #aab4ff;
+  box-shadow: 0 0 12px rgba(170, 180, 255, 0.9);
 }
 
-.ts-diagram--revealed .ts-diagram__tools {
-  animation: ts-diagram-fade-in 700ms 2.32s ease both;
+.ts-bridge__column-head {
+  flex: 0 0 auto;
 }
 
-@keyframes ts-diagram-enter {
+.ts-bridge__column-eyebrow {
+  color: #626672;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+}
+
+.ts-bridge__column-head h3 {
+  margin: 7px 0 0;
+  color: #d8dae0;
+  font-size: clamp(16px, 1.35vw, 20px);
+  font-weight: 450;
+  letter-spacing: -0.025em;
+}
+
+.ts-bridge__column--signals .ts-bridge__column-eyebrow {
+  color: #9099dc;
+}
+
+.ts-bridge__column--signals .ts-bridge__column-head h3 {
+  color: #f2f3ff;
+}
+
+.ts-bridge__card-window {
+  position: relative;
+  min-height: 190px;
+  overflow: hidden;
+  flex: 1 1 auto;
+  margin-block: 10px;
+  mask-image: linear-gradient(180deg, transparent, black 25%, black 75%, transparent);
+}
+
+.ts-bridge__card-stack {
+  position: absolute;
+  inset: 0;
+}
+
+.ts-bridge__card {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: grid;
+  width: 100%;
+  min-height: 68px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 13px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 10px;
+  background: rgba(17, 18, 22, 0.94);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 120ms linear,
+    filter 180ms linear;
+  will-change: transform, opacity, filter;
+}
+
+.ts-bridge__column--signals .ts-bridge__card {
+  border-color: rgba(151, 162, 239, 0.19);
+  background: rgba(31, 34, 51, 0.93);
+}
+
+.ts-bridge__card-index {
+  color: #555965;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.ts-bridge__card-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ts-bridge__card-copy strong {
+  overflow: hidden;
+  color: #e5e6ea;
+  font-size: 13px;
+  font-weight: 540;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-bridge__card-copy small {
+  overflow: hidden;
+  color: #6f737e;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-bridge__column--signals .ts-bridge__card-copy strong {
+  color: #f0f1ff;
+}
+
+.ts-bridge__column--signals .ts-bridge__card-copy small {
+  color: #9a9fbd;
+}
+
+.ts-bridge__card-mark {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #50535c;
+}
+
+.ts-bridge__column--signals .ts-bridge__card-mark {
+  background: #9da7ef;
+  box-shadow: 0 0 12px rgba(157, 167, 239, 0.55);
+}
+
+.ts-bridge__column-note {
+  min-height: 30px;
+  margin: 0;
+  color: #666a74;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.ts-bridge__column--signals .ts-bridge__column-note {
+  color: #8b90aa;
+}
+
+.ts-bridge__footer {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 560px);
+  margin: clamp(14px, 2vh, 24px) auto 0;
+  grid-template-columns: auto minmax(60px, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  color: #545863;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+
+.ts-bridge__footer-line {
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ts-bridge__footer-line i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #555d9c, #a6aff4);
+  box-shadow: 0 0 10px rgba(122, 135, 232, 0.6);
+}
+
+.ts-bridge--revealed .ts-bridge__intro {
+  animation: ts-bridge-rise 700ms 80ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__path-line {
+  animation: ts-bridge-line 900ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__path-node--hr {
+  animation: ts-bridge-rise 500ms 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__path-node--unknown {
+  animation: ts-bridge-node-center 600ms 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__path-node--technical {
+  animation: ts-bridge-rise 500ms 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__drop-line {
+  animation: ts-bridge-drop 620ms 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__column--hr {
+  animation: ts-bridge-rise 700ms 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__signals-shell {
+  animation: ts-bridge-rise 760ms 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-bridge--revealed .ts-bridge__column--technical {
+  animation: ts-bridge-rise 700ms 820ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ts-bridge-rise {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(16px);
   }
 
   to {
@@ -1069,7 +1394,7 @@ body::after {
   }
 }
 
-@keyframes ts-diagram-line-in {
+@keyframes ts-bridge-line {
   from {
     opacity: 0;
     transform: scaleX(0);
@@ -1081,20 +1406,27 @@ body::after {
   }
 }
 
-@keyframes ts-diagram-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes ts-diagram-unknown-highlight {
-  0%, 100% {
-    color: #f3f4f6;
-    text-shadow: none;
+@keyframes ts-bridge-node-center {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
   }
 
-  45% {
-    color: #c7cdf9;
-    text-shadow: 0 0 18px rgba(122, 135, 232, 0.48);
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes ts-bridge-drop {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 
@@ -1181,18 +1513,53 @@ body::after {
   .ts-dot--revealed,
   .ts-stage-content--reveal > *,
   .ts-rail-fill,
-  .ts-diagram__node,
-  .ts-diagram__connector,
-  .ts-diagram__down-arrow,
-  .ts-diagram__tools {
+  .ts-bridge__intro,
+  .ts-bridge__path-line,
+  .ts-bridge__path-node,
+  .ts-bridge__drop-line,
+  .ts-bridge__column,
+  .ts-bridge__signals-shell {
     transition: none;
     animation: none;
     opacity: 1;
     transform: none;
   }
 
-  .ts-diagram__connector {
-    transform: none;
+  .ts-bridge {
+    min-height: auto;
+  }
+
+  .ts-bridge__sticky {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .ts-bridge__path-node--unknown {
+    transform: translateX(-50%);
+  }
+
+  .ts-bridge__card-window,
+  .ts-bridge__card-stack {
+    position: relative;
+    inset: auto;
+    min-height: auto;
+    overflow: visible;
+    mask-image: none;
+  }
+
+  .ts-bridge__card-stack {
+    display: grid;
+    gap: 8px;
+  }
+
+  .ts-bridge__card {
+    position: relative;
+    top: auto;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
   }
 }
 
@@ -1344,7 +1711,123 @@ body::after {
 }
 
 /* ── Responsive ── */
+@media (max-width: 1020px) and (min-width: 768px) {
+  .ts-bridge__sticky {
+    padding-inline: 24px;
+  }
+
+  .ts-bridge__columns {
+    grid-template-columns: minmax(0, 0.92fr) minmax(250px, 1.16fr) minmax(0, 0.92fr);
+    gap: 10px;
+  }
+
+  .ts-bridge__column {
+    padding: 15px;
+  }
+
+  .ts-bridge__card {
+    gap: 8px;
+    padding-inline: 10px;
+  }
+
+  .ts-bridge__card-index {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
+  .ts-bridge {
+    min-height: auto;
+  }
+
+  .ts-bridge__sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 72px 20px;
+  }
+
+  .ts-bridge__intro {
+    text-align: left;
+  }
+
+  .ts-bridge__intro h2 {
+    font-size: clamp(34px, 10vw, 48px);
+  }
+
+  .ts-bridge__path {
+    height: 84px;
+    margin: 36px 0 10px;
+  }
+
+  .ts-bridge__path-node b {
+    max-width: 94px;
+    font-size: 8px;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .ts-bridge__path-node--unknown {
+    align-items: center;
+    text-align: center;
+  }
+
+  .ts-bridge__path-node--technical {
+    text-align: right;
+  }
+
+  .ts-bridge__columns {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ts-bridge__column,
+  .ts-bridge__signals-shell {
+    min-height: auto;
+  }
+
+  .ts-bridge__signals-shell {
+    order: 2;
+    margin-top: 6px;
+  }
+
+  .ts-bridge__column--technical {
+    order: 3;
+  }
+
+  .ts-bridge__card-window,
+  .ts-bridge__card-stack {
+    position: relative;
+    inset: auto;
+    min-height: auto;
+    overflow: visible;
+    mask-image: none;
+  }
+
+  .ts-bridge__card-stack {
+    display: grid;
+    gap: 8px;
+    margin-block: 18px;
+  }
+
+  .ts-bridge__card {
+    position: relative;
+    top: auto;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .ts-bridge__column-note {
+    min-height: 0;
+  }
+
+  .ts-bridge__footer {
+    margin-top: 32px;
+  }
+
   .ts-block {
     display: flex;
     flex-direction: column;
@@ -1365,28 +1848,6 @@ body::after {
   .ts-right {
     width: 100%;
     padding-block: 8vh;
-  }
-
-  .ts-diagram {
-    padding: 12px 0 56px 28px;
-  }
-
-  .ts-diagram__path {
-    grid-template-columns: minmax(0, 1fr) 20px minmax(78px, auto) 20px minmax(0, 1fr);
-  }
-
-  .ts-diagram__node {
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    white-space: normal;
-  }
-
-  .ts-diagram__missing {
-    width: 48%;
-  }
-
-  .ts-diagram__tools {
-    font-size: 8px;
   }
 
   .ts-spacer {
