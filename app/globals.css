@@ -935,6 +935,169 @@ body::after {
   padding-block: 15vh;
 }
 
+/* ── Missing-piece bridge ── */
+.ts-diagram {
+  position: relative;
+  z-index: 1;
+  padding: 20px 0 72px 32px;
+  color: #d4d4d8;
+}
+
+.ts-diagram__path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px minmax(96px, auto) 54px minmax(0, 1fr);
+  align-items: center;
+  gap: 0;
+}
+
+.ts-diagram__node {
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.ts-diagram__node--unknown {
+  color: #f3f4f6;
+}
+
+.ts-diagram__connector {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+}
+
+.ts-diagram__connector--second {
+  transform-origin: right center;
+}
+
+.ts-diagram__missing {
+  display: flex;
+  width: 42%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 18px;
+}
+
+.ts-diagram__down-arrow {
+  color: #7a87e8;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0;
+}
+
+.ts-diagram__node--signals {
+  padding: 9px 14px;
+  border: 1px solid rgba(122, 135, 232, 0.55);
+  border-radius: 999px;
+  color: #c7cdf9;
+  background: rgba(122, 135, 232, 0.08);
+}
+
+.ts-diagram__node--evidence {
+  color: #a1a1aa;
+  letter-spacing: 0.18em;
+}
+
+.ts-diagram__tools {
+  margin-top: 26px;
+  color: #6b7280;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+}
+
+.ts-diagram--revealed .ts-diagram__node--hr {
+  animation: ts-diagram-enter 600ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-diagram--revealed .ts-diagram__connector--first {
+  animation: ts-diagram-line-in 500ms 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-diagram--revealed .ts-diagram__node--unknown {
+  animation:
+    ts-diagram-enter 600ms 420ms cubic-bezier(0.22, 1, 0.36, 1) both,
+    ts-diagram-unknown-highlight 900ms 1.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-diagram--revealed .ts-diagram__connector--second {
+  animation: ts-diagram-line-in 500ms 540ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-diagram--revealed .ts-diagram__node--technical {
+  animation: ts-diagram-enter 600ms 660ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-diagram--revealed .ts-diagram__down-arrow {
+  animation: ts-diagram-fade-in 500ms 1.58s ease both;
+}
+
+.ts-diagram--revealed .ts-diagram__node--signals {
+  animation: ts-diagram-enter 650ms 1.76s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ts-diagram--revealed .ts-diagram__node--evidence {
+  animation: ts-diagram-fade-in 700ms 2.08s ease both;
+}
+
+.ts-diagram--revealed .ts-diagram__tools {
+  animation: ts-diagram-fade-in 700ms 2.32s ease both;
+}
+
+@keyframes ts-diagram-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ts-diagram-line-in {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ts-diagram-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ts-diagram-unknown-highlight {
+  0%, 100% {
+    color: #f3f4f6;
+    text-shadow: none;
+  }
+
+  45% {
+    color: #c7cdf9;
+    text-shadow: 0 0 18px rgba(122, 135, 232, 0.48);
+  }
+}
+
 /* ── Vertical rail — premium hairline with fade-in from above ── */
 .ts-rail {
   position: absolute;
@@ -1017,10 +1180,18 @@ body::after {
   .ts-copy-line__inner,
   .ts-dot--revealed,
   .ts-stage-content--reveal > *,
-  .ts-rail-fill {
+  .ts-rail-fill,
+  .ts-diagram__node,
+  .ts-diagram__connector,
+  .ts-diagram__down-arrow,
+  .ts-diagram__tools {
     transition: none;
     animation: none;
     opacity: 1;
+    transform: none;
+  }
+
+  .ts-diagram__connector {
     transform: none;
   }
 }
@@ -1037,6 +1208,14 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.ts-point-sentence {
+  margin: 4px 0 0;
+  max-width: 580px;
+  color: #a1a1aa;
+  font-size: 16px;
+  line-height: 1.45;
 }
 
 /* One-shot stage reveal. The section copy remains completely static. */
@@ -1186,6 +1365,28 @@ body::after {
   .ts-right {
     width: 100%;
     padding-block: 8vh;
+  }
+
+  .ts-diagram {
+    padding: 12px 0 56px 28px;
+  }
+
+  .ts-diagram__path {
+    grid-template-columns: minmax(0, 1fr) 20px minmax(78px, auto) 20px minmax(0, 1fr);
+  }
+
+  .ts-diagram__node {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    white-space: normal;
+  }
+
+  .ts-diagram__missing {
+    width: 48%;
+  }
+
+  .ts-diagram__tools {
+    font-size: 8px;
   }
 
   .ts-spacer {

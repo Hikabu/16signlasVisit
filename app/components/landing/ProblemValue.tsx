@@ -41,7 +41,7 @@ export function ProblemValue() {
       <LargeWord className="left-[4vw] top-0">FILTER</LargeWord>
       <div className="container">
         <Reveal className="max-w-3xl">
-          <p className="section-label reveal-child">Problem / Value</p>
+          <p className="section-label reveal-child">Walk in already knowing where to go deeper.</p>
           <h2 className="section-title reveal-child mt-4 text-white">The applicant pile arrives already sorted.</h2>
           <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
             Each layer removes a different hiring risk, until your team is left with people worth speaking to.
