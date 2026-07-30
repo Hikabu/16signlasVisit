@@ -1,7 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type DragEvent,
+} from "react";
 import styles from "./TheShift.module.css";
 
 type StoryStage = 0 | 1 | 2;
@@ -15,7 +22,6 @@ type SignalLine = {
 
 type StoryCard = {
   kind: CardKind;
-  step: string;
   eyebrow: string;
   title: string;
   summary: string;
@@ -32,37 +38,35 @@ type StoryState = {
 
 const SCREENING: StoryCard = {
   kind: "screening",
-  step: "01",
   eyebrow: "First context",
   title: "Screening / HR",
-  summary: "Useful context, with limited proof.",
-  status: "Partial signal",
+  summary: "Useful context. Still only part of the picture.",
+  status: "Useful · partial",
   lines: [
     {
-      text: "Relevant background",
+      text: "Relevant context",
       icon: "/icons/16position/hr_interview_bike.svg",
       tone: "blue",
     },
     {
-      text: "Motivation and communication",
+      text: "Communication and motivation",
       icon: "/icons/16position/hr_interview_chair.svg",
       tone: "green",
     },
     {
-      text: "Claims can be rehearsed",
+      text: "Role and team fit",
       icon: "/icons/16position/hr_interview_task.svg",
-      tone: "amber",
+      tone: "violet",
     },
   ],
 };
 
 const TECHNICAL: StoryCard = {
   kind: "technical",
-  step: "03",
   eyebrow: "Deeper review",
   title: "Technical interview",
-  summary: "More depth, after more team time.",
-  status: "Late-stage signal",
+  summary: "Adds depth and discussion—later in the process.",
+  status: "Deep · costly",
   lines: [
     {
       text: "Technical depth",
@@ -75,8 +79,13 @@ const TECHNICAL: StoryCard = {
       tone: "blue",
     },
     {
-      text: "Expensive, late, partly gameable",
+      text: "Late and expensive",
       icon: "/icons/16position/tech_interview_table.svg",
+      tone: "amber",
+    },
+    {
+      text: "Still partly gameable",
+      icon: "/icons/16position/tech_interview_link.svg",
       tone: "amber",
     },
   ],
@@ -84,44 +93,37 @@ const TECHNICAL: StoryCard = {
 
 const SIGNALS: StoryCard = {
   kind: "signals",
-  step: "02",
-  eyebrow: "Before the technical interview",
+  eyebrow: "The missing middle layer",
   title: "16Signals",
-  summary: "Real-work evidence, added at the right moment.",
+  summary:
+    "16Signals adds real-work evidence after screening and before the technical interview.",
   status: "Evidence layer",
   lines: [
     {
-      text: "Verifies ability from real work",
+      text: "Validates screening claims",
       icon: "/icons/16position/16_signlas_portfolio.svg",
       tone: "green",
     },
     {
-      text: "Adds evidence before interview",
+      text: "Prioritizes interview attention",
       icon: "/icons/16position/16_signals_book.svg",
-      tone: "amber",
-    },
-    {
-      text: "Helps prioritize interview attention",
-      icon: "/icons/16position/16_signlas_hole.svg",
       tone: "blue",
     },
     {
-      text: "Builds confidence for human review",
-      icon: "/icons/16position/16_signlas_portfolio.svg",
+      text: "Prepares a more informed interview",
+      icon: "/icons/16position/16_signlas_hole.svg",
       tone: "violet",
-    },
-    {
-      text: "Makes technical interviews informed",
-      icon: "/icons/16position/tech_interview_atom.svg",
-      tone: "green",
-    },
-    {
-      text: "Reduces guesswork between stages",
-      icon: "/icons/16position/tech_interview_link.svg",
-      tone: "amber",
     },
   ],
 };
+
+const CARDS: Record<CardKind, StoryCard> = {
+  screening: SCREENING,
+  signals: SIGNALS,
+  technical: TECHNICAL,
+};
+
+const INITIAL_ORDER: CardKind[] = ["screening", "signals", "technical"];
 
 const INITIAL_STATE: StoryState = {
   stage: 0,
@@ -132,6 +134,40 @@ const INITIAL_STATE: StoryState = {
 
 function visibleLineCount(total: number, localProgress: number) {
   return Math.min(total, Math.max(1, Math.floor(localProgress * total) + 1));
+}
+
+function getSequenceSummary(order: CardKind[]) {
+  const signalsPosition = order.indexOf("signals");
+  const technicalPosition = order.indexOf("technical");
+
+  if (signalsPosition === 1 && technicalPosition === 2) {
+    return {
+      label: "Strongest placement",
+      text: "Screen first, add real-work evidence next, then use deeper interview time where it matters most.",
+    };
+  }
+
+  if (signalsPosition < technicalPosition) {
+    return {
+      label: "Evidence before depth",
+      text:
+        signalsPosition === 0
+          ? "Real-work evidence guides human review before technical interview time is used, with less screening context available upfront."
+          : "Real-work evidence arrives before deeper interview time is used, helping the team prioritize what to investigate.",
+    };
+  }
+
+  if (signalsPosition === 2) {
+    return {
+      label: "Useful, but later",
+      text: "The team still gains real-work evidence for human review, but money and interview time were already spent on earlier stages.",
+    };
+  }
+
+  return {
+    label: "Evidence after depth",
+    text: "16Signals still supports human review, though the technical interview has already consumed deeper team attention.",
+  };
 }
 
 function NotificationList({
@@ -184,21 +220,53 @@ function TimelineCard({
   active,
   visible,
   visibleCount,
+  position,
+  canReorder,
+  isDragging,
+  onFocus,
+  onDragStart,
+  onDragEnd,
+  onDrop,
+  onMove,
 }: {
   card: StoryCard;
   active: boolean;
   visible: boolean;
   visibleCount: number;
+  position: number;
+  canReorder: boolean;
+  isDragging: boolean;
+  onFocus: () => void;
+  onDragStart: (event: DragEvent<HTMLElement>) => void;
+  onDragEnd: () => void;
+  onDrop: (event: DragEvent<HTMLElement>) => void;
+  onMove: (direction: -1 | 1) => void;
 }) {
+  const kindClass = `card${card.kind[0].toUpperCase()}${card.kind.slice(1)}`;
+
   return (
     <article
-      className={`${styles.card} ${styles[`card${card.kind[0].toUpperCase()}${card.kind.slice(1)}`]} ${
+      className={`${styles.card} ${styles[kindClass]} ${
         active ? styles.cardActive : styles.cardQuiet
-      } ${visible ? styles.cardVisible : ""}`}
+      } ${visible ? styles.cardVisible : ""} ${
+        isDragging ? styles.cardDragging : ""
+      }`}
+      data-sequence-card={card.kind}
       aria-current={active ? "step" : undefined}
+      aria-label={`${position + 1}. ${card.title}`}
+      tabIndex={visible ? 0 : -1}
+      draggable={canReorder}
+      onClick={onFocus}
+      onFocus={onFocus}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={(event) => {
+        if (canReorder) event.preventDefault();
+      }}
+      onDrop={onDrop}
     >
       <div className={styles.cardTopline}>
-        <span className={styles.step}>{card.step}</span>
+        <span className={styles.step}>POSITION 0{position + 1}</span>
         <span className={styles.status}>
           <i aria-hidden="true" />
           {card.status}
@@ -210,8 +278,8 @@ function TimelineCard({
           <Image
             src="/icons/a16zero.svg"
             alt=""
-            width={25}
-            height={25}
+            width={31}
+            height={31}
             className={styles.brandMark}
           />
         )}
@@ -231,16 +299,46 @@ function TimelineCard({
       {card.kind === "signals" && (
         <p className={styles.humanNote}>
           <span aria-hidden="true">✓</span>
-          Supports human review · No automatic rejection
+          Supports human review · Helps prioritize attention
         </p>
       )}
+
+      <div className={styles.cardControls} aria-label={`Move ${card.title}`}>
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onMove(-1);
+          }}
+          disabled={!canReorder || position === 0}
+          aria-label={`Move ${card.title} earlier`}
+        >
+          ←
+        </button>
+        <span aria-hidden="true">Drag to reorder</span>
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onMove(1);
+          }}
+          disabled={!canReorder || position === 2}
+          aria-label={`Move ${card.title} later`}
+        >
+          →
+        </button>
+      </div>
     </article>
   );
 }
 
 export function TheShift() {
   const storyRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [story, setStory] = useState<StoryState>(INITIAL_STATE);
+  const [order, setOrder] = useState<CardKind[]>(INITIAL_ORDER);
+  const [manualFocus, setManualFocus] = useState<CardKind | null>(null);
+  const [draggingKind, setDraggingKind] = useState<CardKind | null>(null);
 
   useEffect(() => {
     let frame = 0;
@@ -298,18 +396,111 @@ export function TheShift() {
 
     updateStory();
     window.addEventListener("scroll", requestUpdate, { passive: true });
+    document.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
 
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", requestUpdate);
+      document.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
     };
   }, []);
 
-  const screeningActive = story.stage === 0;
-  const technicalActive = story.stage === 1;
-  const signalsActive = story.stage === 2;
+  const scrollCardIntoView = useCallback((kind: CardKind, smooth = true) => {
+    const track = trackRef.current;
+    const card = track?.querySelector<HTMLElement>(
+      `[data-sequence-card="${kind}"]`,
+    );
+    if (!track || !card) return;
+
+    const trackRect = track.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const target =
+      track.scrollLeft +
+      cardRect.left -
+      trackRect.left -
+      (track.clientWidth - cardRect.width) / 2;
+    track.scrollTo({
+      left: Math.max(0, target),
+      behavior:
+        smooth &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "smooth"
+          : "auto",
+    });
+  }, []);
+
+  const focusCard = useCallback(
+    (kind: CardKind, smooth = true) => {
+      setManualFocus(kind);
+      scrollCardIntoView(kind, smooth);
+    },
+    [scrollCardIntoView],
+  );
+
+  useEffect(() => {
+    if (manualFocus) return;
+    const activeKind =
+      story.stage === 0
+        ? "screening"
+        : story.stage === 1
+          ? "technical"
+          : "signals";
+    const frame = window.requestAnimationFrame(() =>
+      scrollCardIntoView(activeKind),
+    );
+    return () => window.cancelAnimationFrame(frame);
+  }, [manualFocus, scrollCardIntoView, story.stage]);
+
+  const reorder = useCallback(
+    (moving: CardKind, target: CardKind) => {
+      if (moving === target || story.stage < 2) return;
+
+      setOrder((current) => {
+        const next = current.filter((kind) => kind !== moving);
+        next.splice(current.indexOf(target), 0, moving);
+        return next;
+      });
+      setManualFocus(moving);
+      window.requestAnimationFrame(() => focusCard(moving));
+    },
+    [focusCard, story.stage],
+  );
+
+  const moveCard = useCallback(
+    (kind: CardKind, direction: -1 | 1) => {
+      if (story.stage < 2) return;
+      const currentIndex = order.indexOf(kind);
+      const targetIndex = currentIndex + direction;
+      if (targetIndex < 0 || targetIndex >= order.length) return;
+
+      const next = [...order];
+      [next[currentIndex], next[targetIndex]] = [
+        next[targetIndex],
+        next[currentIndex],
+      ];
+      setOrder(next);
+      setManualFocus(kind);
+      window.requestAnimationFrame(() => focusCard(kind));
+    },
+    [focusCard, order, story.stage],
+  );
+
+  const visibleCounts: Record<CardKind, number> = {
+    screening: story.screeningCount,
+    signals: story.signalsCount,
+    technical: story.technicalCount,
+  };
+  const focusedKind =
+    manualFocus ??
+    (story.stage === 0
+      ? "screening"
+      : story.stage === 1
+        ? "technical"
+        : "signals");
+  const summary = getSequenceSummary(order);
+  const focusedPosition = order.indexOf(focusedKind);
 
   return (
     <section
@@ -321,7 +512,12 @@ export function TheShift() {
         <div
           className={styles.sticky}
           data-story-stage={story.stage}
-          style={{ "--story-stage": story.stage } as CSSProperties}
+          style={
+            {
+              "--story-stage": story.stage,
+              "--active-position": focusedPosition,
+            } as CSSProperties
+          }
         >
           <div className={styles.ambientGlow} aria-hidden="true" />
 
@@ -333,46 +529,85 @@ export function TheShift() {
               </span>
             </div>
             <h2 id="hiring-timeline-title">
-              The missing piece before the technical interview.
+              Put evidence where it changes the interview.
             </h2>
-            <p>
-              Screening adds context. Technical interviews add depth.
-              <span> 16Signals adds real-work evidence between them.</span>
-            </p>
+            <div className={styles.dynamicSummary} aria-live="polite">
+              <span>{story.stage < 2 ? "Building the sequence" : summary.label}</span>
+              <p>
+                {story.stage < 2
+                  ? "Screening gives first context. Technical interviews add depth. The missing evidence layer arrives next."
+                  : summary.text}
+              </p>
+            </div>
           </header>
 
           <div className={styles.timeline}>
-            <div className={styles.rail} aria-hidden="true">
-              <span className={styles.railBase} />
-              <span className={styles.railProgress} />
-              <i className={styles.railNodeOne} />
-              <i className={styles.railNodeTwo} />
-              <i className={styles.railNodeThree} />
-            </div>
+            <div className={styles.trackShell}>
+              <div
+                ref={trackRef}
+                className={styles.track}
+                aria-label="Draggable hiring sequence"
+              >
+                <div className={styles.rail} aria-hidden="true">
+                  <span className={styles.railBase} />
+                  <span className={styles.railProgress} />
+                </div>
 
-            <TimelineCard
-              card={SCREENING}
-              active={screeningActive}
-              visible
-              visibleCount={story.screeningCount}
-            />
-            <TimelineCard
-              card={SIGNALS}
-              active={signalsActive}
-              visible={story.stage === 2}
-              visibleCount={story.signalsCount}
-            />
-            <TimelineCard
-              card={TECHNICAL}
-              active={technicalActive}
-              visible={story.stage >= 1}
-              visibleCount={story.technicalCount}
-            />
+                {order.map((kind, index) => {
+                  const card = CARDS[kind];
+                  const isVisible =
+                    kind === "screening" ||
+                    (kind === "technical" && story.stage >= 1) ||
+                    (kind === "signals" && story.stage === 2);
+
+                  return (
+                    <div className={styles.slot} key={kind}>
+                      <i className={styles.railNode} aria-hidden="true" />
+                      <TimelineCard
+                        card={card}
+                        active={focusedKind === kind}
+                        visible={isVisible}
+                        visibleCount={visibleCounts[kind]}
+                        position={index}
+                        canReorder={story.stage === 2}
+                        isDragging={draggingKind === kind}
+                        onFocus={() => {
+                          if (!isVisible) return;
+                          focusCard(kind);
+                        }}
+                        onDragStart={(event) => {
+                          if (story.stage < 2) {
+                            event.preventDefault();
+                            return;
+                          }
+                          setDraggingKind(kind);
+                          event.dataTransfer.effectAllowed = "move";
+                          event.dataTransfer.setData("text/plain", kind);
+                        }}
+                        onDragEnd={() => setDraggingKind(null)}
+                        onDrop={(event) => {
+                          event.preventDefault();
+                          const moving =
+                            (event.dataTransfer.getData(
+                              "text/plain",
+                            ) as CardKind) || draggingKind;
+                          if (moving) reorder(moving, kind);
+                          setDraggingKind(null);
+                        }}
+                        onMove={(direction) => moveCard(kind, direction)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          <div className={styles.scrollCue} aria-hidden="true">
-            <span />
-            Scroll to place the evidence
+          <div className={styles.scrollCue}>
+            <span aria-hidden="true" />
+            {story.stage < 2
+              ? "Scroll to build the sequence"
+              : "Drag cards to compare the order"}
           </div>
         </div>
       </div>

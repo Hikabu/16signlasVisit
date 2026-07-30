@@ -4,7 +4,7 @@
   overflow: clip;
   border-block: 1px solid rgba(255, 255, 255, 0.06);
   background:
-    radial-gradient(circle at 50% 46%, rgba(65, 80, 158, 0.09), transparent 38%),
+    radial-gradient(circle at 50% 51%, rgba(65, 80, 158, 0.11), transparent 38%),
     #08090a;
   color: #f5f7f7;
 }
@@ -30,26 +30,24 @@
   position: sticky;
   top: 0;
   display: flex;
-  width: min(100%, 1480px);
+  width: 100%;
   height: 100svh;
-  min-height: 680px;
-  margin-inline: auto;
+  min-height: 720px;
   overflow: hidden;
   flex-direction: column;
-  padding: clamp(72px, 8.5vh, 90px) clamp(22px, 5vw, 76px)
-    clamp(18px, 3vh, 32px);
+  padding: clamp(58px, 7vh, 80px) 0 clamp(16px, 2.4vh, 28px);
 }
 
 .ambientGlow {
   position: absolute;
-  top: 56%;
+  top: 62%;
   left: 50%;
-  width: clamp(280px, 39vw, 580px);
-  height: clamp(280px, 39vw, 580px);
+  width: clamp(340px, 48vw, 720px);
+  height: clamp(260px, 36vw, 560px);
   border-radius: 50%;
-  background: rgba(96, 115, 232, 0.14);
-  filter: blur(110px);
-  opacity: calc(var(--story-stage) * 0.22);
+  background: rgba(96, 115, 232, 0.15);
+  filter: blur(120px);
+  opacity: calc(0.06 + var(--story-stage) * 0.1);
   pointer-events: none;
   transform: translate(-50%, -50%);
   transition: opacity 700ms ease;
@@ -58,15 +56,15 @@
 .intro {
   position: relative;
   z-index: 5;
-  width: min(100%, 870px);
+  width: min(calc(100% - 44px), 1180px);
   margin-inline: auto;
   text-align: center;
 }
 
 .eyebrowRow {
   display: flex;
-  width: min(100%, 660px);
-  margin: 0 auto clamp(11px, 1.5vh, 17px);
+  width: min(100%, 700px);
+  margin: 0 auto clamp(10px, 1.3vh, 15px);
   align-items: center;
   justify-content: center;
   gap: 18px;
@@ -74,11 +72,11 @@
 
 .eyebrow,
 .counter {
-  color: rgba(189, 197, 207, 0.5);
+  color: rgba(204, 211, 220, 0.66);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
-  font-weight: 620;
-  letter-spacing: 0.17em;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
@@ -86,55 +84,110 @@
 .eyebrowRow::after {
   width: 42px;
   height: 1px;
-  background: rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0.14);
   content: "";
 }
 
 .counter {
-  color: #8d98eb;
+  color: #a8b2ff;
   font-variant-numeric: tabular-nums;
 }
 
 .intro h2 {
   margin: 0;
-  color: #f3f5f5;
-  font-size: clamp(34px, 4.1vw, 62px);
-  font-weight: 430;
-  letter-spacing: -0.052em;
+  color: #f5f7f7;
+  font-size: clamp(35px, 4vw, 59px);
+  font-weight: 440;
+  letter-spacing: -0.05em;
   line-height: 0.98;
   text-wrap: balance;
 }
 
-.intro p {
-  max-width: 650px;
-  margin: clamp(12px, 1.8vh, 20px) auto 0;
-  color: rgba(214, 219, 222, 0.48);
-  font-size: clamp(13px, 1.2vw, 17px);
-  letter-spacing: -0.014em;
-  line-height: 1.5;
-  text-wrap: balance;
+.dynamicSummary {
+  display: grid;
+  width: min(100%, 760px);
+  min-height: 57px;
+  margin: clamp(14px, 1.8vh, 19px) auto 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px 18px;
+  align-items: start;
+  text-align: left;
 }
 
-.intro p span {
-  color: rgba(222, 225, 248, 0.78);
+.dynamicSummary > span {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid rgba(135, 233, 211, 0.25);
+  border-radius: 999px;
+  color: #a9eadc;
+  background: rgba(66, 133, 120, 0.09);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dynamicSummary p {
+  margin: 2px 0 0;
+  color: rgba(224, 229, 233, 0.72);
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.45;
 }
 
 .timeline {
   position: relative;
   z-index: 2;
-  width: min(100%, 1240px);
+  display: flex;
   min-height: 0;
   flex: 1;
-  margin: clamp(20px, 3.5vh, 42px) auto 0;
+  align-items: center;
+  margin-top: clamp(18px, 2.8vh, 30px);
+}
+
+.trackShell {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.track {
+  --card-width: clamp(350px, 29vw, 430px);
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--card-width);
+  gap: clamp(34px, 5vw, 84px);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding: 56px max(6vw, calc((100vw - 1420px) / 2)) 42px;
+  scroll-behavior: smooth;
+  scroll-padding-inline: max(6vw, calc((100vw - 1420px) / 2));
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  scroll-snap-align: center;
 }
 
 .rail {
   position: absolute;
-  top: 50%;
-  left: 6%;
-  width: 88%;
+  top: 28px;
+  left: calc(max(6vw, (100vw - 1420px) / 2) + var(--card-width) / 2);
+  width: calc(var(--card-width) * 2 + clamp(34px, 5vw, 84px) * 2);
   height: 1px;
-  transform: translateY(-50%);
 }
 
 .railBase,
@@ -145,165 +198,141 @@
 }
 
 .railBase {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.12) 8%,
-    rgba(255, 255, 255, 0.12) 92%,
-    transparent
-  );
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .railProgress {
-  width: calc(50% + var(--story-stage) * 25%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(123, 138, 226, 0.6) 16%,
-    rgba(108, 232, 205, 0.82) 100%
-  );
-  box-shadow: 0 0 18px rgba(108, 232, 205, 0.16);
-  transition: width 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  width: calc(var(--active-position) * 50%);
+  background: linear-gradient(90deg, #7381df, #77e8ce);
+  box-shadow:
+    0 0 14px rgba(111, 135, 234, 0.5),
+    0 0 26px rgba(103, 225, 200, 0.16);
+  transition: width 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.rail i {
+.railNode {
   position: absolute;
-  top: 50%;
-  width: 7px;
-  height: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  top: -32px;
+  left: 50%;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   background: #121417;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.025);
-  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.025);
+  transform: translateX(-50%);
   transition:
-    left 800ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 400ms ease,
-    background 400ms ease;
+    background 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
 }
 
-.railNodeOne {
-  left: 10%;
-}
-
-.railNodeTwo {
-  left: 50%;
-  opacity: calc(var(--story-stage) - 1);
-}
-
-.railNodeThree {
-  left: 90%;
-  opacity: var(--story-stage);
-}
-
-.sticky[data-story-stage="0"] .railNodeOne,
-.sticky[data-story-stage="1"] .railNodeThree,
-.sticky[data-story-stage="2"] .railNodeTwo {
-  border-color: rgba(134, 238, 214, 0.54);
+.slot:has(.cardActive) .railNode {
+  border-color: rgba(134, 238, 214, 0.7);
   background: #80e9d1;
   box-shadow:
-    0 0 0 5px rgba(103, 225, 200, 0.08),
-    0 0 20px rgba(103, 225, 200, 0.42);
+    0 0 0 6px rgba(103, 225, 200, 0.09),
+    0 0 22px rgba(103, 225, 200, 0.58);
 }
 
 .card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
   display: flex;
-  width: 31%;
-  min-width: 0;
-  min-height: 330px;
+  width: 100%;
+  min-height: 372px;
   overflow: hidden;
   flex-direction: column;
-  padding: clamp(18px, 1.8vw, 25px);
-  border: 1px solid rgba(255, 255, 255, 0.085);
-  border-radius: 28px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 48%),
-    rgba(14, 16, 18, 0.94);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 48%),
+    rgba(14, 16, 18, 0.97);
   box-shadow:
-    0 34px 72px rgba(0, 0, 0, 0.34),
+    0 30px 70px rgba(0, 0, 0, 0.36),
     0 1px 0 rgba(255, 255, 255, 0.04) inset;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.84);
-  transform-origin: 50% 50%;
+  cursor: grab;
+  user-select: none;
+  transform: translateY(-130px) scale(0.9);
   transition:
-    left 850ms cubic-bezier(0.22, 1, 0.36, 1),
-    width 850ms cubic-bezier(0.22, 1, 0.36, 1),
-    min-height 850ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-radius 850ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 600ms ease,
-    background 600ms ease,
-    box-shadow 600ms ease,
-    opacity 450ms ease,
-    filter 600ms ease,
-    transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: left, width, transform, opacity;
+    border-color 300ms ease,
+    background 300ms ease,
+    box-shadow 300ms ease,
+    filter 300ms ease,
+    opacity 300ms ease;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card:focus-visible {
+  outline: 2px solid #74e9d0;
+  outline-offset: 5px;
 }
 
 .cardVisible {
   opacity: 1;
 }
 
-.cardQuiet {
-  border-radius: 23px;
-  filter: saturate(0.7);
-  transform: translate(-50%, -50%) scale(0.95);
+.cardScreening.cardVisible {
+  animation: enterFromUpperLeft 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.cardQuiet.cardVisible {
-  opacity: 0.7;
+.cardTechnical.cardVisible {
+  animation: enterFromUpperRight 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cardSignals.cardVisible {
+  animation: enterMissingPiece 980ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cardQuiet {
+  filter: saturate(0.72);
+  opacity: 0.66;
+}
+
+.card:not(.cardVisible) {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cardQuiet:hover {
+  border-color: rgba(255, 255, 255, 0.17);
+  filter: saturate(0.9);
+  opacity: 0.86;
 }
 
 .cardActive {
   z-index: 3;
-  border-color: rgba(255, 255, 255, 0.15);
-  border-radius: 32px 32px 28px 32px;
+  border-color: rgba(131, 234, 212, 0.42);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(98, 224, 196, 0.08), transparent 42%),
+    linear-gradient(145deg, rgba(145, 158, 240, 0.08), transparent 52%),
+    rgba(17, 19, 23, 0.98);
+  box-shadow:
+    0 36px 94px rgba(0, 0, 0, 0.46),
+    0 0 0 1px rgba(130, 236, 211, 0.08) inset,
+    0 0 60px rgba(90, 111, 211, 0.13);
+  filter: none;
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  animation: cardSettle 950ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.cardScreening {
-  left: 50%;
-}
-
-.sticky[data-story-stage="1"] .cardScreening {
-  left: 29%;
-}
-
-.sticky[data-story-stage="1"] .cardTechnical {
-  left: 71%;
-}
-
-.sticky[data-story-stage="2"] .cardScreening {
-  left: 15%;
-  width: 27%;
-}
-
-.sticky[data-story-stage="2"] .cardSignals {
-  left: 50%;
-  width: 38%;
-  min-height: 410px;
-}
-
-.sticky[data-story-stage="2"] .cardTechnical {
-  left: 85%;
-  width: 27%;
+.cardDragging {
+  border-color: rgba(168, 180, 255, 0.6);
+  cursor: grabbing;
+  opacity: 0.42;
 }
 
 .cardSignals {
-  z-index: 4;
   border-color: rgba(137, 153, 245, 0.38);
   background:
-    radial-gradient(circle at 48% 8%, rgba(101, 228, 200, 0.12), transparent 38%),
-    linear-gradient(145deg, rgba(143, 156, 244, 0.13), transparent 52%),
-    rgba(17, 19, 27, 0.97);
-  box-shadow:
-    0 40px 100px rgba(0, 0, 0, 0.46),
-    0 0 0 1px rgba(158, 169, 248, 0.08) inset,
-    0 0 74px rgba(93, 109, 210, 0.13);
+    radial-gradient(circle at 48% 8%, rgba(101, 228, 200, 0.13), transparent 38%),
+    linear-gradient(145deg, rgba(143, 156, 244, 0.14), transparent 52%),
+    rgba(17, 19, 27, 0.98);
 }
 
 .cardSignals::before {
@@ -313,10 +342,10 @@
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(171, 183, 255, 0.42),
+    rgba(171, 183, 255, 0.44),
     transparent 34%,
     transparent 66%,
-    rgba(103, 229, 201, 0.28)
+    rgba(103, 229, 201, 0.3)
   );
   content: "";
   mask:
@@ -328,47 +357,49 @@
 
 .cardTopline {
   display: flex;
-  min-height: 24px;
+  min-height: 28px;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
 }
 
 .step {
-  color: rgba(193, 199, 208, 0.34);
+  color: rgba(205, 212, 221, 0.61);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
-  letter-spacing: 0.13em;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
 }
 
 .status {
   display: inline-flex;
+  min-height: 28px;
   align-items: center;
   gap: 7px;
-  padding: 6px 9px;
-  border: 1px solid rgba(237, 176, 92, 0.18);
+  padding: 0 10px;
+  border: 1px solid rgba(237, 176, 92, 0.25);
   border-radius: 999px;
-  color: rgba(239, 188, 117, 0.68);
-  background: rgba(119, 75, 31, 0.09);
-  font-size: 8px;
-  font-weight: 630;
-  letter-spacing: 0.11em;
+  color: rgba(247, 201, 138, 0.9);
+  background: rgba(119, 75, 31, 0.11);
+  font-size: 9px;
+  font-weight: 680;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 .status i {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #dba558;
-  box-shadow: 0 0 9px rgba(219, 165, 88, 0.38);
+  background: #e2ae65;
+  box-shadow: 0 0 9px rgba(219, 165, 88, 0.45);
 }
 
 .cardSignals .status {
-  border-color: rgba(124, 232, 209, 0.22);
-  color: rgba(160, 242, 224, 0.88);
-  background: rgba(70, 142, 128, 0.09);
+  border-color: rgba(124, 232, 209, 0.26);
+  color: rgba(173, 246, 230, 0.96);
+  background: rgba(70, 142, 128, 0.11);
 }
 
 .cardSignals .status i {
@@ -379,108 +410,111 @@
 .cardHeading {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 17px;
+  gap: 13px;
+  margin-top: 19px;
 }
 
 .brandMark {
-  width: 25px;
-  height: 25px;
+  width: 31px;
+  height: 31px;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(129, 234, 211, 0.2));
+  filter: drop-shadow(0 0 12px rgba(129, 234, 211, 0.25));
 }
 
 .cardEyebrow {
   display: block;
-  margin-bottom: 5px;
-  color: rgba(171, 178, 188, 0.38);
+  margin-bottom: 7px;
+  color: rgba(190, 198, 209, 0.66);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .cardHeading h3 {
   margin: 0;
-  color: #eef0f1;
-  font-size: clamp(22px, 2vw, 29px);
-  font-weight: 490;
-  letter-spacing: -0.045em;
+  color: #f1f3f4;
+  font-size: clamp(26px, 2.1vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.042em;
   line-height: 1;
 }
 
 .cardSignals .cardHeading h3 {
-  color: #f5f6ff;
-  font-size: clamp(27px, 2.5vw, 36px);
+  color: #f7f7ff;
+  font-size: clamp(30px, 2.4vw, 37px);
 }
 
 .cardSummary {
-  margin: 10px 0 0;
-  color: rgba(207, 212, 217, 0.46);
-  font-size: 11px;
-  line-height: 1.4;
+  margin: 13px 0 0;
+  color: rgba(221, 226, 230, 0.73);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .cardSignals .cardSummary {
-  color: rgba(216, 221, 244, 0.63);
+  color: rgba(232, 235, 252, 0.9);
+  font-size: 15px;
+  font-weight: 510;
 }
 
 .notifications {
   display: flex;
   min-height: 0;
-  margin: 18px 0 0;
+  margin: 19px 0 0;
   padding: 0;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
   list-style: none;
 }
 
 .notification {
   display: grid;
-  min-height: 43px;
+  min-height: 46px;
   overflow: hidden;
-  grid-template-columns: 28px minmax(0, 1fr) 5px;
+  grid-template-columns: 31px minmax(0, 1fr) 5px;
   align-items: center;
-  gap: 10px;
-  padding: 7px 10px 7px 7px;
-  border: 1px solid rgba(255, 255, 255, 0);
+  gap: 11px;
+  padding: 7px 11px 7px 7px;
+  border: 1px solid transparent;
   border-radius: 13px;
-  color: rgba(227, 230, 233, 0.45);
-  background: rgba(255, 255, 255, 0.018);
-  font-size: 11px;
-  letter-spacing: -0.012em;
+  color: rgba(232, 235, 238, 0.72);
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 13px;
+  font-weight: 480;
+  letter-spacing: -0.01em;
   opacity: 0;
   transform: translateY(12px) scale(0.97);
   transition:
-    opacity 460ms ease,
-    transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
-    background 450ms ease,
-    border-color 450ms ease,
-    color 450ms ease;
+    opacity 420ms ease,
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 350ms ease,
+    border-color 350ms ease,
+    color 350ms ease;
 }
 
 .notificationVisible {
-  opacity: 0.56;
+  opacity: 0.72;
   transform: translateY(0) scale(1);
 }
 
 .notificationNewest {
-  border-color: rgba(255, 255, 255, 0.095);
-  color: rgba(246, 247, 248, 0.95);
-  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f7f8f8;
+  background: rgba(255, 255, 255, 0.065);
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.15),
-    0 1px 0 rgba(255, 255, 255, 0.025) inset;
+    0 8px 24px rgba(0, 0, 0, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.03) inset;
   opacity: 1;
-  transform: translateY(0) scale(1.012);
+  transform: translateY(0) scale(1.008);
 }
 
 .notification > i {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .notificationNewest > i {
@@ -490,8 +524,8 @@
 
 .notificationIcon {
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: 31px;
+  height: 31px;
   border: 1px solid currentColor;
   border-radius: 9px;
   place-items: center;
@@ -499,108 +533,176 @@
 }
 
 .notificationIcon span {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   background: currentColor;
   mask: var(--signal-icon) center / contain no-repeat;
 }
 
 .iconAmber {
-  color: #e8b45f;
+  color: #f0bd6a;
 }
 
 .iconBlue {
-  color: #73b8f4;
+  color: #7ac3ff;
 }
 
 .iconGreen {
-  color: #68dcbf;
+  color: #71e6c8;
 }
 
 .iconViolet {
-  color: #a9a5ff;
+  color: #b3afff;
 }
 
 .cardQuiet .notificationVisible {
-  opacity: 0.42;
+  opacity: 0.58;
 }
 
 .humanNote {
   display: flex;
-  margin: auto 0 0;
-  padding-top: 12px;
+  margin: 14px 0 0;
   align-items: center;
-  gap: 7px;
-  color: rgba(177, 225, 216, 0.56);
-  font-size: 8px;
-  letter-spacing: 0.025em;
+  gap: 8px;
+  color: rgba(192, 237, 228, 0.76);
+  font-size: 11px;
+  letter-spacing: 0.01em;
 }
 
 .humanNote span {
   display: grid;
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(123, 229, 207, 0.18);
+  width: 19px;
+  height: 19px;
+  border: 1px solid rgba(123, 229, 207, 0.28);
   border-radius: 50%;
   place-items: center;
-  color: #7de7cf;
-  background: rgba(83, 162, 146, 0.08);
+  color: #83ead3;
+  background: rgba(83, 162, 146, 0.1);
+  font-size: 10px;
+}
+
+.cardControls {
+  display: flex;
+  min-height: 32px;
+  margin-top: auto;
+  padding-top: 15px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  color: rgba(190, 198, 207, 0.45);
+  font-family: var(--font-geist-mono), monospace;
   font-size: 8px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.cardControls button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  color: #d9dfe2;
+  background: rgba(255, 255, 255, 0.025);
+  cursor: pointer;
+  place-items: center;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.cardControls button:hover:not(:disabled),
+.cardControls button:focus-visible {
+  border-color: rgba(120, 234, 209, 0.58);
+  color: #aef2e3;
+  background: rgba(75, 147, 132, 0.12);
+}
+
+.cardControls button:focus-visible {
+  outline: 2px solid #74e9d0;
+  outline-offset: 2px;
+}
+
+.cardControls button:disabled {
+  color: rgba(218, 223, 226, 0.2);
+  cursor: default;
+  opacity: 0.5;
+}
+
+.sticky[data-story-stage="0"] .cardControls,
+.sticky[data-story-stage="1"] .cardControls {
+  visibility: hidden;
 }
 
 .scrollCue {
   position: relative;
   z-index: 5;
   display: flex;
-  margin: clamp(12px, 2vh, 22px) auto 0;
+  margin: 0 auto;
   align-items: center;
-  gap: 9px;
-  color: rgba(183, 190, 199, 0.31);
+  gap: 10px;
+  color: rgba(202, 209, 218, 0.5);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 8px;
-  font-weight: 580;
+  font-size: 9px;
+  font-weight: 620;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  transition: opacity 400ms ease;
 }
 
-.scrollCue span {
+.scrollCue > span {
   position: relative;
   width: 1px;
   height: 20px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.12);
 }
 
-.scrollCue span::after {
+.scrollCue > span::after {
   position: absolute;
   top: 0;
   left: 0;
   width: 1px;
   height: 8px;
-  background: #7f8be1;
+  background: #8d99ee;
   content: "";
   animation: scrollCue 1.7s ease-in-out infinite;
 }
 
-.sticky[data-story-stage="2"] .scrollCue {
-  opacity: 0;
+@keyframes enterFromUpperLeft {
+  from {
+    opacity: 0;
+    transform: translate(-120px, -150px) rotate(-2.5deg) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(1);
+  }
 }
 
-@keyframes cardSettle {
+@keyframes enterFromUpperRight {
+  from {
+    opacity: 0;
+    transform: translate(120px, -150px) rotate(2.5deg) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(1);
+  }
+}
+
+@keyframes enterMissingPiece {
   0% {
-    border-radius: 24px;
-    transform: translate(-50%, -50%) scale(0.96);
+    opacity: 0;
+    transform: translateY(-175px) scale(0.78);
   }
-
-  58% {
-    border-radius: 35px 30px 34px 29px;
-    transform: translate(-50%, -50%) scale(1.012);
+  68% {
+    opacity: 1;
+    transform: translateY(7px) scale(1.012);
   }
-
   100% {
-    border-radius: 32px 32px 28px 32px;
-    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -610,53 +712,52 @@
     opacity: 0;
     transform: translateY(-7px);
   }
-
   35% {
     opacity: 1;
   }
-
   72% {
     opacity: 0;
     transform: translateY(18px);
   }
 }
 
-@media (max-width: 1020px) and (min-width: 768px) {
+@media (min-width: 1480px) {
+  .track {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1020px) {
   .sticky {
-    padding-inline: 22px;
+    min-height: 700px;
+    padding-top: 52px;
   }
 
-  .timeline {
-    width: 100%;
+  .track {
+    --card-width: clamp(350px, 48vw, 410px);
+    gap: 34px;
+    padding-inline: 7vw;
+    scroll-padding-inline: 7vw;
   }
 
-  .card {
-    min-height: 315px;
-    padding: 18px;
-  }
-
-  .sticky[data-story-stage="2"] .cardSignals {
-    min-height: 390px;
-  }
-
-  .notification {
-    gap: 7px;
-    padding-right: 7px;
-    font-size: 10px;
+  .rail {
+    left: calc(7vw + var(--card-width) / 2);
+    width: calc(var(--card-width) * 2 + 68px);
   }
 }
 
 @media (max-width: 767px) {
   .story {
-    min-height: 300svh;
+    min-height: 315svh;
   }
 
   .sticky {
-    min-height: 620px;
-    padding: 72px 16px 14px;
+    min-height: 650px;
+    padding: 66px 0 14px;
   }
 
   .intro {
+    width: calc(100% - 36px);
     text-align: left;
   }
 
@@ -673,209 +774,131 @@
     flex: 1;
   }
 
-  .intro h2 {
-    max-width: 520px;
-    font-size: clamp(31px, 8.9vw, 44px);
+  .eyebrow,
+  .counter {
+    font-size: 9px;
   }
 
-  .intro p {
-    max-width: 520px;
-    margin: 10px 0 0;
-    font-size: 12px;
+  .intro h2 {
+    max-width: 560px;
+    font-size: clamp(31px, 9vw, 43px);
+  }
+
+  .dynamicSummary {
+    display: block;
+    min-height: 87px;
+    margin-top: 12px;
+  }
+
+  .dynamicSummary p {
+    margin-top: 9px;
+    font-size: 13px;
+    line-height: 1.42;
   }
 
   .timeline {
-    width: 100%;
-    margin-top: 14px;
+    margin-top: 8px;
+  }
+
+  .track {
+    --card-width: min(84vw, 370px);
+    gap: 22px;
+    padding: 46px 8vw 30px;
+    scroll-padding-inline: 8vw;
   }
 
   .rail {
-    top: 4%;
-    left: 20px;
-    width: 1px;
-    height: 92%;
-    transform: none;
+    top: 23px;
+    left: calc(8vw + var(--card-width) / 2);
+    width: calc(var(--card-width) * 2 + 44px);
   }
 
-  .railBase {
-    background: linear-gradient(
-      180deg,
-      transparent,
-      rgba(255, 255, 255, 0.13) 8%,
-      rgba(255, 255, 255, 0.13) 92%,
-      transparent
-    );
-  }
-
-  .railProgress {
-    width: 1px;
-    height: calc(50% + var(--story-stage) * 25%);
-    background: linear-gradient(
-      180deg,
-      transparent,
-      rgba(123, 138, 226, 0.6) 16%,
-      rgba(108, 232, 205, 0.82) 100%
-    );
-    transition: height 800ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .rail i {
-    left: 50%;
-    transition:
-      top 800ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 400ms ease,
-      background 400ms ease;
-  }
-
-  .railNodeOne {
-    top: 10% !important;
-  }
-
-  .railNodeTwo {
-    top: 50% !important;
-  }
-
-  .railNodeThree {
-    top: 90% !important;
+  .railNode {
+    top: -27px;
   }
 
   .card {
-    top: 50%;
-    left: 12% !important;
-    width: 84% !important;
-    min-height: 280px;
-    padding: 16px;
-    transform: translate(0, -50%) scale(0.86);
-  }
-
-  .cardQuiet {
-    min-height: 84px;
-    padding-block: 13px;
-    border-radius: 19px;
-    transform: translate(0, -50%) scale(0.96);
-  }
-
-  .cardActive {
-    transform: translate(0, -50%) scale(1);
-    animation-name: cardSettleMobile;
-  }
-
-  .cardQuiet .cardHeading {
-    margin-top: 7px;
-  }
-
-  .cardQuiet .cardEyebrow,
-  .cardQuiet .cardSummary,
-  .cardQuiet .notifications,
-  .cardQuiet .humanNote {
-    display: none;
-  }
-
-  .cardQuiet .cardHeading h3 {
-    font-size: 18px;
-  }
-
-  .sticky[data-story-stage="0"] .cardScreening {
-    top: 50%;
-  }
-
-  .sticky[data-story-stage="1"] .cardScreening {
-    top: 16%;
-  }
-
-  .sticky[data-story-stage="1"] .cardTechnical {
-    top: 59%;
-  }
-
-  .sticky[data-story-stage="2"] .cardScreening {
-    top: 10%;
-  }
-
-  .sticky[data-story-stage="2"] .cardSignals {
-    top: 50%;
     min-height: 350px;
-    padding: 12px;
+    padding: 19px;
+    border-radius: 22px;
   }
 
-  .sticky[data-story-stage="2"] .cardTechnical {
-    top: 90%;
+  .cardHeading h3 {
+    font-size: 27px;
   }
 
-  .cardSignals .notification {
-    min-height: 32px;
-    grid-template-columns: 23px minmax(0, 1fr) 4px;
-    padding-block: 4px;
+  .cardSignals .cardHeading h3 {
+    font-size: 31px;
   }
 
-  .cardSignals .notificationIcon {
-    width: 23px;
-    height: 23px;
-  }
-
-  .cardSignals .notificationIcon span {
-    width: 13px;
-    height: 13px;
-  }
-
-  .cardSignals .notifications {
-    margin-top: 8px;
-    gap: 4px;
-  }
-
-  .cardSignals .cardHeading {
-    margin-top: 8px;
+  .cardSummary {
+    font-size: 13px;
   }
 
   .cardSignals .cardSummary {
-    display: none;
+    font-size: 14px;
   }
 
-  .cardSignals .humanNote {
-    padding-top: 8px;
+  .notification {
+    min-height: 43px;
+    font-size: 12px;
   }
 
   .scrollCue {
-    margin-top: 8px;
+    font-size: 8px;
   }
 }
 
-@keyframes cardSettleMobile {
-  0% {
-    border-radius: 20px;
-    transform: translate(0, -50%) scale(0.97);
-  }
-
-  58% {
-    border-radius: 33px 28px 32px 27px;
-    transform: translate(0, -50%) scale(1.008);
-  }
-
-  100% {
-    border-radius: 29px 29px 25px 29px;
-    transform: translate(0, -50%) scale(1);
-  }
-}
-
-@media (max-height: 740px) and (min-width: 768px) {
+@media (max-height: 760px) and (min-width: 768px) {
   .sticky {
-    min-height: 640px;
-    padding-block: 70px 16px;
+    min-height: 660px;
+    padding-top: 44px;
   }
 
   .intro h2 {
-    font-size: clamp(34px, 3.8vw, 50px);
+    font-size: clamp(32px, 3.7vw, 48px);
+  }
+
+  .dynamicSummary {
+    margin-top: 11px;
   }
 
   .timeline {
-    margin-top: 16px;
+    margin-top: 8px;
+  }
+
+  .track {
+    padding-block: 45px 24px;
+  }
+
+  .rail {
+    top: 22px;
+  }
+
+  .railNode {
+    top: -26px;
   }
 
   .card {
-    min-height: 300px;
+    min-height: 345px;
+    padding: 18px;
   }
 
-  .sticky[data-story-stage="2"] .cardSignals {
-    min-height: 380px;
+  .cardHeading {
+    margin-top: 13px;
+  }
+
+  .cardSummary {
+    margin-top: 9px;
+  }
+
+  .notifications {
+    margin-top: 12px;
+    gap: 6px;
+  }
+
+  .notification {
+    min-height: 40px;
   }
 }
 
@@ -898,90 +921,31 @@
   }
 
   .timeline {
-    display: grid;
     min-height: auto;
-    margin-top: 48px;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
-    gap: 16px;
+    margin-top: 44px;
   }
 
-  .rail {
-    display: none;
+  .track {
+    padding-block: 46px 24px;
+    scroll-behavior: auto;
   }
 
   .card,
-  .cardQuiet,
-  .cardActive,
-  .sticky[data-story-stage] .card {
-    position: relative;
-    top: auto;
-    left: auto !important;
-    width: auto !important;
-    min-height: 330px;
+  .cardVisible,
+  .cardScreening.cardVisible,
+  .cardTechnical.cardVisible,
+  .cardSignals.cardVisible {
+    min-height: 372px;
     opacity: 1;
-    filter: none;
     transform: none;
     animation: none;
     transition: none;
   }
 
-  .cardSignals {
-    grid-column: 2;
-    grid-row: 1;
-    min-height: 390px !important;
-  }
-
-  .cardScreening {
-    grid-column: 1;
-  }
-
-  .cardTechnical {
-    grid-column: 3;
-  }
-
-  .notification {
-    opacity: 0.58;
+  .notification,
+  .notificationVisible {
+    opacity: 0.75;
     transform: none;
     transition: none;
-  }
-
-  .cardSignals .notification {
-    opacity: 0.72;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
-  .sticky {
-    padding: 72px 18px;
-  }
-
-  .timeline {
-    display: flex;
-    margin-top: 36px;
-    flex-direction: column;
-  }
-
-  .card,
-  .cardQuiet,
-  .cardActive,
-  .sticky[data-story-stage] .card {
-    min-height: auto;
-    padding: 18px;
-  }
-
-  .cardQuiet .cardEyebrow,
-  .cardQuiet .cardSummary,
-  .cardQuiet .notifications,
-  .cardQuiet .humanNote {
-    display: initial;
-  }
-
-  .cardSignals {
-    order: 2;
-    min-height: auto !important;
-  }
-
-  .cardTechnical {
-    order: 3;
   }
 }
