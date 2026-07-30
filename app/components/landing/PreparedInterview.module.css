@@ -3,6 +3,7 @@
   isolation: isolate;
   overflow: clip;
   background: #050607;
+
   color: #f7f8f8;
   padding: clamp(112px, 14vw, 184px) clamp(18px, 4.5vw, 72px)
     clamp(88px, 11vw, 144px);
@@ -115,7 +116,8 @@
 .introCopy h2 {
   max-width: 930px;
   margin: 0;
-  color: #f7f8f8;
+  /* color: #f7f8f8; */
+  color: #459494;
   font-size: clamp(42px, 5.3vw, 78px);
   font-weight: 430;
   letter-spacing: -0.058em;
@@ -998,7 +1000,8 @@
 }
 
 /* 16signals-style desktop workspace treatment for section two. */
-.section { background: #08090b; padding-top: clamp(96px, 12vw, 150px); }
+/* .section { background: #08090b; padding-top: clamp(96px, 12vw, 150px); } */
+.section { background: #ffffff; padding-top: clamp(96px, 12vw, 150px); } 
 .sectionGlow { display: none; }
 .inner { width: min(100%, 1430px); }
 .intro { grid-template-columns: 1fr; gap: 20px; max-width: 880px; margin: 0 auto; text-align: center; }
