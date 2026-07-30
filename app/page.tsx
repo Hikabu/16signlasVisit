@@ -1,6 +1,7 @@
 import { EditorialHero } from "./components/landing/EditorialHero";
 import { PreparedInterview } from "./components/landing/PreparedInterview";
 import { TheShift } from "./components/landing/TheShift";
+import { Shift } from "./components/landing/Shift";
 import { WorkReveals } from "./components/landing/WorkReveals";
 import { ProblemValue } from "./components/landing/ProblemValue";
 import { HowItWorks } from "./components/landing/HowItWorks";
@@ -20,6 +21,7 @@ export default function Home() {
         <EditorialHero />
         <PreparedInterview />
         <TheShift />
+        <Shift />
         <WorkReveals />
         <ProblemValue />
         <HowItWorks />
