@@ -104,14 +104,10 @@ const INITIAL_ORDER: CardKind[] = ["screening", "signals", "technical"];
 
 const INITIAL_STATE: StoryState = {
   stage: 0,
-  screeningCount: 1,
+  screeningCount: SCREENING.lines.length,
   technicalCount: 0,
   signalsCount: 0,
 };
-
-function visibleLineCount(total: number, localProgress: number) {
-  return Math.min(total, Math.max(1, Math.floor(localProgress * total) + 1));
-}
 
 function getSequenceSummary(order: CardKind[]) {
   const signalsPosition = order.indexOf("signals");
@@ -308,29 +304,26 @@ export function Positioning() {
 
       let next: StoryState;
 
-      if (progress < 0.32) {
-        const local = progress / 0.32;
+      if (progress < 0.34) {
         next = {
           stage: 0,
-          screeningCount: visibleLineCount(SCREENING.lines.length, local),
+          screeningCount: SCREENING.lines.length,
           technicalCount: 0,
           signalsCount: 0,
         };
-      } else if (progress < 0.62) {
-        const local = (progress - 0.32) / 0.3;
+      } else if (progress < 0.67) {
         next = {
           stage: 1,
           screeningCount: SCREENING.lines.length,
-          technicalCount: visibleLineCount(TECHNICAL.lines.length, local),
+          technicalCount: TECHNICAL.lines.length,
           signalsCount: 0,
         };
       } else {
-        const local = (progress - 0.62) / 0.38;
         next = {
           stage: 2,
           screeningCount: SCREENING.lines.length,
           technicalCount: TECHNICAL.lines.length,
-          signalsCount: visibleLineCount(SIGNALS.lines.length, local),
+          signalsCount: SIGNALS.lines.length,
         };
       }
 

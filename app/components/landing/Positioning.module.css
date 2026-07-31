@@ -24,7 +24,7 @@
 }
 
 .story {
-  min-height: 330svh;
+  min-height: 230svh;
 }
 
 .sticky {
@@ -33,8 +33,8 @@
   display: flex;
   width: 100%;
   height: 100svh;
-  min-height: 760px;
-  overflow: hidden;
+  min-height: 100svh;
+  overflow: visible;
   flex-direction: column;
   padding: clamp(56px, 8vh, 96px) 0 clamp(20px, 3vh, 40px);
 }
@@ -86,8 +86,8 @@
   margin: 0;
   color: var(--paper);
   font-family: var(--font-geist-sans), Inter, ui-sans-serif, sans-serif;
-  font-size: clamp(48px, 5.6vw, 88px);
-  font-weight: 520;
+  font-size: clamp(42px, 4.6vw, 74px);
+  font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.94;
   text-wrap: balance;
@@ -230,7 +230,7 @@
   position: relative;
   display: flex;
   width: 100%;
-  min-height: 370px;
+  min-height: 348px;
   overflow: hidden;
   flex-direction: column;
   padding: clamp(22px, 2vw, 30px);
@@ -276,15 +276,15 @@
 }
 
 .cardScreening.cardVisible {
-  animation: enterScreening 900ms var(--ease-premium) both;
+  animation: enterScreening 560ms var(--ease-premium) both;
 }
 
 .cardTechnical.cardVisible {
-  animation: enterTechnical 900ms var(--ease-premium) both;
+  animation: enterTechnical 560ms var(--ease-premium) both;
 }
 
 .cardSignals.cardVisible {
-  animation: enterSignalsFromSide 1000ms var(--ease-premium) both;
+  animation: enterSignalsFromSide 680ms var(--ease-premium) both;
 }
 
 .cardQuiet {
@@ -386,15 +386,15 @@
   margin: 0;
   color: var(--paper);
   font-family: var(--font-geist-sans), Inter, ui-sans-serif, sans-serif;
-  font-size: clamp(26px, 2.4vw, 40px);
-  font-weight: 520;
+  font-size: clamp(26px, 2.2vw, 36px);
+  font-weight: 400;
   letter-spacing: -0.055em;
   line-height: 0.98;
 }
 
 .cardSignals .cardHeading h3 {
   color: var(--ink);
-  font-size: clamp(42px, 4.4vw, 68px);
+  font-size: clamp(38px, 3.8vw, 58px);
 }
 
 .cardSummary {
@@ -438,6 +438,23 @@
 .notificationVisible {
   opacity: 0.72;
   transform: translateY(0);
+  animation: revealNotification 420ms var(--ease-premium) both;
+}
+
+.notificationVisible:nth-child(1) {
+  animation-delay: 40ms;
+}
+
+.notificationVisible:nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.notificationVisible:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.notificationVisible:nth-child(4) {
+  animation-delay: 220ms;
 }
 
 .notificationNewest {
@@ -596,6 +613,17 @@
   }
 }
 
+@keyframes revealNotification {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 0.72;
+    transform: translateY(0);
+  }
+}
+
 @keyframes scrollCue {
   0%,
   100% {
@@ -619,7 +647,7 @@
 
 @media (max-width: 1020px) {
   .sticky {
-    min-height: 700px;
+    min-height: 100svh;
     padding-top: 58px;
   }
 
@@ -629,7 +657,7 @@
 
   .intro h2 {
     max-width: 760px;
-    font-size: clamp(48px, 6.5vw, 72px);
+    font-size: clamp(44px, 6vw, 68px);
   }
 
   .track {
@@ -647,12 +675,13 @@
 
 @media (max-width: 767px) {
   .story {
-    min-height: 315svh;
+    min-height: 230svh;
   }
 
   .sticky {
-    min-height: 660px;
+    min-height: 100svh;
     padding: 56px 0 18px;
+    overflow: visible;
   }
 
   .intro {
@@ -670,7 +699,7 @@
 
   .intro h2 {
     max-width: 560px;
-    font-size: clamp(42px, 10vw, 64px);
+    font-size: clamp(40px, 9vw, 58px);
     line-height: 0.96;
   }
 
@@ -712,7 +741,7 @@
   }
 
   .card {
-    min-height: 340px;
+    min-height: 320px;
     padding: 18px;
   }
 
@@ -721,11 +750,11 @@
   }
 
   .cardHeading h3 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .cardSignals .cardHeading h3 {
-    font-size: 44px;
+    font-size: 40px;
   }
 
   .cardSummary {
@@ -744,12 +773,12 @@
 
 @media (max-height: 760px) and (min-width: 768px) {
   .sticky {
-    min-height: 660px;
+    min-height: 100svh;
     padding-top: 44px;
   }
 
   .intro h2 {
-    font-size: clamp(46px, 6vw, 76px);
+    font-size: clamp(42px, 5.5vw, 70px);
   }
 
   .dynamicSummary {
@@ -806,6 +835,7 @@
   .notificationVisible {
     opacity: 0.75;
     transform: none;
+    animation: none;
     transition: none;
   }
 }
