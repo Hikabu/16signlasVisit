@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   useCallback,
   useEffect,
@@ -9,15 +8,13 @@ import {
   type CSSProperties,
   type DragEvent,
 } from "react";
-import styles from "./TheShift.module.css";
+import styles from "./Positioning.module.css";
 
 type StoryStage = 0 | 1 | 2;
 type CardKind = "screening" | "signals" | "technical";
 
 type SignalLine = {
   text: string;
-  icon: string;
-  tone: "amber" | "blue" | "green" | "violet";
 };
 
 type StoryCard = {
@@ -45,18 +42,12 @@ const SCREENING: StoryCard = {
   lines: [
     {
       text: "Relevant context",
-      icon: "/icons/16position/hr_interview_bike.svg",
-      tone: "blue",
     },
     {
       text: "Communication and motivation",
-      icon: "/icons/16position/hr_interview_chair.svg",
-      tone: "green",
     },
     {
       text: "Role and team fit",
-      icon: "/icons/16position/hr_interview_task.svg",
-      tone: "violet",
     },
   ],
 };
@@ -70,23 +61,15 @@ const TECHNICAL: StoryCard = {
   lines: [
     {
       text: "Technical depth",
-      icon: "/icons/16position/tech_interview_atom.svg",
-      tone: "green",
     },
     {
       text: "Problem-solving discussion",
-      icon: "/icons/16position/tech_interview_link.svg",
-      tone: "blue",
     },
     {
       text: "Late and expensive",
-      icon: "/icons/16position/tech_interview_table.svg",
-      tone: "amber",
     },
     {
       text: "Still partly gameable",
-      icon: "/icons/16position/tech_interview_link.svg",
-      tone: "amber",
     },
   ],
 };
@@ -101,18 +84,12 @@ const SIGNALS: StoryCard = {
   lines: [
     {
       text: "Validates screening claims",
-      icon: "/icons/16position/16_signlas_portfolio.svg",
-      tone: "green",
     },
     {
       text: "Prioritizes interview attention",
-      icon: "/icons/16position/16_signals_book.svg",
-      tone: "blue",
     },
     {
       text: "Prepares a more informed interview",
-      icon: "/icons/16position/16_signlas_hole.svg",
-      tone: "violet",
     },
   ],
 };
@@ -192,22 +169,8 @@ function NotificationList({
               isVisible ? styles.notificationVisible : ""
             } ${isNewest ? styles.notificationNewest : ""}`}
           >
-            <span
-              className={`${styles.notificationIcon} ${
-                styles[`icon${line.tone[0].toUpperCase()}${line.tone.slice(1)}`]
-              }`}
-              aria-hidden="true"
-            >
-              <span
-                style={
-                  {
-                    "--signal-icon": `url("${line.icon}")`,
-                  } as CSSProperties
-                }
-              />
-            </span>
+            <span className={styles.notificationIndex}>0{index + 1}</span>
             <span>{line.text}</span>
-            <i aria-hidden="true" />
           </li>
         );
       })}
@@ -274,15 +237,6 @@ function TimelineCard({
       </div>
 
       <div className={styles.cardHeading}>
-        {card.kind === "signals" && (
-          <Image
-            src="/icons/a16zero.svg"
-            alt=""
-            width={31}
-            height={31}
-            className={styles.brandMark}
-          />
-        )}
         <div>
           <span className={styles.cardEyebrow}>{card.eyebrow}</span>
           <h3>{card.title}</h3>
@@ -332,7 +286,7 @@ function TimelineCard({
   );
 }
 
-export function TheShift() {
+export function Positioning() {
   const storyRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [story, setStory] = useState<StoryState>(INITIAL_STATE);
@@ -519,8 +473,6 @@ export function TheShift() {
             } as CSSProperties
           }
         >
-          <div className={styles.ambientGlow} aria-hidden="true" />
-
           <header className={styles.intro}>
             <div className={styles.eyebrowRow}>
               <span className={styles.eyebrow}>The hiring sequence</span>

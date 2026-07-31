@@ -1,0 +1,811 @@
+.section {
+  --ink: #0a0a0a;
+  --paper: #f2f3f1;
+  --warm-gray: #151515;
+  --muted: rgba(242, 243, 241, 0.5);
+  --line: rgba(242, 243, 241, 0.14);
+  --line-strong: rgba(242, 243, 241, 0.28);
+  --ease-premium: cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  border-block: 1px solid var(--line);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.section::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.65'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.story {
+  min-height: 330svh;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 100svh;
+  min-height: 760px;
+  overflow: hidden;
+  flex-direction: column;
+  padding: clamp(56px, 8vh, 96px) 0 clamp(20px, 3vh, 40px);
+}
+
+.intro {
+  position: relative;
+  z-index: 5;
+  width: min(calc(100% - 12vw), 1440px);
+  margin-inline: auto;
+  text-align: left;
+}
+
+.eyebrowRow {
+  display: flex;
+  width: 100%;
+  margin: 0 0 clamp(18px, 2.5vh, 28px);
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 13px;
+}
+
+.eyebrow,
+.counter,
+.step,
+.status,
+.cardEyebrow,
+.cardControls,
+.scrollCue {
+  font-family: var(--font-geist-mono), "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  color: var(--paper);
+}
+
+.counter {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.intro h2 {
+  max-width: 900px;
+  margin: 0;
+  color: var(--paper);
+  font-family: var(--font-geist-sans), Inter, ui-sans-serif, sans-serif;
+  font-size: clamp(48px, 5.6vw, 88px);
+  font-weight: 520;
+  letter-spacing: -0.065em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.dynamicSummary {
+  display: grid;
+  width: min(42%, 580px);
+  min-height: 64px;
+  margin: clamp(28px, 4vh, 44px) 0 0 55%;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px 18px;
+  align-items: start;
+  text-align: left;
+}
+
+.dynamicSummary > span {
+  display: inline-flex;
+  min-height: 0;
+  align-items: center;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 0 0 5px;
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dynamicSummary p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.timeline {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  align-items: center;
+  margin-top: clamp(20px, 3vh, 42px);
+}
+
+.trackShell {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.track {
+  --side-width: min(22vw, 300px);
+  --hero-width: min(54vw, 700px);
+  --gap: clamp(20px, 2.5vw, 40px);
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  gap: var(--gap);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding: 56px max(6vw, calc((100vw - 1440px) / 2)) 38px;
+  scroll-behavior: smooth;
+  scroll-padding-inline: max(6vw, calc((100vw - 1440px) / 2));
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  width: var(--side-width);
+  min-width: 0;
+  scroll-snap-align: center;
+}
+
+.slot:has(.cardSignals) {
+  width: var(--hero-width);
+}
+
+.rail {
+  position: absolute;
+  top: 34px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+}
+
+.railBase,
+.railProgress {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.railBase {
+  background: var(--line);
+}
+
+.railProgress {
+  width: calc(var(--active-position) * 50%);
+  background: var(--line-strong);
+  transition: width 700ms var(--ease-premium);
+}
+
+.railNode {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  z-index: 2;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translateX(-50%);
+  transition: background 500ms var(--ease-premium), border-color 500ms var(--ease-premium), transform 500ms var(--ease-premium);
+}
+
+.slot:has(.cardActive) .railNode {
+  border-color: var(--paper);
+  background: var(--paper);
+  transform: translateX(-50%) scale(1.15);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 370px;
+  overflow: hidden;
+  flex-direction: column;
+  padding: clamp(22px, 2vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--warm-gray);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  opacity: 0;
+  user-select: none;
+  transform: translateY(24px);
+  transition:
+    border-color 700ms var(--ease-premium),
+    box-shadow 700ms var(--ease-premium),
+    opacity 700ms var(--ease-premium),
+    transform 700ms var(--ease-premium),
+    background-color 700ms var(--ease-premium);
+}
+
+.card::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 34%;
+  height: 1px;
+  background: var(--line-strong);
+  content: "";
+  opacity: 0.72;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 6px;
+}
+
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardScreening.cardVisible {
+  animation: enterScreening 900ms var(--ease-premium) both;
+}
+
+.cardTechnical.cardVisible {
+  animation: enterTechnical 900ms var(--ease-premium) both;
+}
+
+.cardSignals.cardVisible {
+  animation: enterSignalsFromSide 1000ms var(--ease-premium) both;
+}
+
+.cardQuiet {
+  opacity: 0.54;
+}
+
+.cardQuiet:hover {
+  opacity: 0.82;
+}
+
+.cardActive {
+  border-color: var(--line-strong);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.44);
+  opacity: 1;
+}
+
+.cardDragging {
+  border-color: var(--line-strong);
+  cursor: grabbing;
+  opacity: 0.42;
+}
+
+.cardSignals {
+  border-color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.44);
+}
+
+.cardSignals::after {
+  background: var(--ink);
+}
+
+.sticky[data-story-stage="2"] .cardScreening,
+.sticky[data-story-stage="2"] .cardTechnical {
+  opacity: 0.2;
+  transform: scale(0.96);
+}
+
+.sticky[data-story-stage="2"] .cardScreening:hover,
+.sticky[data-story-stage="2"] .cardTechnical:hover {
+  opacity: 0.34;
+}
+
+.card:not(.cardVisible) {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cardTopline {
+  display: flex;
+  min-height: 22px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.step {
+  color: rgba(245, 245, 240, 0.4);
+  font-size: 10px;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.cardSignals .step,
+.cardSignals .status,
+.cardSignals .cardEyebrow,
+.cardSignals .cardSummary,
+.cardSignals .humanNote,
+.cardSignals .cardControls {
+  color: rgba(10, 10, 10, 0.56);
+}
+
+.cardSignals .status {
+  color: rgba(10, 10, 10, 0.58);
+}
+
+.cardHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(32px, 4vh, 52px);
+}
+
+.cardEyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: rgba(245, 245, 240, 0.46);
+  font-size: 10px;
+}
+
+.cardHeading h3 {
+  margin: 0;
+  color: var(--paper);
+  font-family: var(--font-geist-sans), Inter, ui-sans-serif, sans-serif;
+  font-size: clamp(26px, 2.4vw, 40px);
+  font-weight: 520;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.cardSignals .cardHeading h3 {
+  color: var(--ink);
+  font-size: clamp(42px, 4.4vw, 68px);
+}
+
+.cardSummary {
+  max-width: 420px;
+  margin: 18px 0 0;
+  color: rgba(245, 245, 240, 0.62);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.cardSignals .cardSummary {
+  max-width: 560px;
+  color: rgba(10, 10, 10, 0.68);
+}
+
+.notifications {
+  display: flex;
+  min-height: 0;
+  margin: 24px 0 0;
+  padding: 0;
+  flex-direction: column;
+  gap: 0;
+  list-style: none;
+}
+
+.notification {
+  display: grid;
+  min-height: 46px;
+  grid-template-columns: 31px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  color: rgba(245, 245, 240, 0.46);
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms var(--ease-premium), transform 700ms var(--ease-premium), color 600ms var(--ease-premium);
+}
+
+.notificationVisible {
+  opacity: 0.72;
+  transform: translateY(0);
+}
+
+.notificationNewest {
+  color: var(--paper);
+  opacity: 1;
+}
+
+.cardSignals .notification {
+  border-color: rgba(10, 10, 10, 0.16);
+  color: rgba(10, 10, 10, 0.5);
+}
+
+.cardSignals .notificationNewest {
+  color: var(--ink);
+}
+
+.notificationIndex {
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+}
+
+.humanNote {
+  display: flex;
+  margin: 18px 0 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.humanNote span {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  place-items: center;
+  font-size: 10px;
+}
+
+.cardControls {
+  display: flex;
+  min-height: 32px;
+  margin-top: auto;
+  padding-top: 26px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  color: rgba(245, 245, 240, 0.36);
+  font-size: 8px;
+}
+
+.cardControls button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(245, 245, 240, 0.25);
+  border-radius: 50%;
+  color: var(--paper);
+  background: transparent;
+  cursor: pointer;
+  place-items: center;
+  transition: border-color 500ms var(--ease-premium), color 500ms var(--ease-premium), transform 500ms var(--ease-premium);
+}
+
+.cardControls button:hover:not(:disabled),
+.cardControls button:focus-visible {
+  border-color: var(--paper);
+  color: var(--paper);
+  transform: translateY(-2px);
+}
+
+.cardControls button:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+}
+
+.cardControls button:disabled {
+  color: rgba(245, 245, 240, 0.18);
+  cursor: default;
+}
+
+.cardSignals .cardControls button {
+  border-color: rgba(10, 10, 10, 0.28);
+  color: var(--ink);
+}
+
+.sticky[data-story-stage="0"] .cardControls,
+.sticky[data-story-stage="1"] .cardControls {
+  visibility: hidden;
+}
+
+.scrollCue {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  gap: 10px;
+  color: rgba(245, 245, 240, 0.38);
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.scrollCue > span {
+  position: relative;
+  width: 1px;
+  height: 20px;
+  overflow: hidden;
+  background: rgba(245, 245, 240, 0.2);
+}
+
+.scrollCue > span::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 8px;
+  background: var(--paper);
+  content: "";
+  animation: scrollCue 1.9s var(--ease-premium) infinite;
+}
+
+@keyframes enterScreening {
+  from {
+    opacity: 0;
+    transform: translate(-36px, 22px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes enterTechnical {
+  from {
+    opacity: 0;
+    transform: translate(36px, 22px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes enterSignalsFromSide {
+  from {
+    opacity: 0;
+    transform: translateX(180px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes scrollCue {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  35% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@media (min-width: 1480px) {
+  .track {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1020px) {
+  .sticky {
+    min-height: 700px;
+    padding-top: 58px;
+  }
+
+  .intro {
+    width: calc(100% - 12vw);
+  }
+
+  .intro h2 {
+    max-width: 760px;
+    font-size: clamp(48px, 6.5vw, 72px);
+  }
+
+  .track {
+    --side-width: min(30vw, 300px);
+    --hero-width: min(60vw, 620px);
+    padding-inline: 7vw;
+    scroll-padding-inline: 7vw;
+  }
+
+  .dynamicSummary {
+    width: min(52%, 520px);
+    margin-left: 48%;
+  }
+}
+
+@media (max-width: 767px) {
+  .story {
+    min-height: 315svh;
+  }
+
+  .sticky {
+    min-height: 660px;
+    padding: 56px 0 18px;
+  }
+
+  .intro {
+    width: calc(100% - 36px);
+  }
+
+  .eyebrowRow {
+    margin-bottom: 24px;
+  }
+
+  .eyebrow,
+  .counter {
+    font-size: 9px;
+  }
+
+  .intro h2 {
+    max-width: 560px;
+    font-size: clamp(42px, 10vw, 64px);
+    line-height: 0.96;
+  }
+
+  .dynamicSummary {
+    display: block;
+    width: min(100%, 390px);
+    min-height: 76px;
+    margin: 22px 0 0;
+  }
+
+  .dynamicSummary > span {
+    display: inline-flex;
+  }
+
+  .dynamicSummary p {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .timeline {
+    margin-top: 8px;
+  }
+
+  .track {
+    --side-width: min(76vw, 330px);
+    --hero-width: min(86vw, 390px);
+    --gap: 22px;
+    padding: 58px 8vw 32px;
+    scroll-padding-inline: 8vw;
+  }
+
+  .rail {
+    top: 26px;
+  }
+
+  .railNode {
+    top: 20px;
+  }
+
+  .card {
+    min-height: 340px;
+    padding: 18px;
+  }
+
+  .cardHeading {
+    margin-top: 30px;
+  }
+
+  .cardHeading h3 {
+    font-size: 28px;
+  }
+
+  .cardSignals .cardHeading h3 {
+    font-size: 44px;
+  }
+
+  .cardSummary {
+    font-size: 14px;
+  }
+
+  .notification {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .scrollCue {
+    font-size: 8px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 768px) {
+  .sticky {
+    min-height: 660px;
+    padding-top: 44px;
+  }
+
+  .intro h2 {
+    font-size: clamp(46px, 6vw, 76px);
+  }
+
+  .dynamicSummary {
+    margin-top: 28px;
+  }
+
+  .timeline {
+    margin-top: 8px;
+  }
+
+  .track {
+    padding-block: 44px 26px;
+  }
+
+  .card {
+    min-height: 360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story {
+    min-height: auto;
+  }
+
+  .sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding-block: 80px;
+  }
+
+  .scrollCue {
+    display: none;
+  }
+
+  .track {
+    scroll-behavior: auto;
+  }
+
+  .card,
+  .cardVisible,
+  .cardScreening.cardVisible,
+  .cardTechnical.cardVisible,
+  .cardSignals.cardVisible {
+    min-height: 390px;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+
+  .notification,
+  .notificationVisible {
+    opacity: 0.75;
+    transform: none;
+    transition: none;
+  }
+}
