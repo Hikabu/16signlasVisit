@@ -8,7 +8,7 @@ import { LargeWord } from "./LargeWord";
 
 export function BookCall() {
   useEffect(() => {
-    const configureCal = async () => {
+    const setupCal = async () => {
       const cal = await getCalApi({
         namespace: "product-explore",
       });
@@ -19,22 +19,17 @@ export function BookCall() {
       });
     };
 
-    void configureCal();
+    void setupCal();
   }, []);
-
-  const scrollToCalendar = () => {
-    document
-      .getElementById("booking-calendar")
-      ?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
 
   return (
     <section
       id="book-call"
-      className="landing-section relative isolate overflow-clip"
+      className="landing-section relative isolate overflow-hidden pt-24 pb-20"
     >
       <LargeWord className="left-[8vw] top-4">TRUST</LargeWord>
 
+      {/* Narrow content only for heading */}
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <p className="section-label">Book a call</p>
@@ -43,51 +38,37 @@ export function BookCall() {
             See what real work reveals before the interview.
           </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
+          <p className="mx-auto mt-5 max-w-2xl text-lg text-[color:var(--muted-strong)]">
             Bring us a role and your current hiring process. We will show where
             16Signals fits before your next hiring cycle.
           </p>
 
-          <button
-            type="button"
-            onClick={scrollToCalendar}
-            className="btn btn-accent mt-10 min-w-[220px] shadow-[var(--shadow-accent-soft)]"
+          <a
+            href="#booking-calendar"
+            className="btn btn-accent mt-8 min-w-[220px]"
           >
             {HERO_CTA}
-          </button>
-        </div>
-
-        <div
-          id="booking-calendar"
-          className="cal-embed relative mt-14 min-h-[720px] overflow-hidden rounded-[28px] border border-white/10 bg-white"
-          aria-label="Book a call with 16Signals"
-        >
-          <Cal
-            namespace="product-explore"
-            calLink="16-signals/quick-chat"
-            style={{
-              width: "100%",
-              height: "100%",
-              minHeight: "720px",
-              overflow: "auto",
-            }}
-            config={{
-              layout: "month_view",
-              useSlotsViewOnSmallScreen: "true",
-            }}
-          />
-        </div>
-
-        <div className="mt-5 text-center">
-          <a
-            href="https://cal.com/16-signals/quick-chat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-white/55 transition-colors hover:text-white"
-          >
-            Having trouble with the calendar? Open Cal.com directly ↗
           </a>
         </div>
+      </div>
+
+      {/* Wide container for Cal.com */}
+      <div
+        id="booking-calendar"
+        className="mx-auto mt-8 w-[min(96vw,1500px)] overflow-hidden rounded-3xl border border-white/10 bg-[#151515]"
+      >
+        <Cal
+          namespace="product-explore"
+          calLink="16-signals/quick-chat"
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          config={{
+            layout: "month_view",
+            useSlotsViewOnSmallScreen: "true",
+          }}
+        />
       </div>
     </section>
   );

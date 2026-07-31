@@ -374,7 +374,9 @@ body::after {
 
 .cal-embed {
   display: flex;
-  min-height: 260px;
+  width: min(96vw, 1500px);
+  min-height: 650px;
+  margin-inline: auto;
   align-items: end;
   justify-content: space-between;
   gap: 28px;
