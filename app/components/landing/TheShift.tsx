@@ -1,398 +1,615 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { useScrollReveal } from "@/app/hooks/useScrollReveal";
+import Image from "next/image";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type DragEvent,
+} from "react";
+import styles from "./TheShift.module.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+type StoryStage = 0 | 1 | 2;
+type CardKind = "screening" | "signals" | "technical";
 
-type Stage = {
-  number: string;
-  title: string;
-  hiringQuestion: string;
-  reveals: string;
-  proof: string;
-  meta: string[];
+type SignalLine = {
+  text: string;
+  icon: string;
+  tone: "amber" | "blue" | "green" | "violet";
 };
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+type StoryCard = {
+  kind: CardKind;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  status: string;
+  lines: SignalLine[];
+};
 
-const ENGINEERING_STAGES: Stage[] = [
-  {
-    number: "01",
-    title: "Source Code",
-    hiringQuestion: "What kind of engineer appears when the résumé disappears?",
-    reveals:
-      "Finished code shows the result. The revisions behind it reveal judgment — how the engineer handles complexity, changes direction and improves an imperfect system.",
-    proof: "feat: auth architecture rebuilt",
-    meta: ["commit a3f9b", "1,847 lines changed"],
-  },
-  {
-    number: "02",
-    title: "Work Over Time",
-    hiringQuestion: "Is this durable capability or one polished moment?",
-    reveals:
-      "Real ability leaves a pattern. Work repeated across projects, months and collaborators is far harder to stage than a portfolio, assessment or carefully prepared repository.",
-    proof: "42 contributions across 11 days",
-    meta: ["3 collaborators", "8 connected changes"],
-  },
-  {
-    number: "03",
-    title: "Technical Decisions",
-    hiringQuestion: "Can this engineer turn ambiguity into decisions others can trust?",
-    reveals:
-      "Pull requests preserve the reasoning that code alone removes — the alternatives considered, trade-offs accepted and decisions made before the final implementation appeared.",
-    proof: "PR #284: architecture decision",
-    meta: ["3 alternatives considered", "linked constraints", "rationale preserved"],
-  },
-  {
-    number: "04",
-    title: "Team Influence",
-    hiringQuestion: "Does this engineer only contribute code, or improve the team around it?",
-    reveals:
-      "Review history shows how the engineer challenges weak decisions, responds to criticism and helps difficult work become clearer, safer and stronger.",
-    proof: "14 review decisions",
-    meta: ["2 reviewers", "12 resolved", "approved"],
-  },
-  {
-    number: "05",
-    title: "Shipping Discipline",
-    hiringQuestion: "Can they move difficult work into release without creating new risk?",
-    reveals:
-      "Delivery records expose the discipline behind shipping — whether quality is protected through testing, integration and repeatable release practices rather than confidence alone.",
-    proof: "847 checks passed",
-    meta: ["coverage 91%", "lint clean", "build 2m 14s"],
-  },
-  {
-    number: "06",
-    title: "Production Impact",
-    hiringQuestion: "Does their engineering survive contact with real users?",
-    reveals:
-      "Production history separates code that looks complete from engineering that performs under real constraints, real traffic and real consequences.",
-    proof: "Released to production",
-    meta: ["canary verified", "p99 latency −18ms", "rollback prepared"],
-  },
-];
+type StoryState = {
+  stage: StoryStage;
+  screeningCount: number;
+  technicalCount: number;
+  signalsCount: number;
+};
 
-const SIGNAL_STAGES: Stage[] = [
-  {
-    number: "01",
-    title: "Work Record Assembled",
-    hiringQuestion: "What would your team have to investigate manually?",
-    reveals:
-      "16Signals brings fragmented commits, reviews, decisions and releases into one continuous work record — without forcing a senior engineer to open and interpret hundreds of disconnected artifacts.",
-    proof: "Engineering history connected",
-    meta: ["commits", "pull requests", "reviews", "releases"],
-  },
-  {
-    number: "02",
-    title: "Context Reconstructed",
-    hiringQuestion: "What did each contribution actually require?",
-    reveals:
-      "An isolated commit proves almost nothing. 16Signals rebuilds the surrounding project, ownership, collaborators and constraints so the work is judged in the conditions where it happened.",
-    proof: "Contribution context rebuilt",
-    meta: ["system complexity", "ownership boundary", "team context"],
-  },
-  {
-    number: "03",
-    title: "Capability Mapped",
-    hiringQuestion: "What becomes visible only across the full body of work?",
-    reveals:
-      "Recurring behavior reveals what a résumé cannot: how the engineer takes ownership, handles complexity, collaborates and delivers when the same abilities are tested repeatedly over time.",
-    proof: "Longitudinal patterns detected",
-    meta: ["ownership", "technical judgment", "consistency", "team influence"],
-  },
-  {
-    number: "04",
-    title: "Claims Proven",
-    hiringQuestion: "Why should anyone trust the conclusion?",
-    reveals:
-      "Every important claim remains attached to the work that produced it. Hiring teams can move from conclusion to source evidence instead of trusting another opaque score or generated summary.",
-    proof: "Every claim evidence-linked",
-    meta: ["source artifacts", "timestamps", "traceable reasoning"],
-  },
-  {
-    number: "05",
-    title: "Risk Exposed",
-    hiringQuestion: "What could become an expensive surprise after hiring?",
-    reveals:
-      "16Signals surfaces missing ownership, uncertain impact and unsupported assumptions before they disappear behind a confident interview. Where the work cannot prove something, the report says so.",
-    proof: "Unknowns made explicit",
-    meta: ["unproven ownership", "unclear impact", "insufficient evidence"],
-  },
-  {
-    number: "06",
-    title: "Decision Brief",
-    hiringQuestion: "What changes when the interview begins with evidence?",
-    reveals:
-      "The team enters the interview already knowing what appears strong, what remains uncertain and exactly where to investigate. Less time proving the basics. More time testing the judgment that determines the hire.",
-    proof: "Interview advantage created",
-    meta: [
-      "verified capabilities",
-      "role-specific risks",
-      "evidence-led questions",
-    ],
-  },
-];
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+const SCREENING: StoryCard = {
+  kind: "screening",
+  eyebrow: "First context",
+  title: "Screening / HR",
+  summary: "Useful context. Still only part of the picture.",
+  status: "Useful · partial",
+  lines: [
+    {
+      text: "Relevant context",
+      icon: "/icons/16position/hr_interview_bike.svg",
+      tone: "blue",
+    },
+    {
+      text: "Communication and motivation",
+      icon: "/icons/16position/hr_interview_chair.svg",
+      tone: "green",
+    },
+    {
+      text: "Role and team fit",
+      icon: "/icons/16position/hr_interview_task.svg",
+      tone: "violet",
+    },
+  ],
+};
 
-function getItemStyle(delta: number): React.CSSProperties {
-  const abs = Math.abs(delta);
-  if (abs === 0) return { opacity: 1, filter: "none" };
-  if (abs === 1) return { opacity: 0.35, filter: "none" };
-  if (abs === 2) return { opacity: 0.12, filter: "blur(1px)" };
-  return { opacity: 0.05, filter: "blur(2px)" };
+const TECHNICAL: StoryCard = {
+  kind: "technical",
+  eyebrow: "Deeper review",
+  title: "Technical interview",
+  summary: "Adds depth and discussion—later in the process.",
+  status: "Deep · costly",
+  lines: [
+    {
+      text: "Technical depth",
+      icon: "/icons/16position/tech_interview_atom.svg",
+      tone: "green",
+    },
+    {
+      text: "Problem-solving discussion",
+      icon: "/icons/16position/tech_interview_link.svg",
+      tone: "blue",
+    },
+    {
+      text: "Late and expensive",
+      icon: "/icons/16position/tech_interview_table.svg",
+      tone: "amber",
+    },
+    {
+      text: "Still partly gameable",
+      icon: "/icons/16position/tech_interview_link.svg",
+      tone: "amber",
+    },
+  ],
+};
+
+const SIGNALS: StoryCard = {
+  kind: "signals",
+  eyebrow: "The missing middle layer",
+  title: "16Signals",
+  summary:
+    "16Signals adds real-work evidence after screening and before the technical interview.",
+  status: "Evidence layer",
+  lines: [
+    {
+      text: "Validates screening claims",
+      icon: "/icons/16position/16_signlas_portfolio.svg",
+      tone: "green",
+    },
+    {
+      text: "Prioritizes interview attention",
+      icon: "/icons/16position/16_signals_book.svg",
+      tone: "blue",
+    },
+    {
+      text: "Prepares a more informed interview",
+      icon: "/icons/16position/16_signlas_hole.svg",
+      tone: "violet",
+    },
+  ],
+};
+
+const CARDS: Record<CardKind, StoryCard> = {
+  screening: SCREENING,
+  signals: SIGNALS,
+  technical: TECHNICAL,
+};
+
+const INITIAL_ORDER: CardKind[] = ["screening", "signals", "technical"];
+
+const INITIAL_STATE: StoryState = {
+  stage: 0,
+  screeningCount: 1,
+  technicalCount: 0,
+  signalsCount: 0,
+};
+
+function visibleLineCount(total: number, localProgress: number) {
+  return Math.min(total, Math.max(1, Math.floor(localProgress * total) + 1));
 }
 
-// ─── Vertical Timeline Block ──────────────────────────────────────────────────
+function getSequenceSummary(order: CardKind[]) {
+  const signalsPosition = order.indexOf("signals");
+  const technicalPosition = order.indexOf("technical");
 
-function VerticalTimeline({
-  stages,
-  label,
-  headline,
-  body,
-  id,
-}: {
-  stages: Stage[];
-  label: string;
-  headline: string;
-  body: string;
-  id: string;
-}) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [revealedStages, setRevealedStages] = useState<Set<number>>(() => new Set());
-  const [animatingStages, setAnimatingStages] = useState<Set<number>>(() => new Set());
-  const [completedAnimations, setCompletedAnimations] = useState<Set<number>>(() => new Set());
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const revealedStagesRef = useRef(new Set<number>());
-  const animationStartedRef = useRef(new Set<number>());
-  const { ref: leftRef, isRevealed: leftCopyRevealed } = useScrollReveal<HTMLDivElement>();
-  const railFillRef = useRef<HTMLDivElement>(null);
-  const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const railRef = useRef<HTMLDivElement>(null);
-
-  const updateRailFill = useCallback((idx: number) => {
-    if (!railFillRef.current || !railRef.current) return;
-    const dot = dotRefs.current[idx];
-    if (!dot) return;
-    const railRect = railRef.current.getBoundingClientRect();
-    const dotRect = dot.getBoundingClientRect();
-    const fillH = dotRect.top - railRect.top + dotRect.height / 2;
-    railFillRef.current.style.height = `${Math.max(0, fillH)}px`;
-  }, []);
-
-  useEffect(() => {
-    const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
-    if (!items.length) return;
-
-    const visibilityMap = new Map<number, number>();
-    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const idx = items.indexOf(entry.target as HTMLDivElement);
-          if (idx !== -1) visibilityMap.set(idx, entry.intersectionRatio);
-        });
-
-        let bestIdx = 0;
-        let bestRatio = -1;
-        visibilityMap.forEach((ratio, idx) => {
-          if (ratio > bestRatio) { bestRatio = ratio; bestIdx = idx; }
-        });
-
-        setActiveIndex(bestIdx);
-        updateRailFill(bestIdx);
-
-        dotRefs.current.forEach((dot, i) => {
-          if (!dot) return;
-          dot.classList.toggle("ts-dot--active", i === bestIdx);
-        });
-      },
-      { threshold: thresholds, rootMargin: "-25% 0px -25% 0px" }
-    );
-
-    items.forEach((item) => observer.observe(item));
-    updateRailFill(0);
-
-    return () => observer.disconnect();
-  }, [updateRailFill]);
-
-  useEffect(() => {
-    const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
-    if (!items.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const newlyRevealed = entries.reduce<number[]>((indices, entry) => {
-          if (!entry.isIntersecting) return indices;
-          const idx = items.indexOf(entry.target as HTMLDivElement);
-          if (idx !== -1 && !revealedStagesRef.current.has(idx)) indices.push(idx);
-          return indices;
-        }, []);
-
-        if (!newlyRevealed.length) return;
-        setRevealedStages((current) => {
-          const next = new Set(current);
-          newlyRevealed.forEach((idx) => {
-            next.add(idx);
-            revealedStagesRef.current.add(idx);
-          });
-          return next;
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
-    );
-
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!revealedStages.has(activeIndex) || animationStartedRef.current.has(activeIndex)) return;
-    animationStartedRef.current.add(activeIndex);
-
-    setAnimatingStages((current) => {
-      const next = new Set(current);
-      next.add(activeIndex);
-      return next;
-    });
-
-    const timeout = window.setTimeout(() => {
-      setAnimatingStages((current) => {
-        const next = new Set(current);
-        next.delete(activeIndex);
-        return next;
-      });
-      setCompletedAnimations((current) => {
-        const next = new Set(current);
-        next.add(activeIndex);
-        return next;
-      });
-    }, 1100);
-
-    return () => window.clearTimeout(timeout);
-  }, [activeIndex, revealedStages]);
-
-  useEffect(() => {
-    const recalc = () => updateRailFill(activeIndex);
-    window.addEventListener("scroll", recalc, { passive: true });
-    window.addEventListener("resize", recalc, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", recalc);
-      window.removeEventListener("resize", recalc);
+  if (signalsPosition === 1 && technicalPosition === 2) {
+    return {
+      label: "Strongest placement",
+      text: "Screen first, add real-work evidence next, then use deeper interview time where it matters most.",
     };
-  }, [activeIndex, updateRailFill]);
+  }
 
+  if (signalsPosition < technicalPosition) {
+    return {
+      label: "Evidence before depth",
+      text:
+        signalsPosition === 0
+          ? "Real-work evidence guides human review before technical interview time is used, with less screening context available upfront."
+          : "Real-work evidence arrives before deeper interview time is used, helping the team prioritize what to investigate.",
+    };
+  }
+
+  if (signalsPosition === 2) {
+    return {
+      label: "Useful, but later",
+      text: "The team still gains real-work evidence for human review, but money and interview time were already spent on earlier stages.",
+    };
+  }
+
+  return {
+    label: "Evidence after depth",
+    text: "16Signals still supports human review, though the technical interview has already consumed deeper team attention.",
+  };
+}
+
+function NotificationList({
+  card,
+  visibleCount,
+  active,
+}: {
+  card: StoryCard;
+  visibleCount: number;
+  active: boolean;
+}) {
   return (
-    <div className="ts-block" id={id}>
-      {/* Left sticky column */}
-      <div className={`ts-left${leftCopyRevealed ? " ts-left--revealed" : ""}`} ref={leftRef}>
-        <div className="ts-copy-line">
-          <div className="ts-copy-line__inner ts-label">{label}</div>
-        </div>
-        <div className="ts-copy-line">
-          <h2 className="ts-copy-line__inner ts-headline">{headline}</h2>
-        </div>
-        <div className="ts-copy-line">
-          <p className="ts-copy-line__inner ts-body">{body}</p>
-        </div>
-      </div>
+    <ul className={styles.notifications} aria-label={`${card.title} signals`}>
+      {card.lines.map((line, index) => {
+        const isVisible = index < visibleCount;
+        const isNewest = active && index === visibleCount - 1;
 
-      {/* Right timeline column */}
-      <div className="ts-right">
-        {/* Vertical rail */}
-        <div className="ts-rail" ref={railRef}>
-          <div className="ts-rail-fill" ref={railFillRef} />
-        </div>
-
-        {/* Items */}
-        <div className="ts-items">
-          {stages.map((stage, i) => {
-            const delta = i - activeIndex;
-            const style = getItemStyle(delta);
-            const isActive = delta === 0;
-            const shouldAnimateContent = isActive && animatingStages.has(i);
-            const hasCompletedReveal = isActive && completedAnimations.has(i);
-            const isRevealed = revealedStages.has(i);
-
-            return (
-              <div
-                key={stage.number}
-                ref={(el) => { itemRefs.current[i] = el; }}
-                className={`ts-item${isActive ? " ts-item--active" : ""}`}
-                style={style}
-                aria-current={isActive ? "true" : undefined}
-              >
-                {/* Dot */}
-                <div
-                  className={`ts-dot${isActive ? " ts-dot--active" : ""}${isRevealed ? " ts-dot--revealed" : ""}`}
-                  ref={(el) => { dotRefs.current[i] = el; }}
-                />
-
-                {/* Content */}
-                <div className="ts-content">
-                  <div className={`ts-title ${isActive ? "ts-title--active" : "ts-title--inactive"}`}>
-                    {stage.title}
-                  </div>
-                  {isActive && (
-                    <div className={`ts-stage-content${shouldAnimateContent ? " ts-stage-content--reveal" : ""}${hasCompletedReveal ? " ts-stage-content--revealed" : ""}`}>
-                      <div className="ts-stage-num">{stage.number}</div>
-                      <div className="ts-evidence-block">
-                        <div className="ts-evidence-label">Hiring Question</div>
-                        <p className="ts-question">{stage.hiringQuestion}</p>
-                      </div>
-                      <div className="ts-evidence-block">
-                        <div className="ts-evidence-label">What This Reveals</div>
-                        <p className="ts-reveals">{stage.reveals}</p>
-                      </div>
-                      <div className="ts-evidence-block">
-                        <div className="ts-evidence-label">Observed Evidence</div>
-                        <div className="ts-proof">{stage.proof}</div>
-                        <div className="ts-meta">
-                          {stage.meta.map((m, mi) => (
-                            <span key={mi} className="ts-meta-line">{m}</span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+        return (
+          <li
+            key={line.text}
+            className={`${styles.notification} ${
+              isVisible ? styles.notificationVisible : ""
+            } ${isNewest ? styles.notificationNewest : ""}`}
+          >
+            <span
+              className={`${styles.notificationIcon} ${
+                styles[`icon${line.tone[0].toUpperCase()}${line.tone.slice(1)}`]
+              }`}
+              aria-hidden="true"
+            >
+              <span
+                style={
+                  {
+                    "--signal-icon": `url("${line.icon}")`,
+                  } as CSSProperties
+                }
+              />
+            </span>
+            <span>{line.text}</span>
+            <i aria-hidden="true" />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
-// ─── Main Export ──────────────────────────────────────────────────────────────
+function TimelineCard({
+  card,
+  active,
+  visible,
+  visibleCount,
+  position,
+  canReorder,
+  isDragging,
+  onFocus,
+  onDragStart,
+  onDragEnd,
+  onDrop,
+  onMove,
+}: {
+  card: StoryCard;
+  active: boolean;
+  visible: boolean;
+  visibleCount: number;
+  position: number;
+  canReorder: boolean;
+  isDragging: boolean;
+  onFocus: () => void;
+  onDragStart: (event: DragEvent<HTMLElement>) => void;
+  onDragEnd: () => void;
+  onDrop: (event: DragEvent<HTMLElement>) => void;
+  onMove: (direction: -1 | 1) => void;
+}) {
+  const kindClass = `card${card.kind[0].toUpperCase()}${card.kind.slice(1)}`;
+
+  return (
+    <article
+      className={`${styles.card} ${styles[kindClass]} ${
+        active ? styles.cardActive : styles.cardQuiet
+      } ${visible ? styles.cardVisible : ""} ${
+        isDragging ? styles.cardDragging : ""
+      }`}
+      data-sequence-card={card.kind}
+      aria-current={active ? "step" : undefined}
+      aria-label={`${position + 1}. ${card.title}`}
+      tabIndex={visible ? 0 : -1}
+      draggable={canReorder}
+      onClick={onFocus}
+      onFocus={onFocus}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={(event) => {
+        if (canReorder) event.preventDefault();
+      }}
+      onDrop={onDrop}
+    >
+      <div className={styles.cardTopline}>
+        <span className={styles.step}>POSITION 0{position + 1}</span>
+        <span className={styles.status}>
+          <i aria-hidden="true" />
+          {card.status}
+        </span>
+      </div>
+
+      <div className={styles.cardHeading}>
+        {card.kind === "signals" && (
+          <Image
+            src="/icons/a16zero.svg"
+            alt=""
+            width={31}
+            height={31}
+            className={styles.brandMark}
+          />
+        )}
+        <div>
+          <span className={styles.cardEyebrow}>{card.eyebrow}</span>
+          <h3>{card.title}</h3>
+        </div>
+      </div>
+
+      <p className={styles.cardSummary}>{card.summary}</p>
+      <NotificationList
+        card={card}
+        visibleCount={visibleCount}
+        active={active}
+      />
+
+      {card.kind === "signals" && (
+        <p className={styles.humanNote}>
+          <span aria-hidden="true">✓</span>
+          Supports human review · Helps prioritize attention
+        </p>
+      )}
+
+      <div className={styles.cardControls} aria-label={`Move ${card.title}`}>
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onMove(-1);
+          }}
+          disabled={!canReorder || position === 0}
+          aria-label={`Move ${card.title} earlier`}
+        >
+          ←
+        </button>
+        <span aria-hidden="true">Drag to reorder</span>
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onMove(1);
+          }}
+          disabled={!canReorder || position === 2}
+          aria-label={`Move ${card.title} later`}
+        >
+          →
+        </button>
+      </div>
+    </article>
+  );
+}
 
 export function TheShift() {
+  const storyRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [story, setStory] = useState<StoryState>(INITIAL_STATE);
+  const [order, setOrder] = useState<CardKind[]>(INITIAL_ORDER);
+  const [manualFocus, setManualFocus] = useState<CardKind | null>(null);
+  const [draggingKind, setDraggingKind] = useState<CardKind | null>(null);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateStory = () => {
+      frame = 0;
+      const element = storyRef.current;
+      if (!element) return;
+
+      const rect = element.getBoundingClientRect();
+      const scrollDistance = Math.max(1, rect.height - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollDistance));
+
+      let next: StoryState;
+
+      if (progress < 0.32) {
+        const local = progress / 0.32;
+        next = {
+          stage: 0,
+          screeningCount: visibleLineCount(SCREENING.lines.length, local),
+          technicalCount: 0,
+          signalsCount: 0,
+        };
+      } else if (progress < 0.62) {
+        const local = (progress - 0.32) / 0.3;
+        next = {
+          stage: 1,
+          screeningCount: SCREENING.lines.length,
+          technicalCount: visibleLineCount(TECHNICAL.lines.length, local),
+          signalsCount: 0,
+        };
+      } else {
+        const local = (progress - 0.62) / 0.38;
+        next = {
+          stage: 2,
+          screeningCount: SCREENING.lines.length,
+          technicalCount: TECHNICAL.lines.length,
+          signalsCount: visibleLineCount(SIGNALS.lines.length, local),
+        };
+      }
+
+      setStory((current) =>
+        current.stage === next.stage &&
+        current.screeningCount === next.screeningCount &&
+        current.technicalCount === next.technicalCount &&
+        current.signalsCount === next.signalsCount
+          ? current
+          : next,
+      );
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateStory);
+    };
+
+    updateStory();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    document.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      document.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, []);
+
+  const scrollCardIntoView = useCallback((kind: CardKind, smooth = true) => {
+    const track = trackRef.current;
+    const card = track?.querySelector<HTMLElement>(
+      `[data-sequence-card="${kind}"]`,
+    );
+    if (!track || !card) return;
+
+    const trackRect = track.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const target =
+      track.scrollLeft +
+      cardRect.left -
+      trackRect.left -
+      (track.clientWidth - cardRect.width) / 2;
+    track.scrollTo({
+      left: Math.max(0, target),
+      behavior:
+        smooth &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "smooth"
+          : "auto",
+    });
+  }, []);
+
+  const focusCard = useCallback(
+    (kind: CardKind, smooth = true) => {
+      setManualFocus(kind);
+      scrollCardIntoView(kind, smooth);
+    },
+    [scrollCardIntoView],
+  );
+
+  useEffect(() => {
+    if (manualFocus) return;
+    const activeKind =
+      story.stage === 0
+        ? "screening"
+        : story.stage === 1
+          ? "technical"
+          : "signals";
+    const frame = window.requestAnimationFrame(() =>
+      scrollCardIntoView(activeKind),
+    );
+    return () => window.cancelAnimationFrame(frame);
+  }, [manualFocus, scrollCardIntoView, story.stage]);
+
+  const reorder = useCallback(
+    (moving: CardKind, target: CardKind) => {
+      if (moving === target || story.stage < 2) return;
+
+      setOrder((current) => {
+        const next = current.filter((kind) => kind !== moving);
+        next.splice(current.indexOf(target), 0, moving);
+        return next;
+      });
+      setManualFocus(moving);
+      window.requestAnimationFrame(() => focusCard(moving));
+    },
+    [focusCard, story.stage],
+  );
+
+  const moveCard = useCallback(
+    (kind: CardKind, direction: -1 | 1) => {
+      if (story.stage < 2) return;
+      const currentIndex = order.indexOf(kind);
+      const targetIndex = currentIndex + direction;
+      if (targetIndex < 0 || targetIndex >= order.length) return;
+
+      const next = [...order];
+      [next[currentIndex], next[targetIndex]] = [
+        next[targetIndex],
+        next[currentIndex],
+      ];
+      setOrder(next);
+      setManualFocus(kind);
+      window.requestAnimationFrame(() => focusCard(kind));
+    },
+    [focusCard, order, story.stage],
+  );
+
+  const visibleCounts: Record<CardKind, number> = {
+    screening: story.screeningCount,
+    signals: story.signalsCount,
+    technical: story.technicalCount,
+  };
+  const focusedKind =
+    manualFocus ??
+    (story.stage === 0
+      ? "screening"
+      : story.stage === 1
+        ? "technical"
+        : "signals");
+  const summary = getSequenceSummary(order);
+  const focusedPosition = order.indexOf(focusedKind);
+
   return (
     <section
       id="the-shift"
-      className="ts-section"
-      aria-label="The Shift — Engineering and Hiring"
+      className={styles.section}
+      aria-labelledby="hiring-timeline-title"
     >
-      <div className="ts-inner">
-        <VerticalTimeline
-          id="ts-engineering"
-          stages={ENGINEERING_STAGES}
-          label="THE PREPARED INTERVIEW"
-          headline="Walk in already knowing where to go deeper."
-          body="Before the conversation begins, see what the work already proves, what remains uncertain and which questions are worth the interview time."
-        />
+      <div ref={storyRef} className={styles.story}>
+        <div
+          className={styles.sticky}
+          data-story-stage={story.stage}
+          style={
+            {
+              "--story-stage": story.stage,
+              "--active-position": focusedPosition,
+            } as CSSProperties
+          }
+        >
+          <div className={styles.ambientGlow} aria-hidden="true" />
 
-        <div className="ts-spacer" aria-hidden="true" />
+          <header className={styles.intro}>
+            <div className={styles.eyebrowRow}>
+              <span className={styles.eyebrow}>The hiring sequence</span>
+              <span className={styles.counter} aria-live="polite">
+                0{story.stage + 1} / 03
+              </span>
+            </div>
+            <h2 id="hiring-timeline-title">
+              Put evidence where it changes the interview.
+            </h2>
+            <div className={styles.dynamicSummary} aria-live="polite">
+              <span>{story.stage < 2 ? "Building the sequence" : summary.label}</span>
+              <p>
+                {story.stage < 2
+                  ? "Screening gives first context. Technical interviews add depth. The missing evidence layer arrives next."
+                  : summary.text}
+              </p>
+            </div>
+          </header>
 
-       <VerticalTimeline
-          id="ts-signals"
-          stages={SIGNAL_STAGES}
-          label="16Signals Analysis"
-          headline="16Signals turns record into capability evidence."
-          body="The platform examines real engineering activity and produces a report in which every conclusion links back to observable work."
-        />
+          <div className={styles.timeline}>
+            <div className={styles.trackShell}>
+              <div
+                ref={trackRef}
+                className={styles.track}
+                aria-label="Draggable hiring sequence"
+              >
+                <div className={styles.rail} aria-hidden="true">
+                  <span className={styles.railBase} />
+                  <span className={styles.railProgress} />
+                </div>
+
+                {order.map((kind, index) => {
+                  const card = CARDS[kind];
+                  const isVisible =
+                    kind === "screening" ||
+                    (kind === "technical" && story.stage >= 1) ||
+                    (kind === "signals" && story.stage === 2);
+
+                  return (
+                    <div className={styles.slot} key={kind}>
+                      <i className={styles.railNode} aria-hidden="true" />
+                      <TimelineCard
+                        card={card}
+                        active={focusedKind === kind}
+                        visible={isVisible}
+                        visibleCount={visibleCounts[kind]}
+                        position={index}
+                        canReorder={story.stage === 2}
+                        isDragging={draggingKind === kind}
+                        onFocus={() => {
+                          if (!isVisible) return;
+                          focusCard(kind);
+                        }}
+                        onDragStart={(event) => {
+                          if (story.stage < 2) {
+                            event.preventDefault();
+                            return;
+                          }
+                          setDraggingKind(kind);
+                          event.dataTransfer.effectAllowed = "move";
+                          event.dataTransfer.setData("text/plain", kind);
+                        }}
+                        onDragEnd={() => setDraggingKind(null)}
+                        onDrop={(event) => {
+                          event.preventDefault();
+                          const moving =
+                            (event.dataTransfer.getData(
+                              "text/plain",
+                            ) as CardKind) || draggingKind;
+                          if (moving) reorder(moving, kind);
+                          setDraggingKind(null);
+                        }}
+                        onMove={(direction) => moveCard(kind, direction)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.scrollCue}>
+            <span aria-hidden="true" />
+            {story.stage < 2
+              ? "Scroll to build the sequence"
+              : "Drag cards to compare the order"}
+          </div>
+        </div>
       </div>
     </section>
   );
