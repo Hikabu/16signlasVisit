@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type DragEvent,
-} from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import styles from "./Positioning.module.css";
 
 type StoryStage = 0 | 1 | 2;
@@ -100,14 +93,18 @@ const CARDS: Record<CardKind, StoryCard> = {
   technical: TECHNICAL,
 };
 
-const INITIAL_ORDER: CardKind[] = ["screening", "signals", "technical"];
-
 const INITIAL_STATE: StoryState = {
-  stage: 0,
+  stage: 2,
   screeningCount: SCREENING.lines.length,
-  technicalCount: 0,
-  signalsCount: 0,
+  technicalCount: TECHNICAL.lines.length,
+  signalsCount: SIGNALS.lines.length,
 };
+
+const AUTO_ORDERS: CardKind[][] = [
+  ["screening", "signals", "technical"],
+  ["signals", "screening", "technical"],
+  ["screening", "technical", "signals"],
+];
 
 function getSequenceSummary(order: CardKind[]) {
   const signalsPosition = order.indexOf("signals");
@@ -180,26 +177,12 @@ function TimelineCard({
   visible,
   visibleCount,
   position,
-  canReorder,
-  isDragging,
-  onFocus,
-  onDragStart,
-  onDragEnd,
-  onDrop,
-  onMove,
 }: {
   card: StoryCard;
   active: boolean;
   visible: boolean;
   visibleCount: number;
   position: number;
-  canReorder: boolean;
-  isDragging: boolean;
-  onFocus: () => void;
-  onDragStart: (event: DragEvent<HTMLElement>) => void;
-  onDragEnd: () => void;
-  onDrop: (event: DragEvent<HTMLElement>) => void;
-  onMove: (direction: -1 | 1) => void;
 }) {
   const kindClass = `card${card.kind[0].toUpperCase()}${card.kind.slice(1)}`;
 
@@ -207,22 +190,10 @@ function TimelineCard({
     <article
       className={`${styles.card} ${styles[kindClass]} ${
         active ? styles.cardActive : styles.cardQuiet
-      } ${visible ? styles.cardVisible : ""} ${
-        isDragging ? styles.cardDragging : ""
-      }`}
+      } ${visible ? styles.cardVisible : ""}`}
       data-sequence-card={card.kind}
       aria-current={active ? "step" : undefined}
       aria-label={`${position + 1}. ${card.title}`}
-      tabIndex={visible ? 0 : -1}
-      draggable={canReorder}
-      onClick={onFocus}
-      onFocus={onFocus}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      onDragOver={(event) => {
-        if (canReorder) event.preventDefault();
-      }}
-      onDrop={onDrop}
     >
       <div className={styles.cardTopline}>
         <span className={styles.step}>POSITION 0{position + 1}</span>
@@ -252,200 +223,29 @@ function TimelineCard({
           Supports human review · Helps prioritize attention
         </p>
       )}
-
-      <div className={styles.cardControls} aria-label={`Move ${card.title}`}>
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-            onMove(-1);
-          }}
-          disabled={!canReorder || position === 0}
-          aria-label={`Move ${card.title} earlier`}
-        >
-          ←
-        </button>
-        <span aria-hidden="true">Drag to reorder</span>
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-            onMove(1);
-          }}
-          disabled={!canReorder || position === 2}
-          aria-label={`Move ${card.title} later`}
-        >
-          →
-        </button>
-      </div>
     </article>
   );
 }
 
 export function Positioning() {
-  const storyRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [story, setStory] = useState<StoryState>(INITIAL_STATE);
-  const [order, setOrder] = useState<CardKind[]>(INITIAL_ORDER);
-  const [manualFocus, setManualFocus] = useState<CardKind | null>(null);
-  const [draggingKind, setDraggingKind] = useState<CardKind | null>(null);
+  const [sequenceIndex, setSequenceIndex] = useState(0);
 
   useEffect(() => {
-    let frame = 0;
+    const interval = window.setInterval(() => {
+      setSequenceIndex((current) => (current + 1) % AUTO_ORDERS.length);
+    }, 5000);
 
-    const updateStory = () => {
-      frame = 0;
-      const element = storyRef.current;
-      if (!element) return;
-
-      const rect = element.getBoundingClientRect();
-      const scrollDistance = Math.max(1, rect.height - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollDistance));
-
-      let next: StoryState;
-
-      if (progress < 0.34) {
-        next = {
-          stage: 0,
-          screeningCount: SCREENING.lines.length,
-          technicalCount: 0,
-          signalsCount: 0,
-        };
-      } else if (progress < 0.67) {
-        next = {
-          stage: 1,
-          screeningCount: SCREENING.lines.length,
-          technicalCount: TECHNICAL.lines.length,
-          signalsCount: 0,
-        };
-      } else {
-        next = {
-          stage: 2,
-          screeningCount: SCREENING.lines.length,
-          technicalCount: TECHNICAL.lines.length,
-          signalsCount: SIGNALS.lines.length,
-        };
-      }
-
-      setStory((current) =>
-        current.stage === next.stage &&
-        current.screeningCount === next.screeningCount &&
-        current.technicalCount === next.technicalCount &&
-        current.signalsCount === next.signalsCount
-          ? current
-          : next,
-      );
-    };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateStory);
-    };
-
-    updateStory();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    document.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", requestUpdate);
-      document.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    };
+    return () => window.clearInterval(interval);
   }, []);
 
-  const scrollCardIntoView = useCallback((kind: CardKind, smooth = true) => {
-    const track = trackRef.current;
-    const card = track?.querySelector<HTMLElement>(
-      `[data-sequence-card="${kind}"]`,
-    );
-    if (!track || !card) return;
-
-    const trackRect = track.getBoundingClientRect();
-    const cardRect = card.getBoundingClientRect();
-    const target =
-      track.scrollLeft +
-      cardRect.left -
-      trackRect.left -
-      (track.clientWidth - cardRect.width) / 2;
-    track.scrollTo({
-      left: Math.max(0, target),
-      behavior:
-        smooth &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "smooth"
-          : "auto",
-    });
-  }, []);
-
-  const focusCard = useCallback(
-    (kind: CardKind, smooth = true) => {
-      setManualFocus(kind);
-      scrollCardIntoView(kind, smooth);
-    },
-    [scrollCardIntoView],
-  );
-
-  useEffect(() => {
-    if (manualFocus) return;
-    const activeKind =
-      story.stage === 0
-        ? "screening"
-        : story.stage === 1
-          ? "technical"
-          : "signals";
-    const frame = window.requestAnimationFrame(() =>
-      scrollCardIntoView(activeKind),
-    );
-    return () => window.cancelAnimationFrame(frame);
-  }, [manualFocus, scrollCardIntoView, story.stage]);
-
-  const reorder = useCallback(
-    (moving: CardKind, target: CardKind) => {
-      if (moving === target || story.stage < 2) return;
-
-      setOrder((current) => {
-        const next = current.filter((kind) => kind !== moving);
-        next.splice(current.indexOf(target), 0, moving);
-        return next;
-      });
-      setManualFocus(moving);
-      window.requestAnimationFrame(() => focusCard(moving));
-    },
-    [focusCard, story.stage],
-  );
-
-  const moveCard = useCallback(
-    (kind: CardKind, direction: -1 | 1) => {
-      if (story.stage < 2) return;
-      const currentIndex = order.indexOf(kind);
-      const targetIndex = currentIndex + direction;
-      if (targetIndex < 0 || targetIndex >= order.length) return;
-
-      const next = [...order];
-      [next[currentIndex], next[targetIndex]] = [
-        next[targetIndex],
-        next[currentIndex],
-      ];
-      setOrder(next);
-      setManualFocus(kind);
-      window.requestAnimationFrame(() => focusCard(kind));
-    },
-    [focusCard, order, story.stage],
-  );
-
+  const story = INITIAL_STATE;
+  const order = AUTO_ORDERS[sequenceIndex];
   const visibleCounts: Record<CardKind, number> = {
     screening: story.screeningCount,
     signals: story.signalsCount,
     technical: story.technicalCount,
   };
-  const focusedKind =
-    manualFocus ??
-    (story.stage === 0
-      ? "screening"
-      : story.stage === 1
-        ? "technical"
-        : "signals");
+  const focusedKind: CardKind = "signals";
   const summary = getSequenceSummary(order);
   const focusedPosition = order.indexOf(focusedKind);
 
@@ -455,33 +255,31 @@ export function Positioning() {
       className={styles.section}
       aria-labelledby="hiring-timeline-title"
     >
-      <div ref={storyRef} className={styles.story}>
+      <div className={styles.story}>
         <div
           className={styles.sticky}
-          data-story-stage={story.stage}
-          style={
-            {
-              "--story-stage": story.stage,
-              "--active-position": focusedPosition,
-            } as CSSProperties
-          }
+          data-story-stage="2"
+          data-sequence-index={sequenceIndex + 1}
+          style={{ "--active-position": focusedPosition } as CSSProperties}
         >
           <header className={styles.intro}>
             <div className={styles.eyebrowRow}>
               <span className={styles.eyebrow}>The hiring sequence</span>
               <span className={styles.counter} aria-live="polite">
-                0{story.stage + 1} / 03
+                0{sequenceIndex + 1} / 03
               </span>
             </div>
             <h2 id="hiring-timeline-title">
               Put evidence where it changes the interview.
             </h2>
-            <div className={styles.dynamicSummary} aria-live="polite">
-              <span>{story.stage < 2 ? "Building the sequence" : summary.label}</span>
+            <div
+              key={sequenceIndex}
+              className={styles.dynamicSummary}
+              aria-live="polite"
+            >
+              <span>{summary.label}</span>
               <p>
-                {story.stage < 2
-                  ? "Screening gives first context. Technical interviews add depth. The missing evidence layer arrives next."
-                  : summary.text}
+                {summary.text}
               </p>
             </div>
           </header>
@@ -489,9 +287,8 @@ export function Positioning() {
           <div className={styles.timeline}>
             <div className={styles.trackShell}>
               <div
-                ref={trackRef}
                 className={styles.track}
-                aria-label="Draggable hiring sequence"
+                aria-label="Automatic hiring sequence comparison"
               >
                 <div className={styles.rail} aria-hidden="true">
                   <span className={styles.railBase} />
@@ -506,7 +303,7 @@ export function Positioning() {
                     (kind === "signals" && story.stage === 2);
 
                   return (
-                    <div className={styles.slot} key={kind}>
+                    <div className={styles.slot} key={`${kind}-${sequenceIndex}`}>
                       <i className={styles.railNode} aria-hidden="true" />
                       <TimelineCard
                         card={card}
@@ -514,32 +311,6 @@ export function Positioning() {
                         visible={isVisible}
                         visibleCount={visibleCounts[kind]}
                         position={index}
-                        canReorder={story.stage === 2}
-                        isDragging={draggingKind === kind}
-                        onFocus={() => {
-                          if (!isVisible) return;
-                          focusCard(kind);
-                        }}
-                        onDragStart={(event) => {
-                          if (story.stage < 2) {
-                            event.preventDefault();
-                            return;
-                          }
-                          setDraggingKind(kind);
-                          event.dataTransfer.effectAllowed = "move";
-                          event.dataTransfer.setData("text/plain", kind);
-                        }}
-                        onDragEnd={() => setDraggingKind(null)}
-                        onDrop={(event) => {
-                          event.preventDefault();
-                          const moving =
-                            (event.dataTransfer.getData(
-                              "text/plain",
-                            ) as CardKind) || draggingKind;
-                          if (moving) reorder(moving, kind);
-                          setDraggingKind(null);
-                        }}
-                        onMove={(direction) => moveCard(kind, direction)}
                       />
                     </div>
                   );
@@ -550,9 +321,7 @@ export function Positioning() {
 
           <div className={styles.scrollCue}>
             <span aria-hidden="true" />
-            {story.stage < 2
-              ? "Scroll to build the sequence"
-              : "Drag cards to compare the order"}
+            Automatic placement comparison · updates every 5 seconds
           </div>
         </div>
       </div>

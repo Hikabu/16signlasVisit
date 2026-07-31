@@ -24,19 +24,18 @@
 }
 
 .story {
-  min-height: 230svh;
+  min-height: 0;
 }
 
 .sticky {
-  position: sticky;
-  top: 0;
+  position: relative;
   display: flex;
   width: 100%;
-  height: 100svh;
-  min-height: 100svh;
+  height: auto;
+  min-height: 0;
   overflow: visible;
   flex-direction: column;
-  padding: clamp(56px, 8vh, 96px) 0 clamp(20px, 3vh, 40px);
+  padding: clamp(56px, 8vh, 88px) 0 clamp(20px, 3vh, 32px);
 }
 
 .intro {
@@ -102,6 +101,7 @@
   gap: 12px 18px;
   align-items: start;
   text-align: left;
+  animation: summarySwap 420ms var(--ease-premium) both;
 }
 
 .dynamicSummary > span {
@@ -146,38 +146,35 @@
 }
 
 .track {
-  --side-width: min(22vw, 300px);
-  --hero-width: min(54vw, 700px);
-  --gap: clamp(20px, 2.5vw, 40px);
+  --gap: clamp(16px, 2vw, 28px);
   position: relative;
   display: grid;
-  width: 100%;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
+  width: min(calc(100% - 12vw), 1440px);
+  margin-inline: auto;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.45fr) minmax(0, 0.8fr);
   gap: var(--gap);
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  padding: 56px max(6vw, calc((100vw - 1440px) / 2)) 38px;
-  scroll-behavior: smooth;
-  scroll-padding-inline: max(6vw, calc((100vw - 1440px) / 2));
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-}
-
-.track::-webkit-scrollbar {
-  display: none;
+  overflow: visible;
+  padding: 36px 0 28px;
+  transition: grid-template-columns 680ms var(--ease-premium);
 }
 
 .slot {
   position: relative;
   display: flex;
-  width: var(--side-width);
+  width: auto;
   min-width: 0;
-  scroll-snap-align: center;
 }
 
 .slot:has(.cardSignals) {
-  width: var(--hero-width);
+  width: auto;
+}
+
+.track:has(.slot:nth-child(1) .cardSignals) {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.8fr) minmax(0, 0.8fr);
+}
+
+.track:has(.slot:nth-child(3) .cardSignals) {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.45fr);
 }
 
 .rail {
@@ -238,7 +235,7 @@
   border-radius: 2px;
   background: var(--warm-gray);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  cursor: grab;
+  cursor: default;
   opacity: 0;
   user-select: none;
   transform: translateY(24px);
@@ -259,10 +256,6 @@
   background: var(--line-strong);
   content: "";
   opacity: 0.72;
-}
-
-.card:active {
-  cursor: grabbing;
 }
 
 .card:focus-visible {
@@ -301,12 +294,6 @@
   opacity: 1;
 }
 
-.cardDragging {
-  border-color: var(--line-strong);
-  cursor: grabbing;
-  opacity: 0.42;
-}
-
 .cardSignals {
   border-color: var(--paper);
   background: var(--paper);
@@ -316,17 +303,6 @@
 
 .cardSignals::after {
   background: var(--ink);
-}
-
-.sticky[data-story-stage="2"] .cardScreening,
-.sticky[data-story-stage="2"] .cardTechnical {
-  opacity: 0.2;
-  transform: scale(0.96);
-}
-
-.sticky[data-story-stage="2"] .cardScreening:hover,
-.sticky[data-story-stage="2"] .cardTechnical:hover {
-  opacity: 0.34;
 }
 
 .card:not(.cardVisible) {
@@ -624,6 +600,17 @@
   }
 }
 
+@keyframes summarySwap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes scrollCue {
   0%,
   100% {
@@ -647,7 +634,6 @@
 
 @media (max-width: 1020px) {
   .sticky {
-    min-height: 100svh;
     padding-top: 58px;
   }
 
@@ -661,10 +647,7 @@
   }
 
   .track {
-    --side-width: min(30vw, 300px);
-    --hero-width: min(60vw, 620px);
-    padding-inline: 7vw;
-    scroll-padding-inline: 7vw;
+    width: calc(100% - 12vw);
   }
 
   .dynamicSummary {
@@ -675,11 +658,10 @@
 
 @media (max-width: 767px) {
   .story {
-    min-height: 230svh;
+    min-height: 0;
   }
 
   .sticky {
-    min-height: 100svh;
     padding: 56px 0 18px;
     overflow: visible;
   }
@@ -725,11 +707,10 @@
   }
 
   .track {
-    --side-width: min(76vw, 330px);
-    --hero-width: min(86vw, 390px);
-    --gap: 22px;
-    padding: 58px 8vw 32px;
-    scroll-padding-inline: 8vw;
+    width: calc(100% - 36px);
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+    padding: 28px 0 20px;
   }
 
   .rail {
@@ -773,7 +754,6 @@
 
 @media (max-height: 760px) and (min-width: 768px) {
   .sticky {
-    min-height: 100svh;
     padding-top: 44px;
   }
 
@@ -787,10 +767,6 @@
 
   .timeline {
     margin-top: 8px;
-  }
-
-  .track {
-    padding-block: 44px 26px;
   }
 
   .card {
@@ -813,6 +789,10 @@
 
   .scrollCue {
     display: none;
+  }
+
+  .dynamicSummary {
+    animation: none;
   }
 
   .track {
