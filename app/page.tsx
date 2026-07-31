@@ -1,6 +1,6 @@
 import { EditorialHero } from "./components/landing/EditorialHero";
 import { PreparedInterview } from "./components/landing/PreparedInterview";
-import { TheShift } from "./components/landing/TheShift";
+import { Positioning } from "./components/landing/Positioning";
 import { Shift } from "./components/landing/Shift";
 import { WorkReveals } from "./components/landing/WorkReveals";
 import { ProblemValue } from "./components/landing/ProblemValue";
@@ -20,7 +20,7 @@ export default function Home() {
       <main id="main" className="page-shell pb-[var(--space-16)] md:pb-0">
         <EditorialHero />
         <PreparedInterview />
-        <TheShift />
+        <Positioning />
         <Shift />
         <WorkReveals />
         <ProblemValue />
