@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
+import { useScrollReveal } from "@/app/hooks/useScrollReveal";
 import styles from "./Positioning.module.css";
 
 type StoryStage = 0 | 1 | 2;
@@ -112,31 +113,27 @@ function getSequenceSummary(order: CardKind[]) {
 
   if (signalsPosition === 1 && technicalPosition === 2) {
     return {
-      label: "Strongest placement",
-      text: "Screen first, add real-work evidence next, then use deeper interview time where it matters most.",
+      text: "Between screening and the technical interview, 16Signals turns real-work evidence into a sharper, more relevant conversation.",
     };
   }
 
   if (signalsPosition < technicalPosition) {
     return {
-      label: "Evidence before depth",
       text:
         signalsPosition === 0
-          ? "Real-work evidence guides human review before technical interview time is used, with less screening context available upfront."
-          : "Real-work evidence arrives before deeper interview time is used, helping the team prioritize what to investigate.",
+          ? "Placed first, 16Signals can guide the rest of the process, but the team has less screening context to anchor the evidence."
+          : "Before deeper interview time is used, 16Signals helps the team focus the conversation on what still needs to be investigated.",
     };
   }
 
   if (signalsPosition === 2) {
     return {
-      label: "Useful, but later",
-      text: "The team still gains real-work evidence for human review, but money and interview time were already spent on earlier stages.",
+      text: "After the interviews, 16Signals still adds evidence, but earlier hiring effort has already been spent without it.",
     };
   }
 
   return {
-    label: "Evidence after depth",
-    text: "16Signals still supports human review, though the technical interview has already consumed deeper team attention.",
+    text: "After the technical interview, 16Signals still supports human review, though deeper team attention has already been used.",
   };
 }
 
@@ -229,6 +226,11 @@ function TimelineCard({
 
 export function Positioning() {
   const [sequenceIndex, setSequenceIndex] = useState(0);
+  const { ref: introRef, isRevealed: introRevealed } =
+    useScrollReveal<HTMLElement>({
+      threshold: 0.18,
+      rootMargin: "0px 0px -14% 0px",
+    });
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -247,7 +249,6 @@ export function Positioning() {
   };
   const focusedKind: CardKind = "signals";
   const summary = getSequenceSummary(order);
-  const focusedPosition = order.indexOf(focusedKind);
 
   return (
     <section
@@ -260,41 +261,35 @@ export function Positioning() {
           className={styles.sticky}
           data-story-stage="2"
           data-sequence-index={sequenceIndex + 1}
-          style={{ "--active-position": focusedPosition } as CSSProperties}
         >
-          <header className={styles.intro}>
-            <div className={styles.eyebrowRow}>
-              <span className={styles.eyebrow}>The hiring sequence</span>
-              <span className={styles.counter} aria-live="polite">
-                0{sequenceIndex + 1} / 03
-              </span>
-            </div>
-            <h2 id="hiring-timeline-title">
-              Put evidence where it changes the interview.
-            </h2>
-            <div
-              key={sequenceIndex}
-              className={styles.dynamicSummary}
-              aria-live="polite"
-            >
-              <span>{summary.label}</span>
-              <p>
-                {summary.text}
-              </p>
+          <header
+            ref={introRef}
+            className={`${styles.intro} ${
+              introRevealed ? styles.introRevealed : ""
+            }`}
+          >
+            <div className={styles.introRevealLine}>
+              <h2 id="hiring-timeline-title">
+                The earlier evidence enters the process, the better the interview becomes.
+              </h2>
             </div>
           </header>
 
           <div className={styles.timeline}>
             <div className={styles.trackShell}>
               <div
+                key={sequenceIndex}
+                className={styles.dynamicSummary}
+                aria-live="polite"
+              >
+                <span className={styles.counter}>0{sequenceIndex + 1} / 03</span>
+                <p>{summary.text}</p>
+              </div>
+
+              <div
                 className={styles.track}
                 aria-label="Automatic hiring sequence comparison"
               >
-                <div className={styles.rail} aria-hidden="true">
-                  <span className={styles.railBase} />
-                  <span className={styles.railProgress} />
-                </div>
-
                 {order.map((kind, index) => {
                   const card = CARDS[kind];
                   const isVisible =
@@ -304,7 +299,6 @@ export function Positioning() {
 
                   return (
                     <div className={styles.slot} key={`${kind}-${sequenceIndex}`}>
-                      <i className={styles.railNode} aria-hidden="true" />
                       <TimelineCard
                         card={card}
                         active={focusedKind === kind}
@@ -317,11 +311,6 @@ export function Positioning() {
                 })}
               </div>
             </div>
-          </div>
-
-          <div className={styles.scrollCue}>
-            <span aria-hidden="true" />
-            Automatic placement comparison · updates every 5 seconds
           </div>
         </div>
       </div>

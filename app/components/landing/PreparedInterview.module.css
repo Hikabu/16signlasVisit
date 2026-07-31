@@ -1001,7 +1001,7 @@
 
 /* 16signals-style desktop workspace treatment for section two. */
 /* .section { background: #08090b; padding-top: clamp(96px, 12vw, 150px); } */
-.section { background: #ffffff; padding-top: clamp(96px, 12vw, 150px); } 
+.section { background: #0f0f12; padding-top: clamp(96px, 12vw, 150px); } 
 .sectionGlow { display: none; }
 .inner { width: min(100%, 1430px); }
 .intro { grid-template-columns: 1fr; gap: 20px; max-width: 880px; margin: 0 auto; text-align: center; }

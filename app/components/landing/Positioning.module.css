@@ -35,7 +35,7 @@
   min-height: 0;
   overflow: visible;
   flex-direction: column;
-  padding: clamp(56px, 8vh, 88px) 0 clamp(20px, 3vh, 32px);
+  padding: clamp(48px, 6vh, 72px) 0 clamp(20px, 3vh, 32px);
 }
 
 .intro {
@@ -46,23 +46,11 @@
   text-align: left;
 }
 
-.eyebrowRow {
-  display: flex;
-  width: 100%;
-  margin: 0 0 clamp(18px, 2.5vh, 28px);
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 13px;
-}
-
-.eyebrow,
 .counter,
 .step,
 .status,
 .cardEyebrow,
-.cardControls,
-.scrollCue {
+.cardControls {
   font-family: var(--font-geist-mono), "SFMono-Regular", Consolas, monospace;
   font-size: 11px;
   font-weight: 500;
@@ -71,35 +59,44 @@
   text-transform: uppercase;
 }
 
-.eyebrow {
-  color: var(--paper);
-}
-
 .counter {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
+.introRevealLine {
+  overflow: hidden;
+}
+
+.introRevealLine h2 {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.introRevealed .introRevealLine h2 {
+  animation: introCopyLineRise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .intro h2 {
-  max-width: 900px;
+  max-width: 1180px;
   margin: 0;
   color: var(--paper);
   font-family: var(--font-geist-sans), Inter, ui-sans-serif, sans-serif;
-  font-size: clamp(42px, 4.6vw, 74px);
+  font-size: clamp(38px, 4vw, 64px);
   font-weight: 400;
   letter-spacing: -0.065em;
-  line-height: 0.94;
+  line-height: 0.98;
   text-wrap: balance;
 }
 
 .dynamicSummary {
   display: grid;
-  width: min(42%, 580px);
-  min-height: 64px;
-  margin: clamp(28px, 4vh, 44px) 0 0 55%;
+  width: min(calc(100% - 12vw), 1440px);
+  min-height: 0;
+  margin: 0 auto clamp(20px, 3vh, 32px);
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 12px 18px;
-  align-items: start;
+  gap: 18px 24px;
+  align-items: baseline;
   text-align: left;
   animation: summarySwap 420ms var(--ease-premium) both;
 }
@@ -108,10 +105,9 @@
   display: inline-flex;
   min-height: 0;
   align-items: center;
-  border: 0;
-  border-bottom: 1px solid var(--line-strong);
+  border: 1px solid var(--line-strong);
   border-radius: 0;
-  padding: 0 0 5px;
+  padding: 6px 8px;
   color: var(--muted);
   font-family: var(--font-geist-mono), monospace;
   font-size: 10px;
@@ -123,10 +119,11 @@
 }
 
 .dynamicSummary p {
+  max-width: 920px;
   margin: 0;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.6;
+  color: rgba(242, 243, 241, 0.72);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.5;
 }
 
 .timeline {
@@ -136,7 +133,7 @@
   min-height: 0;
   flex: 1;
   align-items: center;
-  margin-top: clamp(20px, 3vh, 42px);
+  margin-top: clamp(20px, 3vh, 32px);
 }
 
 .trackShell {
@@ -151,76 +148,17 @@
   display: grid;
   width: min(calc(100% - 12vw), 1440px);
   margin-inline: auto;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.45fr) minmax(0, 0.8fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap);
   overflow: visible;
-  padding: 36px 0 28px;
-  transition: grid-template-columns 680ms var(--ease-premium);
+  padding: 0 0 28px;
 }
 
 .slot {
   position: relative;
   display: flex;
-  width: auto;
-  min-width: 0;
-}
-
-.slot:has(.cardSignals) {
-  width: auto;
-}
-
-.track:has(.slot:nth-child(1) .cardSignals) {
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.8fr) minmax(0, 0.8fr);
-}
-
-.track:has(.slot:nth-child(3) .cardSignals) {
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.45fr);
-}
-
-.rail {
-  position: absolute;
-  top: 34px;
-  left: 0;
   width: 100%;
-  height: 1px;
-  pointer-events: none;
-}
-
-.railBase,
-.railProgress {
-  position: absolute;
-  inset: 0;
-  display: block;
-}
-
-.railBase {
-  background: var(--line);
-}
-
-.railProgress {
-  width: calc(var(--active-position) * 50%);
-  background: var(--line-strong);
-  transition: width 700ms var(--ease-premium);
-}
-
-.railNode {
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  z-index: 2;
-  width: 12px;
-  height: 12px;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  background: var(--ink);
-  transform: translateX(-50%);
-  transition: background 500ms var(--ease-premium), border-color 500ms var(--ease-premium), transform 500ms var(--ease-premium);
-}
-
-.slot:has(.cardActive) .railNode {
-  border-color: var(--paper);
-  background: var(--paper);
-  transform: translateX(-50%) scale(1.15);
+  min-width: 0;
 }
 
 .card {
@@ -362,7 +300,7 @@
   margin: 0;
   color: var(--paper);
   font-family: var(--font-geist-sans), Inter, ui-sans-serif, sans-serif;
-  font-size: clamp(26px, 2.2vw, 36px);
+  font-size: clamp(30px, 2.5vw, 42px);
   font-weight: 400;
   letter-spacing: -0.055em;
   line-height: 0.98;
@@ -370,7 +308,7 @@
 
 .cardSignals .cardHeading h3 {
   color: var(--ink);
-  font-size: clamp(38px, 3.8vw, 58px);
+  font-size: clamp(34px, 3vw, 48px);
 }
 
 .cardSummary {
@@ -600,6 +538,18 @@
   }
 }
 
+@keyframes introCopyLineRise {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes summarySwap {
   from {
     opacity: 0;
@@ -651,8 +601,7 @@
   }
 
   .dynamicSummary {
-    width: min(52%, 520px);
-    margin-left: 48%;
+    width: calc(100% - 12vw);
   }
 }
 
@@ -670,11 +619,6 @@
     width: calc(100% - 36px);
   }
 
-  .eyebrowRow {
-    margin-bottom: 24px;
-  }
-
-  .eyebrow,
   .counter {
     font-size: 9px;
   }
@@ -688,8 +632,7 @@
   .dynamicSummary {
     display: block;
     width: min(100%, 390px);
-    min-height: 76px;
-    margin: 22px 0 0;
+    margin: 0 auto 20px;
   }
 
   .dynamicSummary > span {
@@ -710,15 +653,7 @@
     width: calc(100% - 36px);
     grid-template-columns: 1fr !important;
     gap: 16px;
-    padding: 28px 0 20px;
-  }
-
-  .rail {
-    top: 26px;
-  }
-
-  .railNode {
-    top: 20px;
+    padding: 0 0 20px;
   }
 
   .card {
@@ -762,7 +697,7 @@
   }
 
   .dynamicSummary {
-    margin-top: 28px;
+    margin-top: 0;
   }
 
   .timeline {
@@ -792,6 +727,13 @@
   }
 
   .dynamicSummary {
+    animation: none;
+  }
+
+  .introRevealLine h2,
+  .introRevealed .introRevealLine h2 {
+    opacity: 1;
+    transform: none;
     animation: none;
   }
 
