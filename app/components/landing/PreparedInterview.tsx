@@ -5,6 +5,14 @@ import { useScrollReveal } from "@/app/hooks/useScrollReveal";
 import styles from "./PreparedInterview.module.css";
 
 type EvidenceId = "proven" | "verify" | "ask";
+type JobId = "backend" | "frontend" | "product-design";
+type ApplicantId = "alex" | "maya" | "daniel";
+type ReportSection =
+  | "report"
+  | "linked-evidence"
+  | "questions-to-explore"
+  | "interview-plan"
+  | "open-questions";
 
 type Output = {
   id: EvidenceId;
@@ -66,6 +74,26 @@ const outputs: Output[] = [
     artifactMeta:
       "3 linked artifacts · 2 alternatives · rationale partially recorded",
   },
+];
+
+const jobs: { id: JobId; label: string }[] = [
+  { id: "backend", label: "Backend Developer" },
+  { id: "frontend", label: "Frontend Developer" },
+  { id: "product-design", label: "Product Designer" },
+];
+
+const applicants: { id: ApplicantId; label: string }[] = [
+  { id: "alex", label: "Alex Morgan" },
+  { id: "maya", label: "Maya Chen" },
+  { id: "daniel", label: "Daniel Kim" },
+];
+
+const reportSections: { id: ReportSection; label: string }[] = [
+  { id: "report", label: "Report" },
+  { id: "linked-evidence", label: "Linked evidence" },
+  { id: "questions-to-explore", label: "Questions to explore" },
+  { id: "interview-plan", label: "Interview plan" },
+  { id: "open-questions", label: "Open questions" },
 ];
 
 function EvidenceIcon() {
@@ -146,6 +174,11 @@ export function PreparedInterview() {
   const reportRef = useRef<HTMLDivElement>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [openEvidence, setOpenEvidence] = useState<EvidenceId | null>(null);
+  const [jobsOpen, setJobsOpen] = useState(true);
+  const [expandedJob, setExpandedJob] = useState<JobId | null>("backend");
+  const [applicationsOpen, setApplicationsOpen] = useState(true);
+  const [expandedApplicant, setExpandedApplicant] =
+    useState<ApplicantId | null>("alex");
 
   useEffect(() => {
     const report = reportRef.current;
@@ -240,7 +273,14 @@ export function PreparedInterview() {
               <img className={styles.brandAsset} src="/icons/a16zero.svg" alt="" />
               <span className={styles.productName}>16Signals</span>
               <span className={styles.chromeDivider} />
-              <span className={styles.chromeLocation}>Hiring workspace</span>
+              <nav className={styles.chromeLocation} aria-label="Breadcrumb">
+                <ol>
+                  <li>Jobs</li>
+                  <li>Backend Developer</li>
+                  <li>Applications</li>
+                  <li aria-current="page">Alex Morgan</li>
+                </ol>
+              </nav>
             </div>
             <div className={styles.chromeStatus}>
               <span className={styles.issueCount}>Candidate 02 / 18</span>
@@ -255,22 +295,124 @@ export function PreparedInterview() {
           </div>
 
           <div className={styles.reportWorkspace}>
-            <aside className={styles.sidebar} aria-label="Candidate report navigation">
+            <aside className={styles.sidebar} aria-label="Hiring navigation">
               <div className={styles.workspaceBrand}><img className={styles.brandAsset} src="/icons/a16zero.svg" alt="" /><strong>16Signals</strong><span>⌄</span></div>
-              <div>
-                <p className={styles.sidebarLabel}>Candidate</p>
-                <p className={styles.candidateName}>Alex Morgan</p>
-              </div>
 
-              <nav aria-label="Candidate report sections">
-                <a className={styles.activeNav} href="#prepared-interview"><img src="/icons/inbox.svg" alt="" /><span>Jobs</span></a>
-                <a href="#prepared-interview"><img src="/icons/progress.svg" alt="" /><span>Create jobs</span></a>
-                <a href="#prepared-interview"><img src="/icons/git.svg" alt="" /><span>Applications</span></a>
-                <a href="#prepared-interview"><img src="/icons/statistick.svg" alt="" /><span>Settings</span></a>
-                <p className={styles.navSection}>Interview</p>
-                <a href="#prepared-interview"><img src="/icons/interviews.svg" alt="" /><span>Questions to ask</span></a>
-                <a href="#prepared-interview"><img src="/icons/project.svg" alt="" /><span>Risks to verify</span></a>
-                <a href="#prepared-interview"><img src="/icons/progress.svg" alt="" /><span>Interview plan</span></a>
+              <nav className={styles.sidebarNav} aria-label="Jobs and settings">
+                <button
+                  type="button"
+                  className={`${styles.navRow} ${styles.primaryNav} ${styles.pathNav}`}
+                  aria-expanded={jobsOpen}
+                  aria-controls="prepared-interview-jobs"
+                  onClick={() => setJobsOpen((open) => !open)}
+                >
+                  <span className={styles.navRowText}>
+                    <img src="/icons/inbox.svg" alt="" />
+                    <span>Jobs</span>
+                  </span>
+                  <span className={`${styles.navChevron} ${jobsOpen ? styles.navChevronOpen : ""}`} aria-hidden="true">›</span>
+                </button>
+
+                {jobsOpen && (
+                  <div id="prepared-interview-jobs" className={styles.navChildren}>
+                    {jobs.map((job) => {
+                      const isExpanded = expandedJob === job.id;
+                      const isCurrentJob = job.id === "backend";
+
+                      return (
+                        <div key={job.id}>
+                          <button
+                            type="button"
+                            className={`${styles.navRow} ${isCurrentJob ? styles.pathNav : ""}`}
+                            aria-expanded={isExpanded}
+                            aria-controls={`prepared-interview-${job.id}`}
+                            onClick={() => {
+                              if (isExpanded) {
+                                setExpandedJob(null);
+                                return;
+                              }
+                              setExpandedJob(job.id);
+                              setApplicationsOpen(false);
+                              setExpandedApplicant(null);
+                            }}
+                          >
+                            <span>{job.label}</span>
+                            <span className={`${styles.navChevron} ${isExpanded ? styles.navChevronOpen : ""}`} aria-hidden="true">›</span>
+                          </button>
+
+                          {isExpanded && (
+                            <div id={`prepared-interview-${job.id}`} className={styles.navChildren}>
+                              <a className={styles.navRow} href="#prepared-interview">
+                                <span>Job details</span>
+                              </a>
+                              {isCurrentJob ? (
+                                <button
+                                  type="button"
+                                  className={`${styles.navRow} ${styles.pathNav}`}
+                                  aria-expanded={applicationsOpen}
+                                  aria-controls={`prepared-interview-${job.id}-applications`}
+                                  onClick={() => {
+                                    setApplicationsOpen((open) => !open);
+                                    if (applicationsOpen) setExpandedApplicant(null);
+                                  }}
+                                >
+                                  <span>Applications · 18</span>
+                                  <span className={`${styles.navChevron} ${applicationsOpen ? styles.navChevronOpen : ""}`} aria-hidden="true">›</span>
+                                </button>
+                              ) : (
+                                <a className={styles.navRow} href="#prepared-interview">
+                                  <span>Applications</span>
+                                </a>
+                              )}
+
+                              {applicationsOpen && isCurrentJob && (
+                                <div id={`prepared-interview-${job.id}-applications`} className={styles.navChildren}>
+                                  {applicants.map((applicant) => {
+                                    const isApplicantExpanded = expandedApplicant === applicant.id;
+                                    const isCurrentApplicant = applicant.id === "alex";
+
+                                    return (
+                                      <div key={applicant.id}>
+                                        <button
+                                          type="button"
+                                          className={`${styles.navRow} ${isCurrentApplicant ? styles.pathNav : ""}`}
+                                          aria-expanded={isApplicantExpanded}
+                                          aria-controls={`prepared-interview-${applicant.id}-report`}
+                                          onClick={() => setExpandedApplicant(isApplicantExpanded ? null : applicant.id)}
+                                        >
+                                          <span>{applicant.label}</span>
+                                          <span className={`${styles.navChevron} ${isApplicantExpanded ? styles.navChevronOpen : ""}`} aria-hidden="true">›</span>
+                                        </button>
+
+                                        {isApplicantExpanded && (
+                                          <div id={`prepared-interview-${applicant.id}-report`} className={styles.navChildren}>
+                                            {reportSections.map((section) => (
+                                              <a
+                                                key={section.id}
+                                                className={`${styles.navRow} ${isCurrentApplicant && section.id === "report" ? styles.activeNav : ""}`}
+                                                href="#prepared-interview"
+                                                aria-current={isCurrentApplicant && section.id === "report" ? "page" : undefined}
+                                              >
+                                                <span>{section.label}</span>
+                                              </a>
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                <a className={`${styles.navRow} ${styles.primaryNav}`} href="#prepared-interview"><span className={styles.navRowText}><img src="/icons/progress.svg" alt="" /><span>Create job</span></span></a>
+                <a className={`${styles.navRow} ${styles.primaryNav}`} href="#prepared-interview"><span className={styles.navRowText}><img src="/icons/statistick.svg" alt="" /><span>Settings</span></span></a>
               </nav>
             </aside>
 
