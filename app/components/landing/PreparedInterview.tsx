@@ -270,7 +270,7 @@ export function PreparedInterview() {
 
           <div className={styles.reportChrome}>
             <div className={styles.chromeIdentity}>
-              <img className={styles.brandAsset} src="/icons/a16zero.svg" alt="" />
+              <img className={styles.brandAsset} src="/a16zero.png" alt="" />
               <span className={styles.productName}>16Signals</span>
               <span className={styles.chromeDivider} />
               <nav className={styles.chromeLocation} aria-label="Breadcrumb">
@@ -296,7 +296,7 @@ export function PreparedInterview() {
 
           <div className={styles.reportWorkspace}>
             <aside className={styles.sidebar} aria-label="Hiring navigation">
-              <div className={styles.workspaceBrand}><img className={styles.brandAsset} src="/icons/a16zero.svg" alt="" /><strong>16Signals</strong><span>⌄</span></div>
+              <div className={styles.workspaceBrand}><img className={styles.brandAsset} src="/a16zero.png" alt="" /><strong>16Signals</strong><span>⌄</span></div>
 
               <nav className={styles.sidebarNav} aria-label="Jobs and settings">
                 <button
@@ -518,7 +518,7 @@ export function PreparedInterview() {
                 <div className={styles.detailItem}><span className={styles.statusDot}>●</span><span>Analysis complete</span></div>
                 <div className={styles.detailItem}><span className={styles.priorityBars}>▂▅▇</span><span>Senior Backend Engineer</span></div>
                 <div className={styles.detailItem}><span className={styles.avatar}>A</span><span>Alex Morgan</span></div>
-                <div className={`${styles.detailItem} ${styles.detailItemMuted}`}><img src="/icons/a16zero.svg" alt="" /><span>Analyzed by 16Signals</span></div>
+                <div className={`${styles.detailItem} ${styles.detailItemMuted}`}><img className={styles.analyzedBrandAsset} src="/a16zero.png" alt="" /><span>Analyzed by 16Signals</span></div>
                 <div className={styles.detailDivider} />
                 <div className={styles.detailItem}><span className={styles.muted}>Work examined</span><span className={styles.detailValue}>18 months</span></div>
                 <div className={styles.detailItem}><span className={styles.muted}>Evidence</span><span className={styles.detailValue}>46 linked</span></div>
