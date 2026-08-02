@@ -344,7 +344,7 @@ export function Shift() {
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
           label="THE MISSING PIECE"
-          headline="Between the HR screen and the technical interview."
+          headline="Before the technical interview."
           body="Interviews are expensive. Take-homes are gameable. Resumes are weak. 16Signals adds real work evidence before you spend more time."
         />
       </div>
