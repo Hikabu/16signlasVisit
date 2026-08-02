@@ -263,10 +263,10 @@ export function PreparedInterview() {
               </div>
 
               <nav aria-label="Candidate report sections">
-                <a className={styles.activeNav} href="#prepared-interview"><img src="/icons/inbox.svg" alt="" /><span>Decision brief</span></a>
-                <a href="#prepared-interview"><img src="/icons/progress.svg" alt="" /><span>Capability profile</span></a>
-                <a href="#prepared-interview"><img src="/icons/git.svg" alt="" /><span>Linked evidence</span></a>
-                <a href="#prepared-interview"><img src="/icons/statistick.svg" alt="" /><span>Evidence coverage</span></a>
+                <a className={styles.activeNav} href="#prepared-interview"><img src="/icons/inbox.svg" alt="" /><span>Jobs</span></a>
+                <a href="#prepared-interview"><img src="/icons/progress.svg" alt="" /><span>Create jobs</span></a>
+                <a href="#prepared-interview"><img src="/icons/git.svg" alt="" /><span>Applications</span></a>
+                <a href="#prepared-interview"><img src="/icons/statistick.svg" alt="" /><span>Settings</span></a>
                 <p className={styles.navSection}>Interview</p>
                 <a href="#prepared-interview"><img src="/icons/interviews.svg" alt="" /><span>Questions to ask</span></a>
                 <a href="#prepared-interview"><img src="/icons/project.svg" alt="" /><span>Risks to verify</span></a>

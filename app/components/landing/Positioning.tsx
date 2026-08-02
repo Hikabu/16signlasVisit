@@ -270,7 +270,7 @@ export function Positioning() {
           >
             <div className={styles.introRevealLine}>
               <h2 id="hiring-timeline-title">
-                The earlier evidence enters the process, the better the interview becomes.
+                How to use 16 signlas?
               </h2>
             </div>
           </header>
