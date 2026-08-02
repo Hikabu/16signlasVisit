@@ -356,8 +356,11 @@ export function PreparedInterview() {
                                     if (applicationsOpen) setExpandedApplicant(null);
                                   }}
                                 >
-                                  <span>Applications · 18</span>
-                                  <span className={`${styles.navChevron} ${applicationsOpen ? styles.navChevronOpen : ""}`} aria-hidden="true">›</span>
+                                  <span>Applications</span>
+                                  <span className={styles.navRowActions}>
+                                    <span className={styles.applicationCount} aria-label="18 applicants">18</span>
+                                    <span className={`${styles.navChevron} ${applicationsOpen ? styles.navChevronOpen : ""}`} aria-hidden="true">›</span>
+                                  </span>
                                 </button>
                               ) : (
                                 <a className={styles.navRow} href="#prepared-interview">
@@ -411,8 +414,20 @@ export function PreparedInterview() {
                   </div>
                 )}
 
-                <a className={`${styles.navRow} ${styles.primaryNav}`} href="#prepared-interview"><span className={styles.navRowText}><img src="/icons/progress.svg" alt="" /><span>Create job</span></span></a>
-                <a className={`${styles.navRow} ${styles.primaryNav}`} href="#prepared-interview"><span className={styles.navRowText}><img src="/icons/statistick.svg" alt="" /><span>Settings</span></span></a>
+                <a className={`${styles.navRow} ${styles.primaryNav}`} href="#prepared-interview">
+                  <span className={styles.navRowText}><img src="/icons/progress.svg" alt="" /><span>Create job</span></span></a>
+              </nav>
+
+              <nav className={styles.sidebarFooter} aria-label="Account and support">
+                <a className={styles.navRow} href="#prepared-interview">
+                  <span className={styles.navRowText}><img src="/icons/16position/tech_interview_link.svg" alt="" /><span>Support</span></span>
+                </a>
+                <a className={styles.navRow} href="#prepared-interview">
+                  <span className={styles.navRowText}><img src="/icons/16position/tech_interview_atom.svg" alt="" /><span>Settings</span></span>
+                </a>
+                <a className={styles.navRow} href="#prepared-interview">
+                  <span className={styles.navRowText}><img src="/icons/16position/16_signlas_hole.svg" alt="" /><span>Log out</span></span>
+                </a>
               </nav>
             </aside>
 
