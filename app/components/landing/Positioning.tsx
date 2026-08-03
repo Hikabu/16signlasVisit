@@ -31,7 +31,7 @@ const SCREENING: StoryCard = {
   kind: "screening",
   eyebrow: "First context",
   title: "Screening / HR",
-  summary: "Useful context. Still only part of the picture.",
+  summary: "Evaluates how well someone describes their experience.",
   status: "Useful · partial",
   lines: [
     {
@@ -50,7 +50,7 @@ const TECHNICAL: StoryCard = {
   kind: "technical",
   eyebrow: "Deeper review",
   title: "Technical interview",
-  summary: "Adds depth and discussion—later in the process.",
+  summary: "Evaluates how well someone performs during a prepared conversation or exercise.",
   status: "Deep · costly",
   lines: [
     {
@@ -73,7 +73,7 @@ const SIGNALS: StoryCard = {
   eyebrow: "The missing middle layer",
   title: "16Signals",
   summary:
-    "16Signals adds real-work evidence after screening and before the technical interview.",
+    "16signals examines that work before the interview.",
   status: "Evidence layer",
   lines: [
     {
@@ -235,7 +235,7 @@ export function Positioning() {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setSequenceIndex((current) => (current + 1) % AUTO_ORDERS.length);
-    }, 5000);
+    }, 20000); //every 30sec change 
 
     return () => window.clearInterval(interval);
   }, []);

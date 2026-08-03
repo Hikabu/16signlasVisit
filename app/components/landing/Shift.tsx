@@ -22,7 +22,7 @@ const ENGINEERING_STAGES: Stage[] = [
   {
     number: "01",
     title: "Polished claims",
-    sentence: "Resumes can be polished; work history is harder to fake.",
+    sentence: "What the candidate has actually worked on",
   },
   {
     number: "02",
@@ -344,7 +344,7 @@ export function Shift() {
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
           label="THE MISSING PIECE"
-          headline="Before the technical interview."
+          headline="The company can see: "
           body="Interviews are expensive. Take-homes are gameable. Resumes are weak. 16Signals adds real work evidence before you spend more time."
         />
       </div>
