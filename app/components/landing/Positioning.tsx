@@ -52,9 +52,9 @@ export function Positioning() {
         <header className={styles.intro}>
           <p className={styles.eyebrow}>The problem</p>
           <h2 id="hiring-timeline-title">
-            Screening and technical interviews don’t reveal how people work.
+            Hiring sees preparation Not performance
           </h2>
-          <p className={styles.hook}>See how people work before the interview.</p>
+          <p className={styles.hook}>See how people work before the interview</p>
         </header>
 
         <div className={styles.composition}>
