@@ -55,13 +55,12 @@ export function Positioning() {
 
         <div className={styles.composition}>
           <p className={styles.bridge}>
-            Nor screening or technical interview examines work 
-            under deadlines and systems involved.
+            Screening and technical interviews don’t reveal how people work under real deadlines.
           </p>
 
           <div className={styles.caption}>
             <span aria-hidden="true" />
-            <p>16Signals fixes this situation</p>
+            <p>See how people work before the interview.</p>
           </div>
 
           <div className={styles.cardsRow}>
