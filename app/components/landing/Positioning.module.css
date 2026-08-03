@@ -67,7 +67,7 @@
 
 .caption span {
   width: 100%;
-  height: 1px;
+  height: 0.5px;
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -78,7 +78,8 @@
     transparent 100%
   );
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(10px) scaleX(0.04);
+  transform-origin: center;
 }
 
 .caption p {
@@ -197,11 +198,11 @@
 }
 
 .revealed .screeningCard {
-  animation: screeningSequence 4340ms var(--ease-out) 180ms both;
+  animation: screeningSequence 4650ms var(--ease-out) 180ms both;
 }
 
 .revealed .technicalCard {
-  animation: technicalSequence 4340ms var(--ease-out) 180ms both;
+  animation: technicalSequence 4650ms var(--ease-out) 180ms both;
 }
 
 .revealed .bridge {
@@ -209,15 +210,15 @@
 }
 
 .revealed .caption span {
-  animation: captionRise 700ms var(--ease-out) 2020ms both;
+  animation: lineReveal 1000ms var(--ease-out) 2020ms both;
 }
 
 .revealed .caption p {
-  animation: captionRise 700ms var(--ease-out) 2800ms both;
+  animation: captionRise 700ms var(--ease-out) 3120ms both;
 }
 
 .revealed .featuredCard {
-  animation: signalsApproach 900ms var(--ease-out) 3620ms both;
+  animation: signalsApproach 900ms var(--ease-out) 3940ms both;
 }
 
 @keyframes rise {
@@ -238,8 +239,8 @@
     transform: translateX(calc(67.5% + (var(--card-gap) / 2))) translateY(40px);
   }
 
-  19%,
-  79% {
+  17%,
+  81% {
     opacity: 1;
     transform: translateX(calc(67.5% + (var(--card-gap) / 2))) translateY(0);
   }
@@ -256,8 +257,8 @@
     transform: translateX(calc(-67.5% - (var(--card-gap) / 2))) translateY(40px);
   }
 
-  19%,
-  79% {
+  17%,
+  81% {
     opacity: 1;
     transform: translateX(calc(-67.5% - (var(--card-gap) / 2))) translateY(0);
   }
@@ -277,6 +278,18 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes lineReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scaleX(0.04);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
   }
 }
 

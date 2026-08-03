@@ -55,8 +55,8 @@ export function Positioning() {
 
         <div className={styles.composition}>
           <p className={styles.bridge}>
-            Neither screening nor a technical interview examines how a person worked
-            when real deadlines and systems were involved.
+            Nor screening or technical interview examines work 
+            under deadlines and systems involved.
           </p>
 
           <div className={styles.caption}>
