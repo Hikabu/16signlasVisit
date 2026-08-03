@@ -36,7 +36,7 @@
 .inner {
   box-sizing: border-box;
   width: min(calc(100% - 12vw), 1440px);
-  min-height: calc(100svh - 84px);
+  min-height: calc(100svh - 60px);
   margin-inline: auto;
   padding-block: clamp(44px, 4.5vw, 64px);
 }
