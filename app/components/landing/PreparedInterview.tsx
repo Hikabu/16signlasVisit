@@ -558,15 +558,6 @@ export function PreparedInterview() {
             <div className={styles.promptBox}>Search this candidate&apos;s evidence… <span>⌕　↑</span></div>
           </aside>
         </div>
-
-        <div className={styles.transition}>
-          <span aria-hidden="true" />
-          <p>Every conclusion remains connected to the work behind it.</p>
-          <span aria-hidden="true" />
-          <span className={styles.transitionArrow} aria-hidden="true">
-            ↓
-          </span>
-        </div>
       </div>
     </section>
   );
