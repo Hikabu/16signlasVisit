@@ -54,7 +54,7 @@ export function Positioning() {
           <h2 id="hiring-timeline-title">
             Hiring sees preparation Not performance
           </h2>
-          <p className={styles.hook}>See how people work before the interview</p>
+          <p className={styles.hook}>see how people work before the interview</p>
         </header>
 
         <div className={styles.composition}>
