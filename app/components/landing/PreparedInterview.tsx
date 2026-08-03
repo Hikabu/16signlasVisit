@@ -238,13 +238,13 @@ export function PreparedInterview() {
             <div className={styles.introCopy}>
             <div className={`${styles.introRevealLine} ${styles.introHeadline}`}>
               <h2 id="prepared-interview-title">
-                Skip the investigation. Start with the evidence.
+                Skip the investigation Start with the evidence
               </h2>
             </div>
             <div className={`${styles.introRevealLine} ${styles.introBody}`}>
               <p>
                 16Signals turns years of engineering activity into one organized hiring
-                brief—showing what is already proven, what remains uncertain and exactly
+                brief-showing what is already proven, what remains uncertain and exactly
                 what to investigate in the interview.
               </p>
             </div>

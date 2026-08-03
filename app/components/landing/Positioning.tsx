@@ -50,19 +50,14 @@ export function Positioning() {
     >
       <div className={styles.inner}>
         <header className={styles.intro}>
-          <h2 id="hiring-timeline-title">How to use 16Signals</h2>
+          <p className={styles.eyebrow}>The problem</p>
+          <h2 id="hiring-timeline-title">
+            Screening and technical interviews don’t reveal how people work.
+          </h2>
+          <p className={styles.hook}>See how people work before the interview.</p>
         </header>
 
         <div className={styles.composition}>
-          <p className={styles.bridge}>
-            Screening and technical interviews don’t reveal how people work under real deadlines.
-          </p>
-
-          <div className={styles.caption}>
-            <span aria-hidden="true" />
-            <p>See how people work before the interview.</p>
-          </div>
-
           <div className={styles.cardsRow}>
             <div className={styles.screeningCard}>
               <StoryCard {...cards.screening} />

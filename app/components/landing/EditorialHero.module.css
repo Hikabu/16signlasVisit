@@ -38,7 +38,7 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 30;
-  min-height: 72px;
+  min-height: 84px;
   padding: 0 clamp(14px, 4.1vw, 66px);
   border-bottom: 1px solid transparent;
   background: transparent;
@@ -55,7 +55,7 @@
 
 .headerInner {
   width: 100%;
-  min-height: 72px;
+  min-height: 84px;
   display: grid;
   grid-template-columns: minmax(190px, 1fr) auto minmax(190px, 1fr);
   align-items: center;
@@ -110,7 +110,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(20px, 2vw, 34px);
+  gap: clamp(24px, 2.35vw, 40px);
   white-space: nowrap;
 }
 
@@ -121,7 +121,7 @@
   font-size: 14px;
   font-weight: 520;
   line-height: 1;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.025em;
   text-decoration: none;
   transition: color 160ms ease, opacity 160ms ease, background-color 160ms ease;
 }
@@ -133,7 +133,7 @@
 
 .nav a {
   position: relative;
-  padding: 27px 0 25px;
+  padding: 33px 0 31px;
 }
 
 .nav a::after {
