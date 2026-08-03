@@ -48,7 +48,7 @@
 .composition {
   --card-gap: clamp(18px, 2vw, 30px);
   width: min(100%, 1280px);
-  margin: clamp(52px, 7vw, 92px) auto 0;
+  margin: clamp(28px, 3.5vw, 48px) auto 0;
 }
 
 .caption {
@@ -198,11 +198,11 @@
 }
 
 .revealed .screeningCard {
-  animation: screeningSequence 4650ms var(--ease-out) 180ms both;
+  animation: screeningSequence 5160ms var(--ease-out) 180ms both;
 }
 
 .revealed .technicalCard {
-  animation: technicalSequence 4650ms var(--ease-out) 180ms both;
+  animation: technicalSequence 5160ms var(--ease-out) 180ms both;
 }
 
 .revealed .bridge {
@@ -218,7 +218,7 @@
 }
 
 .revealed .featuredCard {
-  animation: signalsApproach 900ms var(--ease-out) 3940ms both;
+  animation: signalsApproach 1400ms var(--ease-out) 5140ms both;
 }
 
 @keyframes rise {
