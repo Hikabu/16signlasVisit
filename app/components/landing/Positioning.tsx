@@ -55,14 +55,23 @@ export function Positioning() {
 
         <div className={styles.composition}>
           <p className={styles.bridge}>
-            Neither screening nor tech interview examines how a person worked when
-            real deadlines and systems were involved.
+            Neither screening nor a technical interview examines how a person worked
+            when real deadlines and systems were involved.
           </p>
 
+          <div className={styles.caption}>
+            <span aria-hidden="true" />
+            <p>16Signals fixes this situation</p>
+          </div>
+
           <div className={styles.cardsRow}>
-            <StoryCard {...cards.screening} />
+            <div className={styles.screeningCard}>
+              <StoryCard {...cards.screening} />
+            </div>
             <StoryCard {...cards.signals} featured />
-            <StoryCard {...cards.technical} />
+            <div className={styles.technicalCard}>
+              <StoryCard {...cards.technical} />
+            </div>
           </div>
         </div>
       </div>
