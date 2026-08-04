@@ -21,33 +21,39 @@ type BridgeCard = {
 const ENGINEERING_STAGES: Stage[] = [
   {
     number: "01",
-    title: "Polished claims",
-    sentence: "What the candidate has actually worked on",
+    title: "What they owned",
+    sentence:
+      "See whether the candidate led the work, supported it, or contributed to only one part.",
   },
   {
     number: "02",
-    title: "Talk vs. doing",
-    sentence: "Interviews show talking; work history shows doing.",
+    title: "How they made decisions",
+    sentence:
+      "Find the trade-offs, revisions, and technical choices behind the final result.",
   },
   {
     number: "03",
-    title: "Gameable tests",
-    sentence: "Take-homes are gameable; real past work is harder to game.",
+    title: "What complexity they handled",
+    sentence:
+      "Understand the scale, constraints, and systems present in their previous work.",
   },
   {
     number: "04",
-    title: "Faster focus",
-    sentence: "Evidence helps teams focus faster.",
+    title: "How they worked over time",
+    sentence:
+      "See repeated patterns across projects instead of judging one prepared moment.",
   },
   {
     number: "05",
-    title: "Verify early",
-    sentence: "Bad hires are expensive; verify before deeper interviews.",
+    title: "How they worked with others",
+    sentence:
+      "Review evidence of feedback, collaboration, technical discussion, and shared ownership.",
   },
   {
     number: "06",
-    title: "Know what to ask",
-    sentence: "16Signals shows what is proven, uncertain, and worth asking.",
+    title: "What to examine next",
+    sentence:
+      "Turn proven work, open questions, and uncertainties into a focused technical interview.",
   },
 ];
 
@@ -343,8 +349,8 @@ export function Shift() {
         <VerticalTimeline
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
-          label="THE MISSING PIECE"
-          headline="The company can see: "
+          label="WHAT THE PROCESS CANNOT SEE"
+          headline="TThe work behind the CV "
           body="Interviews are expensive. Take-homes are gameable. Resumes are weak. 16Signals adds real work evidence before you spend more time."
         />
       </div>
