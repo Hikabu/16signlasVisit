@@ -260,10 +260,8 @@ function VerticalTimeline({
 
   useEffect(() => {
     const recalc = () => updateRailFill(activeIndex);
-    window.addEventListener("scroll", recalc, { passive: true });
     window.addEventListener("resize", recalc, { passive: true });
     return () => {
-      window.removeEventListener("scroll", recalc);
       window.removeEventListener("resize", recalc);
     };
   }, [activeIndex, updateRailFill]);
@@ -350,7 +348,7 @@ export function Shift() {
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
           label="WHAT THE PROCESS CANNOT SEE"
-          headline="TThe work behind the CV "
+          headline="The work behind the CV "
           body="Interviews are expensive. Take-homes are gameable. Resumes are weak. 16Signals adds real work evidence before you spend more time."
         />
       </div>

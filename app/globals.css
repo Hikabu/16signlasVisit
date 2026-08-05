@@ -838,6 +838,23 @@ body::after {
    ══════════════════════════════════════════════════════════════════ */
 
 .ts-section {
+  --ts-spectrum-vertical: linear-gradient(
+    180deg,
+    #ff641e 0%,
+    #e8a83d 20%,
+    #008c78 43%,
+    #078fa9 64%,
+    #2f9fc1 78%,
+    #db8fb7 100%
+  );
+  --ts-spectrum-text: linear-gradient(
+    100deg,
+    #ff641e 0%,
+    #e8a83d 22%,
+    #008c78 48%,
+    #2f9fc1 72%,
+    #db8fb7 100%
+  );
   background: #08090a;
   color: #f3f4f6;
   font-family: "Inter", system-ui, -apple-system, sans-serif;
@@ -1439,7 +1456,7 @@ body::after {
   top: 0;
   width: 1px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.08);
+  background: transparent;
   border-radius: 1px;
   mask-image: linear-gradient(180deg, transparent, black 120px);
 }
@@ -1450,11 +1467,27 @@ body::after {
   left: 0;
   width: 100%;
   height: 0;
-  background: linear-gradient(180deg, transparent, #5E6AD2 60%, #7A87E8);
+  background: var(--ts-spectrum-vertical);
   border-radius: 1px;
-  box-shadow: 0 0 12px rgba(122, 135, 232, 0.45);
-  transition: height 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 0 9px rgba(8, 143, 169, 0.38),
+    0 0 16px rgba(219, 143, 183, 0.2);
+  transform-origin: top center;
+  animation: ts-rail-enter 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: height 850ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: height;
+}
+
+@keyframes ts-rail-enter {
+  from {
+    opacity: 0;
+    transform: scaleY(0.12);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 /* ── Items ── */
@@ -1583,7 +1616,7 @@ body::after {
   margin: 4px 0 0;
   max-width: 580px;
   color: #a1a1aa;
-  font-size: 16px;
+  font-size: 36px;
   line-height: 1.45;
 }
 
@@ -1626,13 +1659,17 @@ body::after {
   }
 }
 
-/* Stage number — desaturated indigo */
+/* Stage number — spectrum sampled from the visual reference */
 .ts-stage-num {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
-  color: #7A87E8;
+  color: transparent;
+  background: var(--ts-spectrum-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Evidence narrative */
@@ -1667,21 +1704,22 @@ body::after {
   max-width: 580px;
 }
 
-/* Title */
-.ts-title--active {
-  color: #C7CDF9;
-}
-
+/* Titles share the same orange-to-teal-to-blue-to-pink spectrum. */
 .ts-title {
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.1;
-  transition: color 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  color: transparent;
+  background: var(--ts-spectrum-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ts-title--inactive {
-  color: #4a4a52;
+  opacity: 0.72;
 }
 
 /* Proof line */
