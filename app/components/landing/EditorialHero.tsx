@@ -150,10 +150,10 @@ export function EditorialHero() {
             <div className={styles.copyColumn}>
               <div className={styles.headlineBlock}>
                 <p className={styles.eyebrow}>
-                  Evidence-led engineering hiring
+                  Evidence-based technical assessment
                 </p>
 
-                <h1 id="hero-title" className={styles.headline} aria-label="Hiring, with the lights on.">
+                <h1 id="hero-title" className={styles.headline} aria-label="The CV proof layer for technical hiring">
                   <span className={styles.headlineLine}>
                     <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">Hiring,</span>
                   </span>
@@ -170,8 +170,7 @@ export function EditorialHero() {
 
               <div className={styles.narrative}>
                 <p className={styles.subhead}>
-                  16 Signals reads real engineering work and shows you what it says — strengths, risks, and the questions worth asking next.
-                </p>
+                Get a 90-second Engineering DNA Brief with verified skills, code quality signals, resume claim checks, job-fit insights, and targeted interview questions.                </p>
 
                 <div className={styles.actionGroup}>
                   <div className={styles.ctas} role="group" aria-label="Primary actions">
