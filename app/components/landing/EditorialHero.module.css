@@ -162,17 +162,29 @@
   width: min(100%, 640px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   padding-bottom: clamp(4px, 1.5vh, 16px);
 }
 
 .headlineBlock {
+  width: 100%;
   max-width: 600px;
 }
 
+.eyebrow {
+  width: 100%;
+  max-width: 570px;
+  margin: 0 0 20px;
+  color: rgba(232, 232, 238, 0.58);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+}
+
 .headline {
-  max-width: 8.6ch;
+  width: 100%;
+  max-width: 600px;
   margin: 0;
   color: #ffffff;
   font-size: clamp(56px, 5.25vw, 82px);
@@ -216,16 +228,16 @@
 }
 
 .narrative {
-  align-self: center;
+  align-self: stretch;
   width: 100%;
   max-width: 600px;
   margin-top: 34px;
   padding-bottom: 2px;
-  text-align: center;
+  text-align: left;
 }
 
 .narrative > p {
-  max-width: 570px;
+  max-width: 52ch;
   margin: 0;
   color: rgba(232, 232, 238, 0.74);
   font-size: clamp(17px, 1.35vw, 20px);
@@ -245,7 +257,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 44px;
   padding-top: 23px;
 }
@@ -254,15 +266,15 @@
   content: "";
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 0;
   width: min(100%, 420px);
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2) 22%, rgba(0, 154, 147, 0.24) 50%, rgba(255, 255, 255, 0.2) 78%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
   opacity: 0;
-  transform: translateX(-50%) scaleX(0.86);
-  transform-origin: center;
+  transform: scaleX(0.86);
+  transform-origin: left center;
   animation: actionLineReveal 850ms cubic-bezier(.2, .7, .2, 1) 620ms forwards;
 }
 
@@ -270,6 +282,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-start;
   gap: 28px;
   margin-top: 0;
   opacity: 0;
@@ -485,7 +498,7 @@
 @keyframes actionLineReveal {
   to {
     opacity: 0.72;
-    transform: translateX(-50%) scaleX(1);
+    transform: scaleX(1);
   }
 }
 
@@ -501,7 +514,7 @@
 
   .actionGroup::before {
     opacity: 0.52;
-    transform: translateX(-50%);
+    transform: none;
     animation: none;
   }
 

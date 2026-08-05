@@ -14,7 +14,7 @@ const cards = {
   },
   signals: {
     title: "16Signals",
-    summary: "Reveals evidence from real work before the interview.",
+    summary: "Shows what they've actually done, before the interview even starts.",
   },
 };
 

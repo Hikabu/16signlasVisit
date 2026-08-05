@@ -155,15 +155,16 @@ export function EditorialHero() {
 
                 <h1 id="hero-title" className={styles.headline} aria-label="The CV proof layer for technical hiring">
                   <span className={styles.headlineLine}>
-                    <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">Hiring,</span>
+                    <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The CV proof layer </span>
+                    {/* <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The resume verification </span> */}
                   </span>
+                  {/* <span className={styles.headlineLine}> */}
+                    {/* <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The CV proof layer </span> */}
+                    {/* <span className={styles.headlineWord} style={{ animationDelay: "50ms" }} aria-hidden="true"> system for </span> */}
+                  {/* </span> */}
                   <span className={styles.headlineLine}>
-                    <span className={styles.headlineWord} style={{ animationDelay: "60ms" }} aria-hidden="true">with</span>{" "}
-                    <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">the</span>{" "}
-                    <span className={styles.headlineWord} style={{ animationDelay: "180ms" }} aria-hidden="true">lights</span>
-                  </span>
-                  <span className={styles.headlineLine}>
-                    <span className={styles.headlineWord} style={{ animationDelay: "240ms",  marginRight: "33px"  }} aria-hidden="true">ON</span>
+                    <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">for technical hiring</span>{" "}
+                    {/* <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">engineering hires</span>{" "} */}
                   </span>
                 </h1>
               </div>
