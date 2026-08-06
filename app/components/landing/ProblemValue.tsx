@@ -6,45 +6,47 @@ const folders = [
   {
     label: "01",
     tabOffset: "7%",
-    title: "Proof of Work",
-    body: "We separate shipped work from polished claims, so the shortlist starts with evidence instead of presentation.",
+    title: "Add the role",
+    body:
+      "Share the job description or define the stack, responsibilities, and experience your team needs.",
+    note: "Takes a few minutes.",
   },
   {
     label: "02",
-    tabOffset: "18%",
-    title: "Real Contributions",
-    body: "Commits, projects, ownership patterns, and technical context are mapped before anyone reaches your calendar.",
+    tabOffset: "20%",
+    title: "Invite the candidate",
+    body:
+      "Send a secure link. The candidate chooses and connects the professional work they want assessed.",
+    note: "Candidate-controlled access.",
   },
   {
     label: "03",
-    tabOffset: "38%",
-    title: "Consistency",
-    body: "Seniority, depth, and trajectory are checked across time, not guessed from a single resume snapshot.",
+    tabOffset: "36%",
+    title: "16Signals reads the work",
+    body:
+      "We examine relevant contributions, technical decisions, code quality, collaboration, and evidence over time.",
+    note: "Analysis runs automatically.",
   },
   {
     label: "04",
-    tabOffset: "12%",
-    title: "Anti-Fraud",
-    body: "Borrowed work, inflated authorship, and weak provenance are flagged early, while strong candidates keep moving.",
-  },
-  {
-    label: "05",
-    tabOffset: "48%",
-    title: "Technical Signals",
-    body: "The output is a verified brief: strengths, risks, and interview probes ready for your engineering team.",
+    tabOffset: "14%",
+    title: "Open the brief",
+    body:
+      "See what matches the role, what is supported by evidence, what remains unclear, and what to ask next.",
+    note: "Ready before the interview.",
   },
 ] as const;
 
 export function ProblemValue() {
   return (
     <section id="problem-value" className="landing-section relative isolate overflow-clip section-transition section-edge-highlight">
-      <LargeWord className="left-[4vw] top-0">FILTER</LargeWord>
+      <LargeWord className="left-[4vw] top-0">HOW</LargeWord>
       <div className="container">
         <Reveal className="max-w-3xl">
-          <p className="section-label reveal-child">Walk in already knowing where to go deeper.</p>
-          <h2 className="section-title reveal-child mt-4 text-white">The applicant pile arrives already sorted.</h2>
+          <p className="section-label reveal-child">One brief. Sixteen clear answers.</p>
+          <h2 className="section-title reveal-child mt-4 text-white">From application to interview brief</h2>
           <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
-            Each layer removes a different hiring risk, until your team is left with people worth speaking to.
+            Add the role. Invite the candidate. Receive the evidence. Use it in the interview.
           </p>
         </Reveal>
 
@@ -93,7 +95,7 @@ export function ProblemValue() {
                 <div className="flex flex-col justify-end">
                   <p className="reveal-child max-w-xl text-[15px] leading-[1.55] text-[color:var(--folder-foreground)]">{folder.body}</p>
                   <div className="reveal-child mt-10 h-px w-full bg-[color:var(--folder-line)]" />
-                  <p className="reveal-child mt-5 text-xs tracking-[0.02em] text-[color:var(--folder-muted)]">Verified before the first interview.</p>
+                  <p className="reveal-child mt-5 text-xs tracking-[0.02em] text-[color:var(--folder-muted)]">{folder.note}</p>
                 </div>
               </div>
             </Reveal>
