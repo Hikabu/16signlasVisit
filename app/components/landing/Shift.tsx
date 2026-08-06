@@ -21,40 +21,41 @@ type BridgeCard = {
 const ENGINEERING_STAGES: Stage[] = [
   {
     number: "01",
-    title: "What they owned",
+    title: "What have they used?",
     sentence:
-      "See whether the candidate led the work, supported it, or contributed to only one part.",
+      "- See the languages, systems, and technical complexity demonstrated in their work",
   },
   {
     number: "02",
-    title: "How they made decisions",
+    title: "What is relevant?",
     sentence:
-      "Find the trade-offs, revisions, and technical choices behind the final result.",
+      "- Find the experience that directly relates to the role your team is hiring for",
   },
   {
     number: "03",
-    title: "What complexity they handled",
+    title: "What does the code show?",
     sentence:
-      "Understand the scale, constraints, and systems present in their previous work.",
+      "- Review evidence of structure, testing, maintainability, security, and technical complexity",
   },
   {
     number: "04",
-    title: "How they worked over time",
+    title: "Working style",
     sentence:
-      "See repeated patterns across projects instead of judging one prepared moment.",
+      "- See how they communicate, review work, solve problems, and take ownership",
   },
-  {
+ {
     number: "05",
-    title: "How they worked with others",
-    sentence:
-      "Review evidence of feedback, collaboration, technical discussion, and shared ownership.",
+    title: "Evidence gaps",
+    sentence: 
+      "- See which role requirements are supported by their work and which still need to be checked",
   },
   {
     number: "06",
-    title: "What to examine next",
+    title: "What should you ask next?",
     sentence:
-      "Turn proven work, open questions, and uncertainties into a focused technical interview.",
+      "- Enter the interview knowing what is already supported and where to go deeper",
   },
+
 ];
 
 
@@ -347,9 +348,9 @@ export function Shift() {
         <VerticalTimeline
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
-          label="WHAT THE PROCESS CANNOT SEE"
-          headline="The work behind the CV "
-          body="Interviews are expensive. Take-homes are gameable. Resumes are weak. 16Signals adds real work evidence before you spend more time."
+          label="WHAT 16SIGNALS ADDS"
+          headline="What the CV leaves out"
+          body="One brief shows what matches the role, where evidence is missing, and where the interview should go deeper."
         />
       </div>
     </section>
