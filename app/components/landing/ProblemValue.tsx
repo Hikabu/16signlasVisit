@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 const folders = [
   {
     label: "01",
-    tabOffset: "7%",
+    step: "DEFINE THE ROLE",
     title: "Add the role",
     body:
       "Share the job description or define the stack, responsibilities, and experience your team needs.",
@@ -13,7 +13,7 @@ const folders = [
   },
   {
     label: "02",
-    tabOffset: "20%",
+    step: "INVITE THE CANDIDATE",
     title: "Invite the candidate",
     body:
       "Send a secure link. The candidate chooses and connects the professional work they want assessed.",
@@ -21,7 +21,7 @@ const folders = [
   },
   {
     label: "03",
-    tabOffset: "36%",
+    step: "REVIEW THE EVIDENCE",
     title: "16Signals reads the work",
     body:
       "We examine relevant contributions, technical decisions, code quality, collaboration, and evidence over time.",
@@ -29,7 +29,7 @@ const folders = [
   },
   {
     label: "04",
-    tabOffset: "14%",
+    step: "PREPARE THE INTERVIEW",
     title: "Open the brief",
     body:
       "See what matches the role, what is supported by evidence, what remains unclear, and what to ask next.",
@@ -64,38 +64,27 @@ export function ProblemValue() {
                   "--folder-top": `${88 + index * 10}px`,
                   "--folder-shift": `${index * 2}px`,
                   "--reveal-delay": `${index * 70}ms`,
-                  "--folder-tab-offset": folder.tabOffset,
                 } as CSSProperties
               }
             >
-              <div className="verification-folder__tab reveal-child">
-                <svg
-                  className="verification-folder__tab-shape"
-                  viewBox="0 0 200 32"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <defs>
-                    <linearGradient id="folder-tab-gradient" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#34495e" />
-                      <stop offset="100%" stopColor="#243342" />
-                    </linearGradient>
-                  </defs>
-                  <rect x="0.5" y="0.5" width="199" height="31" rx="2" />
-                </svg>
-                <span className="verification-folder__tab-label">{folder.label}</span>
-              </div>
-              <div className="grid min-h-[360px] content-between gap-12 p-8 md:grid-cols-[0.86fr_1.14fr] md:p-10 lg:p-12">
-                <div>
-                  <p className="reveal-child text-xs font-medium uppercase tracking-[0.14em] text-[#62676b]">{folder.label}</p>
-                  <h3 className="reveal-child mt-5 max-w-[12ch] text-[28px] font-semibold leading-[1.08] text-[#17191b]">
-                    {folder.title}
-                  </h3>
+              <div className="verification-folder__grain" aria-hidden="true" />
+              <div className="verification-folder__accent" aria-hidden="true" />
+              <div className="verification-folder__content">
+                <div className="verification-folder__left">
+                  <span className="verification-folder__number" aria-hidden="true">
+                    {folder.label}
+                  </span>
+                  <p className="verification-folder__step">
+                    <span>{folder.label}</span>
+                    <span aria-hidden="true">/</span>
+                    <span>{folder.step}</span>
+                  </p>
+                  <h3>{folder.title}</h3>
                 </div>
-                <div className="flex flex-col justify-end">
-                  <p className="reveal-child max-w-xl text-[15px] leading-[1.55] text-[color:var(--folder-foreground)]">{folder.body}</p>
-                  <div className="reveal-child mt-10 h-px w-full bg-[color:var(--folder-line)]" />
-                  <p className="reveal-child mt-5 text-xs tracking-[0.02em] text-[color:var(--folder-muted)]">{folder.note}</p>
+                <div className="verification-folder__right">
+                  <p className="verification-folder__description">{folder.body}</p>
+                  <div className="verification-folder__divider" aria-hidden="true" />
+                  <p className="verification-folder__status">{folder.note}</p>
                 </div>
               </div>
             </Reveal>
