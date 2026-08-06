@@ -336,10 +336,10 @@ function VerticalTimeline({
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
 
-export function Shift() {
+export function CV_Misses() {
   return (
     <section
-      id="the-shift"
+      id="cv-misses"
       className="ts-section"
       aria-label="The Shift — Engineering and Hiring"
     >
