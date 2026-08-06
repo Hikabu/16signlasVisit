@@ -238,14 +238,14 @@ export function PreparedInterview() {
             <div className={styles.introCopy}>
             <div className={`${styles.introRevealLine} ${styles.introHeadline}`}>
               <h2 id="prepared-interview-title">
-                Skip the investigation. Start with the evidence.
+                We already went through their work. So you don't have to
               </h2>
             </div>
             <div className={`${styles.introRevealLine} ${styles.introBody}`}>
               <p>
                 16Signals turns years of engineering activity into one organized hiring
-                brief—showing what is already proven, what remains uncertain and exactly
-                what to investigate in the interview.
+                brief-showing so you walk in already knowing what's proven, 
+                what's unclear, and what's worth asking.
               </p>
             </div>
           </div>
@@ -557,15 +557,6 @@ export function PreparedInterview() {
             </div>
             <div className={styles.promptBox}>Search this candidate&apos;s evidence… <span>⌕　↑</span></div>
           </aside>
-        </div>
-
-        <div className={styles.transition}>
-          <span aria-hidden="true" />
-          <p>Every conclusion remains connected to the work behind it.</p>
-          <span aria-hidden="true" />
-          <span className={styles.transitionArrow} aria-hidden="true">
-            ↓
-          </span>
         </div>
       </div>
     </section>

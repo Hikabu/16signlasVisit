@@ -21,34 +21,41 @@ type BridgeCard = {
 const ENGINEERING_STAGES: Stage[] = [
   {
     number: "01",
-    title: "Polished claims",
-    sentence: "Resumes can be polished; work history is harder to fake.",
+    title: "What have they used?",
+    sentence:
+      "- See the languages, systems, and technical complexity demonstrated in their work",
   },
   {
     number: "02",
-    title: "Talk vs. doing",
-    sentence: "Interviews show talking; work history shows doing.",
+    title: "What is relevant?",
+    sentence:
+      "- Find the experience that directly relates to the role your team is hiring for",
   },
   {
     number: "03",
-    title: "Gameable tests",
-    sentence: "Take-homes are gameable; real past work is harder to game.",
+    title: "What does the code show?",
+    sentence:
+      "- Review evidence of structure, testing, maintainability, security, and technical complexity",
   },
   {
     number: "04",
-    title: "Faster focus",
-    sentence: "Evidence helps teams focus faster.",
+    title: "Working style",
+    sentence:
+      "- See how they communicate, review work, solve problems, and take ownership",
   },
-  {
+ {
     number: "05",
-    title: "Verify early",
-    sentence: "Bad hires are expensive; verify before deeper interviews.",
+    title: "Evidence gaps",
+    sentence: 
+      "- See which role requirements are supported by their work and which still need to be checked",
   },
   {
     number: "06",
-    title: "Know what to ask",
-    sentence: "16Signals shows what is proven, uncertain, and worth asking.",
+    title: "What should you ask next?",
+    sentence:
+      "- Enter the interview knowing what is already supported and where to go deeper",
   },
+
 ];
 
 
@@ -254,10 +261,8 @@ function VerticalTimeline({
 
   useEffect(() => {
     const recalc = () => updateRailFill(activeIndex);
-    window.addEventListener("scroll", recalc, { passive: true });
     window.addEventListener("resize", recalc, { passive: true });
     return () => {
-      window.removeEventListener("scroll", recalc);
       window.removeEventListener("resize", recalc);
     };
   }, [activeIndex, updateRailFill]);
@@ -343,9 +348,9 @@ export function Shift() {
         <VerticalTimeline
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
-          label="THE MISSING PIECE"
-          headline="Before the technical interview."
-          body="Interviews are expensive. Take-homes are gameable. Resumes are weak. 16Signals adds real work evidence before you spend more time."
+          label="WHAT 16SIGNALS ADDS"
+          headline="What the CV leaves out"
+          body="One brief shows what matches the role, where evidence is missing, and where the interview should go deeper."
         />
       </div>
     </section>

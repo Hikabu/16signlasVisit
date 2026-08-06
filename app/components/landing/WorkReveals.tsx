@@ -143,7 +143,7 @@ export function WorkReveals() {
         <header className={styles.intro}>
           <p className={styles.eyebrow}>Research</p>
           <h2 id="research-title" className={styles.title}>
-            Evidence, examined.
+            Evidence, examined
           </h2>
           <p className={styles.description}>
             Original research on how real engineering work can make hiring
