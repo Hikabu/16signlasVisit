@@ -8,7 +8,7 @@ import styles from "./EditorialHero.module.css";
 
 const navItems = [
   { label: "Report", href: "#prepared-interview", section: "prepared-interview" },
-  { label: "What it reveals", href: "#the-shift", section: "the-shift" },
+  { label: "Problem", href: "#the-shift", section: "the-shift" },
   { label: "Research", href: "#research", section: "research" },
   { label: "Method", href: "#how-it-works", section: "how-it-works" },
   { label: "Principles", href: "#problem-value", section: "problem-value" },
@@ -149,21 +149,13 @@ export function EditorialHero() {
           <div className={styles.heroGrid}>
             <div className={styles.copyColumn}>
               <div className={styles.headlineBlock}>
-                <p className={styles.eyebrow}>
-                  Evidence-based technical assessment
-                </p>
 
-                <h1 id="hero-title" className={styles.headline} aria-label="The CV proof layer for technical hiring">
+                <h1 id="hero-title" className={styles.headline} aria-label="Hiring layer for teams that ship fast">
                   <span className={styles.headlineLine}>
-                    <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The CV proof layer </span>
-                    {/* <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The resume verification </span> */}
+                    <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The hiring layer for </span>
                   </span>
-                  {/* <span className={styles.headlineLine}> */}
-                    {/* <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">The CV proof layer </span> */}
-                    {/* <span className={styles.headlineWord} style={{ animationDelay: "50ms" }} aria-hidden="true"> system for </span> */}
-                  {/* </span> */}
                   <span className={styles.headlineLine}>
-                    <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">for technical hiring</span>{" "}
+                    <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">teams that ship fast</span>{" "}
                     {/* <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">engineering hires</span>{" "} */}
                   </span>
                 </h1>
@@ -171,7 +163,7 @@ export function EditorialHero() {
 
               <div className={styles.narrative}>
                 <p className={styles.subhead}>
-                Get a 90-second Engineering DNA Brief with verified skills, code quality signals, resume claim checks, job-fit insights, and targeted interview questions.                </p>
+                Turn every application into a 90-second brief on demonstrated skills, CV claims, role fit, and what to explore in the interview.  </p>
 
                 <div className={styles.actionGroup}>
                   <div className={styles.ctas} role="group" aria-label="Primary actions">

@@ -238,7 +238,7 @@ export function PreparedInterview() {
             <div className={styles.introCopy}>
             <div className={`${styles.introRevealLine} ${styles.introHeadline}`}>
               <h2 id="prepared-interview-title">
-                We already went through their work. You don't have to. 
+                We already went through their work. So you don't have to
               </h2>
             </div>
             <div className={`${styles.introRevealLine} ${styles.introBody}`}>

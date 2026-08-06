@@ -6,15 +6,15 @@ import styles from "./Positioning.module.css";
 const cards = {
   screening: {
     title: "Screening / HR",
-    summary: "Shows how clearly someone can describe their experience.",
+    summary: "Shows how clearly someone can describe their experience",
   },
   technical: {
     title: "Technical interview",
-    summary: "Shows how someone performs in a prepared conversation or exercise.",
+    summary: "Shows how someone performs in a prepared conversation or exercise",
   },
   signals: {
     title: "16Signals",
-    summary: "Shows what they've actually done, before the interview even starts.",
+    summary: "Shows whether candidate's real work fits this role before engineering time is spent",
   },
 };
 
@@ -52,9 +52,9 @@ export function Positioning() {
         <header className={styles.intro}>
           <p className={styles.eyebrow}>The problem</p>
           <h2 id="hiring-timeline-title">
-            Hiring sees preparation Not performance
+            A slow hiring mistake becomes a product delay
           </h2>
-          <p className={styles.hook}>see how people work before the interview</p>
+          <p className={styles.hook}>Your company ships fast. Hiring should operate at the same speed.</p>
         </header>
 
         <div className={styles.composition}>

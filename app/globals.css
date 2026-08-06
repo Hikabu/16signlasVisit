@@ -845,8 +845,8 @@ body::after {
     #e6a174 92%
   );
   --ts-spectrum-text:
-    radial-gradient(circle at 16% 35%, #9adfd6 0, transparent 30%),
-    radial-gradient(circle at 78% 20%, #efaa79 0, transparent 32%),
+    radial-gradient(circle at 16% 35%, #9adfd6),
+    radial-gradient(circle at 8% 20%, #efaa79 0, transparent 32%),
     linear-gradient(105deg, #70c8c5 6%, #a9c3c2 45%, #e6a174 92%);
   background: #08090a;
   color: #f3f4f6;
