@@ -1,11 +1,14 @@
-import { LargeWord } from "./LargeWord";
+"use client";
+
 import { Reveal } from "./Reveal";
+import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 
 const folders = [
   {
     label: "01",
-    tabOffset: "7%",
+    accentOffset: "8%",
+    step: "DEFINE THE ROLE",
     title: "Add the role",
     body:
       "Share the job description or define the stack, responsibilities, and experience your team needs.",
@@ -13,7 +16,8 @@ const folders = [
   },
   {
     label: "02",
-    tabOffset: "20%",
+    accentOffset: "27%",
+    step: "INVITE THE CANDIDATE",
     title: "Invite the candidate",
     body:
       "Send a secure link. The candidate chooses and connects the professional work they want assessed.",
@@ -21,7 +25,8 @@ const folders = [
   },
   {
     label: "03",
-    tabOffset: "36%",
+    accentOffset: "54%",
+    step: "REVIEW THE EVIDENCE",
     title: "16Signals reads the work",
     body:
       "We examine relevant contributions, technical decisions, code quality, collaboration, and evidence over time.",
@@ -29,7 +34,8 @@ const folders = [
   },
   {
     label: "04",
-    tabOffset: "14%",
+    accentOffset: "73%",
+    step: "PREPARE THE INTERVIEW",
     title: "Open the brief",
     body:
       "See what matches the role, what is supported by evidence, what remains unclear, and what to ask next.",
@@ -38,19 +44,79 @@ const folders = [
 ] as const;
 
 export function ProblemValue() {
+  const stackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const stack = stackRef.current;
+    if (!stack) return;
+
+    const cards = Array.from(stack.querySelectorAll<HTMLElement>(".verification-folder"));
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+    let animationFrame = 0;
+    let previousIndex = -1;
+    let wasMobile = false;
+
+    const updateCurrentFolder = () => {
+      animationFrame = 0;
+
+      if (mobileQuery.matches) {
+        if (!wasMobile) cards.forEach((card) => card.setAttribute("data-current", "true"));
+        wasMobile = true;
+        previousIndex = -1;
+        return;
+      }
+
+      if (wasMobile) {
+        wasMobile = false;
+        previousIndex = -1;
+      }
+
+      let currentIndex = 0;
+
+      cards.forEach((card, index) => {
+        const stickyTop = 88 + index * 10;
+        if (card.getBoundingClientRect().top <= stickyTop + 12) currentIndex = index;
+      });
+
+      if (currentIndex === previousIndex) return;
+
+      cards.forEach((card, index) => {
+        card.setAttribute("data-current", index === currentIndex ? "true" : "false");
+      });
+      previousIndex = currentIndex;
+    };
+
+    const scheduleUpdate = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(updateCurrentFolder);
+    };
+
+    updateCurrentFolder();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   return (
-    <section id="problem-value" className="landing-section relative isolate overflow-clip section-transition section-edge-highlight">
-      <LargeWord className="left-[4vw] top-0">HOW</LargeWord>
+    <section
+      id="problem-value"
+      className="problem-value-section landing-section relative isolate overflow-clip section-transition section-edge-highlight"
+    >
       <div className="container">
         <Reveal className="max-w-3xl">
-          <p className="section-label reveal-child">One brief. Sixteen clear answers.</p>
-          <h2 className="section-title reveal-child mt-4 text-white">From application to interview brief</h2>
+          <p className="section-label problem-value__eyebrow reveal-child">One brief. Sixteen clear answers.</p>
+          <h2 className="section-title problem-value__title reveal-child mt-4 text-white">From application to interview brief</h2>
           <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
             Add the role. Invite the candidate. Receive the evidence. Use it in the interview.
           </p>
         </Reveal>
 
-        <div className="verification-folder-stack mt-16 space-y-8">
+        <div ref={stackRef} className="verification-folder-stack mt-16 space-y-8">
           {folders.map((folder, index) => (
             <Reveal
               as="article"
@@ -64,38 +130,25 @@ export function ProblemValue() {
                   "--folder-top": `${88 + index * 10}px`,
                   "--folder-shift": `${index * 2}px`,
                   "--reveal-delay": `${index * 70}ms`,
-                  "--folder-tab-offset": folder.tabOffset,
+                  "--folder-accent-left": folder.accentOffset,
                 } as CSSProperties
               }
             >
-              <div className="verification-folder__tab reveal-child">
-                <svg
-                  className="verification-folder__tab-shape"
-                  viewBox="0 0 200 32"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <defs>
-                    <linearGradient id="folder-tab-gradient" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#34495e" />
-                      <stop offset="100%" stopColor="#243342" />
-                    </linearGradient>
-                  </defs>
-                  <rect x="0.5" y="0.5" width="199" height="31" rx="2" />
-                </svg>
-                <span className="verification-folder__tab-label">{folder.label}</span>
-              </div>
-              <div className="grid min-h-[360px] content-between gap-12 p-8 md:grid-cols-[0.86fr_1.14fr] md:p-10 lg:p-12">
-                <div>
-                  <p className="reveal-child text-xs font-medium uppercase tracking-[0.14em] text-[#62676b]">{folder.label}</p>
-                  <h3 className="reveal-child mt-5 max-w-[12ch] text-[28px] font-semibold leading-[1.08] text-[#17191b]">
-                    {folder.title}
-                  </h3>
+              <div className="verification-folder__grain" aria-hidden="true" />
+              <div className="verification-folder__accent" aria-hidden="true" />
+              <div className="verification-folder__content">
+                <div className="verification-folder__left">
+                  <p className="verification-folder__step">
+                    <span>{folder.label}</span>
+                    <span aria-hidden="true">/</span>
+                    <span>{folder.step}</span>
+                  </p>
+                  <h3>{folder.title}</h3>
                 </div>
-                <div className="flex flex-col justify-end">
-                  <p className="reveal-child max-w-xl text-[15px] leading-[1.55] text-[color:var(--folder-foreground)]">{folder.body}</p>
-                  <div className="reveal-child mt-10 h-px w-full bg-[color:var(--folder-line)]" />
-                  <p className="reveal-child mt-5 text-xs tracking-[0.02em] text-[color:var(--folder-muted)]">{folder.note}</p>
+                <div className="verification-folder__right">
+                  <p className="verification-folder__description">{folder.body}</p>
+                  <div className="verification-folder__divider" aria-hidden="true" />
+                  <p className="verification-folder__status">{folder.note}</p>
                 </div>
               </div>
             </Reveal>
