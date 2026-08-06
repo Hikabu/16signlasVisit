@@ -9,7 +9,7 @@ import styles from "./EditorialHero.module.css";
 const navItems = [
   { label: "Report", href: "#prepared-interview", section: "prepared-interview" },
   { label: "Problem", href: "#the-shift", section: "the-shift" },
-  { label: "CV misses", href: "#cv-misses", section: "cv-misses" },
+  { label: "CV never shows", href: "#cv-misses", section: "cv-misses" },
   { label: "Research", href: "#research", section: "research" },
   { label: "Principles", href: "#problem-value", section: "problem-value" },
   { label: "Method", href: "#how-it-works", section: "how-it-works" },
