@@ -348,7 +348,7 @@ export function CV_Misses() {
         <VerticalTimeline
           id="ts-engineering"
           stages={ENGINEERING_STAGES}
-          label="WHAT 16SIGNALS ADDS"
+          label="16SIGNALS ADDS"
           headline="What the CV leaves out"
           body="One brief shows what matches the role, where evidence is missing, and where the interview should go deeper."
         />

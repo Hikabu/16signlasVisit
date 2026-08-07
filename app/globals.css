@@ -611,8 +611,8 @@ body::after {
 }
 
 .section-label.problem-value__eyebrow {
-  color: rgb(245 245 245 / 0.38);
-  font-size: 10px;
+  color: #f2f3f175;
+  font-size: 19px;
   font-weight: 450;
   letter-spacing: 0.18em;
 }
@@ -1064,10 +1064,10 @@ body::after {
 }
 
 .ts-label {
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #6B7280;
+  color: #f2f3f175;
   margin-bottom: 20px;
 }
 

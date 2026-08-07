@@ -22,8 +22,8 @@ export default function Home() {
         <PreparedInterview />
         <Positioning />
         <CV_Misses />
-        <WorkReveals />
         <ProblemValue />
+        <WorkReveals />
         <HowItWorks />
         <BookCall />
       </main>
