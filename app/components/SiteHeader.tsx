@@ -3,6 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { HERO_NAVIGATION } from "@/app/data/landing";
+import { useActiveLandingSection } from "@/app/hooks/useActiveLandingSection";
 import { useIsScrolled } from "@/app/hooks/useIsScrolled";
 import styles from "./SiteHeader.module.css";
 
@@ -14,8 +17,12 @@ const mainNavigation = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const [isHomeMenuOpen, setIsHomeMenuOpen] = useState(false);
   const isScrolled = useIsScrolled(18);
+  const isHome = pathname === "/";
+  const activeSection = useActiveLandingSection(isHome);
   const hasSolidBackground = pathname !== "/" || isScrolled;
+  const isBookCallActive = isHome && activeSection === "book-call";
 
   return (
     <header
@@ -37,6 +44,57 @@ export function SiteHeader() {
         </Link>
 
         <nav className={styles.nav} aria-label="Main navigation">
+          <div
+            className={styles.homeMenu}
+            onMouseEnter={() => setIsHomeMenuOpen(true)}
+            onMouseLeave={() => setIsHomeMenuOpen(false)}
+          >
+            <div className={styles.homeMenuTrigger}>
+              <Link
+                href="/"
+                className={isHome ? "activeNav" : undefined}
+                aria-current={isHome ? "page" : undefined}
+              >
+                What is 16Signals
+              </Link>
+              <button
+                type="button"
+                className={styles.menuToggle}
+                onClick={() => setIsHomeMenuOpen((open) => !open)}
+                aria-expanded={isHomeMenuOpen}
+                aria-controls="homepage-section-menu"
+                aria-label="Show homepage sections"
+              >
+                <span aria-hidden="true">⌄</span>
+              </button>
+            </div>
+
+            <div
+              id="homepage-section-menu"
+              className={`${styles.dropdown} ${
+                isHomeMenuOpen ? styles.dropdownOpen : ""
+              }`}
+            >
+              <p>On this page</p>
+              {HERO_NAVIGATION.map((item) => {
+                const isSectionActive =
+                  isHome && activeSection === item.sectionId;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={`/${item.href}`}
+                    className={isSectionActive ? "activeNav" : undefined}
+                    aria-current={isSectionActive ? "location" : undefined}
+                    onClick={() => setIsHomeMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
           {mainNavigation.map((item) => {
             const isResearchRoute =
               item.href === "/blog" && pathname.startsWith("/research");
@@ -48,7 +106,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={isActive ? styles.activeNav : undefined}
+                className={isActive ? "activeNav" : undefined}
                 aria-current={isActive ? "page" : undefined}
               >
                 {item.label}
@@ -58,11 +116,23 @@ export function SiteHeader() {
         </nav>
 
         <div className={styles.headerActions}>
-          <Link className={styles.headerCta} href="/#book-call">
+          <Link
+            className={`${styles.headerCta} ${
+              isBookCallActive ? "activeNav" : ""
+            }`}
+            href="/#book-call"
+            aria-current={isBookCallActive ? "location" : undefined}
+          >
             Run it on your work
           </Link>
-          <Link className={styles.contactLink} href="/#book-call">
-            Contact
+          <Link
+            className={`${styles.contactLink} ${
+              isBookCallActive ? "activeNav" : ""
+            }`}
+            href="/#book-call"
+            aria-current={isBookCallActive ? "location" : undefined}
+          >
+            Call us
           </Link>
         </div>
       </div>

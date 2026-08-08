@@ -22,7 +22,7 @@ export function ResearchIndex({
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="research-index-title">
         <p className={styles.eyebrow}>{eyebrow}</p>
-        <h1 id="research-index-title">Evidence, examined.</h1>
+        <h1 id="research-index-title">Evidence, examined</h1>
         <p className={styles.lede}>
           Notes on real engineering work, signal quality, and a more humane way
           to make technical hiring decisions.

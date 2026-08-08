@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { HERO_NAVIGATION } from "@/app/data/landing";
+import { useActiveLandingSection } from "@/app/hooks/useActiveLandingSection";
 import styles from "./SiteFooter.module.css";
 
 const pages = [
@@ -11,6 +15,10 @@ const pages = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const activeSection = useActiveLandingSection(isHome);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
@@ -26,29 +34,62 @@ export function SiteFooter() {
           <div>
             <p className={styles.columnTitle}>Page map</p>
             <nav aria-label="Homepage sections">
-              {HERO_NAVIGATION.map((item) => (
-                <Link key={item.href} href={`/${item.href}`}>
-                  {item.label}
-                </Link>
-              ))}
+              {HERO_NAVIGATION.map((item) => {
+                const isActive = isHome && activeSection === item.sectionId;
+                return (
+                  <Link
+                    key={item.href}
+                    href={`/${item.href}`}
+                    className={isActive ? "activeNav" : undefined}
+                    aria-current={isActive ? "location" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
           <div>
             <p className={styles.columnTitle}>Pages</p>
             <nav aria-label="Pages">
-              {pages.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  {item.label}
-                </Link>
-              ))}
+              {pages.map((item) => {
+                const matchingHomepageSection =
+                  item.href === "/research"
+                    ? "research"
+                    : item.href === "/faq"
+                      ? "faq"
+                      : item.href === "/pricing"
+                        ? "pricing"
+                        : null;
+                const isActive =
+                  pathname === item.href ||
+                  pathname.startsWith(`${item.href}/`) ||
+                  (isHome && activeSection === matchingHomepageSection);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={isActive ? "activeNav" : undefined}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
           <div>
             <p className={styles.columnTitle}>Legal</p>
             <nav aria-label="Legal">
-              <Link href="/terms">Terms &amp; Conditions</Link>
+              <Link
+                href="/terms"
+                className={pathname === "/terms" ? "activeNav" : undefined}
+                aria-current={pathname === "/terms" ? "page" : undefined}
+              >
+                Terms &amp; Conditions
+              </Link>
             </nav>
           </div>
         </div>
