@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./styles/theme.css";
+import "./styles/base.css";
+import "./styles/problem-value.css";
+import "./styles/how-it-works.css";
+import "./styles/shared-ui.css";
+import "./styles/reveals.css";
+import "./styles/cv-misses.css";
 
 export const metadata: Metadata = {
   title: "16 Signals - Verified Engineering Shortlists",

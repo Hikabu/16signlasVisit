@@ -1,12 +1,11 @@
-import { EditorialHero } from "./components/landing/EditorialHero";
-import { PreparedInterview } from "./components/landing/PreparedInterview";
-import { Positioning } from "./components/landing/Positioning";
-import { CV_Misses } from "./components/landing/CV_Misses";
-import { WorkReveals } from "./components/landing/WorkReveals";
-import { ProblemValue } from "./components/landing/ProblemValue";
-import { HowItWorks } from "./components/landing/HowItWorks";
-import { BookCall } from "./components/landing/BookCall";
-
+import { BookCall } from "@/app/sections/BookCall";
+import { CvMisses } from "@/app/sections/CvMisses";
+import { EditorialHero } from "@/app/sections/EditorialHero";
+import { HowItWorks } from "@/app/sections/HowItWorks";
+import { Positioning } from "@/app/sections/Positioning";
+import { PreparedInterview } from "@/app/sections/prepared-interview/PreparedInterview";
+import { ProblemValue } from "@/app/sections/ProblemValue";
+import { Research } from "@/app/sections/Research";
 
 export default function Home() {
   return (
@@ -21,9 +20,9 @@ export default function Home() {
         <EditorialHero />
         <PreparedInterview />
         <Positioning />
-        <CV_Misses />
-        <WorkReveals />
+        <CvMisses />
         <ProblemValue />
+        <Research />
         <HowItWorks />
         <BookCall />
       </main>
