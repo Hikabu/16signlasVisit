@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -8,8 +9,8 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import { RESEARCH_ARTICLES } from "@/app/data/landing";
 import { useScrollReveal } from "@/app/hooks/useScrollReveal";
+import type { ResearchArticle } from "@/app/types/landing";
 import styles from "./Research.module.css";
 
 function ArrowIcon({ direction }: { direction: "previous" | "next" }) {
@@ -33,7 +34,7 @@ function ArrowIcon({ direction }: { direction: "previous" | "next" }) {
   );
 }
 
-export function Research() {
+export function Research({ articles }: { articles: readonly ResearchArticle[] }) {
   const { ref: sectionRef, isRevealed } = useScrollReveal<HTMLElement>({
     threshold: 0.14,
     rootMargin: "0px 0px -8% 0px",
@@ -132,10 +133,10 @@ export function Research() {
               </button>
             </div>
 
-            <a className={styles.viewAllButton} href="/research">
+            <Link className={styles.viewAllButton} href="/research">
               View all research
               <span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           </div>
         </header>
 
@@ -146,9 +147,9 @@ export function Research() {
             className={styles.track}
             aria-label="Featured research"
           >
-            {RESEARCH_ARTICLES.map((article, index) => (
+            {articles.map((article, index) => (
               <article
-                key={article.title}
+                key={article.slug}
                 className={styles.card}
                 data-research-card
                 style={{ "--card-index": index } as CSSProperties}

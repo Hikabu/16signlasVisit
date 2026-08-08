@@ -32,11 +32,13 @@ export type HowItWorksStep = {
 };
 
 export type ResearchArticle = {
+  slug: string;
   category: string;
   title: string;
   description: string;
   image: string;
   href: string;
+  date: string;
 };
 
 export type EvidenceId = "proven" | "verify" | "ask";

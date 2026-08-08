@@ -1,0 +1,87 @@
+.page {
+  min-height: 100svh;
+  padding: 60px clamp(20px, 5vw, 80px) clamp(100px, 12vw, 160px);
+  background:
+    radial-gradient(circle at 78% 8%, rgba(0, 154, 147, 0.055), transparent 27%),
+    #08090a;
+  color: #f4f7f7;
+}
+
+.hero,
+.faqs {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.hero {
+  padding-block: clamp(90px, 12vw, 156px) clamp(72px, 8vw, 108px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.eyebrow {
+  margin: 0 0 25px !important;
+  color: #74817f !important;
+  font-family: var(--font-geist-mono);
+  font-size: 10px !important;
+  font-weight: 520;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(58px, 8vw, 108px);
+  font-weight: 430;
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+}
+
+.hero > p:last-child {
+  max-width: 54ch;
+  margin: 38px 0 0;
+  color: #8f9b99;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.62;
+}
+
+.faqs {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.45fr) minmax(0, 1.55fr);
+  gap: clamp(48px, 9vw, 140px);
+  padding-top: clamp(72px, 8vw, 108px);
+}
+
+.sideNote {
+  align-self: start;
+  position: sticky;
+  top: 100px;
+}
+
+.sideNote p {
+  margin: 0;
+  color: #9ab1ae;
+  font-family: var(--font-geist-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sideNote span {
+  display: block;
+  margin-top: 12px;
+  color: #616d6b;
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .faqs {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .sideNote {
+    position: static;
+  }
+}
