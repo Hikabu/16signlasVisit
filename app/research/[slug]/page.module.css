@@ -284,8 +284,8 @@
 
 .moreArticles {
   padding: clamp(90px, 10vw, 140px) clamp(24px, 5vw, 80px) clamp(112px, 12vw, 168px);
-  background: #e7e9e4;
-  color: #111514;
+  background: #090b0c;
+  color: #f3f5f2;
 }
 
 .moreHeader,
@@ -305,7 +305,7 @@
 
 .moreHeader p {
   margin: 0 0 24px;
-  color: #4f5f5b;
+  color: #788783;
   font-family: var(--font-geist-mono);
   font-size: 10px;
   letter-spacing: 0.15em;
@@ -323,17 +323,17 @@
 .moreHeader > a {
   flex: 0 0 auto;
   padding: 10px 21px;
-  border: 1px solid #777e7a;
+  border: 1px solid #6f7875;
   border-radius: 999px;
-  color: #111514;
+  color: #f1f4f1;
   font-size: 12px;
   font-weight: 540;
   text-decoration: none;
 }
 
 .moreHeader > a:hover {
-  border-color: #175f5a;
-  color: #175f5a;
+  border-color: #a2d8d2;
+  color: #c9f5ef;
 }
 
 .relatedGrid {

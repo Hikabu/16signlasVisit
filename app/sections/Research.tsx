@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   useCallback,
@@ -10,6 +9,7 @@ import {
   type CSSProperties,
 } from "react";
 import { useScrollReveal } from "@/app/hooks/useScrollReveal";
+import { EditorialArticleCard } from "@/app/components/EditorialArticleCard";
 import type { ResearchArticle } from "@/app/types/landing";
 import styles from "./Research.module.css";
 
@@ -148,45 +148,14 @@ export function Research({ articles }: { articles: readonly ResearchArticle[] })
             aria-label="Featured research"
           >
             {articles.map((article, index) => (
-              <article
+              <div
                 key={article.slug}
                 className={styles.card}
                 data-research-card
                 style={{ "--card-index": index } as CSSProperties}
               >
-                <a
-                  className={styles.coverLink}
-                  href={article.href}
-                  aria-label={`Read ${article.title}`}
-                >
-                  <span className={styles.cover}>
-                    <Image
-                      src={article.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 719px) 84vw, (max-width: 1199px) 60vw, 440px"
-                      className={styles.coverImage}
-                    />
-                    <span className={styles.issueNumber} aria-hidden="true">
-                      16S / 0{index + 1}
-                    </span>
-                  </span>
-                </a>
-
-                <div className={styles.cardBody}>
-                  <p className={styles.category}>{article.category}</p>
-                  <h3 className={styles.cardTitle}>
-                    <a href={article.href}>{article.title}</a>
-                  </h3>
-                  <p className={styles.cardDescription}>
-                    {article.description}
-                  </p>
-                  <a className={styles.readButton} href={article.href}>
-                    Read research
-                    <span aria-hidden="true">↗</span>
-                  </a>
-                </div>
-              </article>
+                <EditorialArticleCard article={article} index={index} />
+              </div>
             ))}
           </div>
         </div>

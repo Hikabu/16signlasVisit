@@ -1,5 +1,5 @@
 ---
-title: " Why “Insufficient Evidence” Is a Trust Feature"
+title: " Why <Insufficient Evidence> Is a Trust Feature"
 date: "2026-02-10"
 summary: "Recognizing weak or missing evidence prevents false confidence and leads to better interview questions."
 ---
