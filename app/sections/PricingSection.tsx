@@ -10,7 +10,7 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
     >
       <div className={styles.inner}>
         <header className={styles.intro}>
-          <p className={styles.eyebrow}>Pricing</p>
+          {!standalone ? <p className={styles.eyebrow}>Pricing</p> : null}
           <h2 id={standalone ? "pricing-page-title" : "home-pricing-title"}>
             Start with evidence. Grow with us.
           </h2>

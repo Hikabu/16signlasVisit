@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
-  return <ResearchIndex articles={getResearchArticles()} eyebrow="Blog / Research" />;
+  return <ResearchIndex articles={getResearchArticles()} eyebrow={null} />;
 }

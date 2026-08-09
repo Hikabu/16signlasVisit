@@ -18,6 +18,10 @@
   padding-block: clamp(104px, 12vw, 156px);
 }
 
+.standalone .inner {
+  padding-top: clamp(52px, 6vw, 80px);
+}
+
 .intro {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.58fr);

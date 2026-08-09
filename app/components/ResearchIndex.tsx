@@ -7,15 +7,19 @@ export function ResearchIndex({
   eyebrow = "Research / Blog",
 }: {
   articles: readonly ResearchArticle[];
-  eyebrow?: string;
+  eyebrow?: string | null;
 }) {
   return (
     <main className={styles.page}>
-      <section className={styles.hero} aria-labelledby="research-index-title">
-        <div className={styles.heroTopline}>
-          <p className={styles.eyebrow}>{eyebrow}</p>
-          <p className={styles.issueNote}>Independent notes · Vol. 01</p>
-        </div>
+      <section
+        className={`${styles.hero} ${eyebrow ? "" : styles.heroCompact}`}
+        aria-labelledby="research-index-title"
+      >
+        {eyebrow ? (
+          <div className={styles.heroTopline}>
+            <p className={styles.eyebrow}>{eyebrow}</p>
+          </div>
+        ) : null}
         <h1 id="research-index-title">
           Technical hiring has enough opinions. We publish the
           <span> evidence.</span>

@@ -14,7 +14,6 @@ export default function FaqPage() {
   return (
     <main className={styles.page}>
       <header className={styles.hero}>
-        <p className={styles.eyebrow}>FAQ</p>
         <h1>What you need to know.</h1>
         <p>
           Straight answers about the product, the analysis, candidate privacy,
