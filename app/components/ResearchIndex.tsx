@@ -17,17 +17,12 @@ export function ResearchIndex({
           <p className={styles.issueNote}>Independent notes · Vol. 01</p>
         </div>
         <h1 id="research-index-title">
-          Technical hiring has enough <span>opinions.</span> We publish the
-          <em> evidence.</em>
+          Technical hiring has enough opinions. We publish the
+          <span> evidence.</span>
         </h1>
         <div className={styles.heroFooter}>
           <p className={styles.lede}>
-            Field notes on real engineering work, trustworthy signal, and a
-            more humane way to make consequential hiring decisions.
-          </p>
-          <p className={styles.annotation}>
-            Research for people who would rather see the work than trust the
-            claim.
+            Field notes on real engineering work, trustworthy signal to make consequential hiring decisions.
           </p>
         </div>
       </section>
