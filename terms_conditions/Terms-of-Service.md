@@ -2,7 +2,7 @@
 **Effective Date:** [DATE]
 **Last Updated:** [DATE]
 
-These Terms of Service ("**Terms**") are a binding agreement between [Company Name] ("**Company**," "**we**," "**us**," or "**our**") and the person or entity accessing or using the EBTA platform, including its website, dashboard, and related applications (collectively, the "**Platform**"). By accessing or using the Platform, you agree to be bound by these Terms.
+These Terms of Service ("**Terms**") are a binding agreement between 16signlas ("**Company**," "**we**," "**us**," or "**our**") and the person or entity accessing or using the EBTA platform, including its website, dashboard, and related applications (collectively, the "**Platform**"). By accessing or using the Platform, you agree to be bound by these Terms.
 
 The Platform serves two categories of users:
 

@@ -80,3 +80,34 @@
 .body a {
   color: #8fd8d3;
 }
+
+.body :global(.markdownTableWrap) {
+  overflow-x: auto;
+  margin: 2.2em 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.body table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.body th,
+.body td {
+  padding: 15px 14px 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+  text-align: left;
+  vertical-align: top;
+}
+
+.body th {
+  color: #eef3f1;
+  font-family: var(--font-geist-mono);
+  font-size: 9px;
+  font-weight: 520;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

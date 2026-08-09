@@ -1,8 +1,8 @@
 
-**Effective Date:** [DATE]
-**Last Updated:** [DATE]
+<!-- **Effective Date:** [DATE] -->
+**Last Updated:** [01.07.2026]
 
-[Company Name] ("**Company**," "**we**," "**us**," or "**our**") operates the EBTA platform (the "**Platform**"), which helps Employers obtain supplementary, evidence-based context about a Candidate they are already considering. This Policy explains what personal data we collect from **Employers** and **Candidates**, how we use it, how long we keep it, and your rights.
+16signlas ("**Company**," "**we**," "**us**," or "**our**") operates the EBTA platform (the "**Platform**"), which helps Employers obtain supplementary, evidence-based context about a Candidate they are already considering. This Policy explains what personal data we collect from **Employers** and **Candidates**, how we use it, how long we keep it, and your rights.
 
 This Policy should be read with our [Terms of Service](./Terms-of-Service.md). Capitalized terms not defined here have the meaning given there.
 
@@ -141,4 +141,3 @@ If you are located in the EEA or UK, you may also contact our representative (if
 ---
 
 *End of Privacy Policy.*
-~

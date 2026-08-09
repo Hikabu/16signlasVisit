@@ -4,7 +4,7 @@ date: "2026-03-05"
 summary: "Under the hood of the evidence-based candidate evaluation platform."
 ---
 
-## Architecture at a glance
+## Architecture at a glance 
 
 16 Signals is built on a straightforward premise: real code tells a better story than a résumé ever could. But making that work at scale requires some interesting engineering.
 

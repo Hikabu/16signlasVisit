@@ -1,15 +1,6 @@
-import Image from "next/image";
 import type { ResearchArticle } from "@/app/types/landing";
+import { EditorialArticleCard } from "./EditorialArticleCard";
 import styles from "./ResearchIndex.module.css";
-
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat("en", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`));
-}
 
 export function ResearchIndex({
   articles,
@@ -21,42 +12,40 @@ export function ResearchIndex({
   return (
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="research-index-title">
-        <p className={styles.eyebrow}>{eyebrow}</p>
-        <h1 id="research-index-title">Evidence, examined</h1>
-        <p className={styles.lede}>
-          Notes on real engineering work, signal quality, and a more humane way
-          to make technical hiring decisions.
-        </p>
+        <div className={styles.heroTopline}>
+          <p className={styles.eyebrow}>{eyebrow}</p>
+          <p className={styles.issueNote}>Independent notes · Vol. 01</p>
+        </div>
+        <h1 id="research-index-title">
+          Technical hiring has enough <span>opinions.</span> We publish the
+          <em> evidence.</em>
+        </h1>
+        <div className={styles.heroFooter}>
+          <p className={styles.lede}>
+            Field notes on real engineering work, trustworthy signal, and a
+            more humane way to make consequential hiring decisions.
+          </p>
+          <p className={styles.annotation}>
+            Research for people who would rather see the work than trust the
+            claim.
+          </p>
+        </div>
       </section>
 
-      <section className={styles.grid} aria-label="All research articles">
-        {articles.map((article, index) => (
-          <article className={styles.card} key={article.slug}>
-            <a className={styles.imageLink} href={article.href}>
-              <span className={styles.imageFrame}>
-                <Image
-                  src={article.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 430px"
-                  className={styles.image}
-                />
-                <span className={styles.issue}>16S / 0{index + 1}</span>
-              </span>
-            </a>
-            <div className={styles.meta}>
-              <span>{article.category}</span>
-              <time dateTime={article.date}>{formatDate(article.date)}</time>
-            </div>
-            <h2>
-              <a href={article.href}>{article.title}</a>
-            </h2>
-            <p>{article.description}</p>
-            <a className={styles.readLink} href={article.href}>
-              Read research <span aria-hidden="true">↗</span>
-            </a>
-          </article>
-        ))}
+      <section className={styles.collection} aria-label="All research articles">
+        <div className={styles.collectionHeader}>
+          <p>Latest thinking</p>
+          <span>{String(articles.length).padStart(2, "0")} articles</span>
+        </div>
+        <div className={styles.grid}>
+          {articles.map((article, index) => (
+            <EditorialArticleCard
+              article={article}
+              index={index}
+              key={article.slug}
+            />
+          ))}
+        </div>
       </section>
     </main>
   );

@@ -41,6 +41,51 @@ export function MarkdownContent({ content }: { content: string }) {
       continue;
     }
 
+    if (
+      line.startsWith("|") &&
+      index + 1 < lines.length &&
+      /^\|?(?:\s*:?-+:?\s*\|)+\s*$/.test(lines[index + 1].trim())
+    ) {
+      const rows: string[][] = [];
+      const toCells = (row: string) =>
+        row
+          .replace(/^\||\|$/g, "")
+          .split("|")
+          .map((cell) => cell.trim());
+
+      const headings = toCells(line);
+      index += 2;
+
+      while (index < lines.length && lines[index].trim().startsWith("|")) {
+        rows.push(toCells(lines[index].trim()));
+        index += 1;
+      }
+
+      blocks.push(
+        <div className="markdownTableWrap" key={`table-${index}`}>
+          <table>
+            <thead>
+              <tr>
+                {headings.map((cell, cellIndex) => (
+                  <th key={cellIndex}>{renderInline(cell)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                    <td key={cellIndex}>{renderInline(cell)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>,
+      );
+      continue;
+    }
+
     if (/^\d+\.\s+/.test(line)) {
       const items: string[] = [];
       while (index < lines.length && /^\d+\.\s+/.test(lines[index].trim())) {

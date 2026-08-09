@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { EditorialArticleCard } from "@/app/components/EditorialArticleCard";
 import { MarkdownContent } from "@/app/components/MarkdownContent";
 import { getResearchArticle, getResearchArticles } from "@/app/lib/content";
 import styles from "./page.module.css";
@@ -17,6 +18,11 @@ function formatDate(date: string) {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${date}T00:00:00Z`));
+}
+
+function getReadingTime(body: string) {
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(2, Math.ceil(words / 220));
 }
 
 export function generateStaticParams() {
@@ -41,48 +47,69 @@ export default async function ArticlePage({ params }: PageProps) {
   if (articleIndex === -1) notFound();
 
   const article = articles[articleIndex];
-  const previous = articles[(articleIndex - 1 + articles.length) % articles.length];
-  const next = articles[(articleIndex + 1) % articles.length];
+  const relatedArticles = [
+    ...articles.slice(articleIndex + 1),
+    ...articles.slice(0, articleIndex + 1),
+  ].slice(0, 3);
 
   return (
     <main className={styles.page}>
       <article>
         <header className={styles.header}>
-          <Link href="/research" className={styles.backLink}>
-            Research index
-          </Link>
-          <div className={styles.meta}>
-            <span>{article.category}</span>
-            <time dateTime={article.date}>{formatDate(article.date)}</time>
+          <div className={styles.headerTopline}>
+            <Link href="/research" className={styles.backLink}>
+              Research / Article
+            </Link>
+            <span>16S—Field note</span>
           </div>
           <h1>{article.title}</h1>
-          <p className={styles.summary}>{article.description}</p>
+          <div className={styles.heroFooter}>
+            <div>
+              <p className={styles.summary}>{article.description}</p>
+              <div className={styles.meta}>
+                <time dateTime={article.date}>{formatDate(article.date)}</time>
+                <span>{getReadingTime(article.body)} min read</span>
+              </div>
+            </div>
+            <Link className={styles.brandStamp} href="/" aria-label="16 Signals home">
+              <Image src="/a16zero.png" alt="" width={40} height={40} />
+              <span>16 Signals</span>
+            </Link>
+          </div>
         </header>
 
-        <div className={styles.cover}>
-          <Image
-            src={article.image}
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 900px) 100vw, 1280px"
-          />
-        </div>
+        <section className={styles.readingSurface}>
+          <div className={styles.publisher}>
+            <Image src="/a16zero.png" alt="" width={42} height={42} />
+            <div>
+              <strong>16 Signals Research</strong>
+              <span>{article.category}</span>
+            </div>
+          </div>
+          <div className={styles.body}>
+            <MarkdownContent content={article.body} />
+          </div>
+        </section>
 
-        <div className={styles.body}>
-          <MarkdownContent content={article.body} />
-        </div>
-
-        <nav className={styles.articleNav} aria-label="Research articles">
-          <Link href={previous.href} className={styles.previous}>
-            <span>← Previous research</span>
-            <strong>{previous.title}</strong>
-          </Link>
-          <Link href={next.href} className={styles.next}>
-            <span>Next research →</span>
-            <strong>{next.title}</strong>
-          </Link>
-        </nav>
+        <section className={styles.moreArticles} aria-labelledby="more-articles-title">
+          <div className={styles.moreHeader}>
+            <div>
+              <p>Discover</p>
+              <h2 id="more-articles-title">See more articles</h2>
+            </div>
+            <Link href="/research">View all</Link>
+          </div>
+          <div className={styles.relatedGrid}>
+            {relatedArticles.map((related) => (
+              <EditorialArticleCard
+                article={related}
+                compact
+                index={articles.findIndex((item) => item.slug === related.slug)}
+                key={related.slug}
+              />
+            ))}
+          </div>
+        </section>
       </article>
     </main>
   );

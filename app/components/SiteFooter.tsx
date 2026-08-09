@@ -90,6 +90,13 @@ export function SiteFooter() {
               >
                 Terms &amp; Conditions
               </Link>
+              <Link
+                href="/privacy"
+                className={pathname === "/privacy" ? "activeNav" : undefined}
+                aria-current={pathname === "/privacy" ? "page" : undefined}
+              >
+                Privacy Policy
+              </Link>
             </nav>
           </div>
         </div>

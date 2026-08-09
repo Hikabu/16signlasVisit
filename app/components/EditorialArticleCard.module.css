@@ -1,0 +1,151 @@
+.card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  background: #f3f1ea;
+  color: #101515;
+}
+
+.imageLink {
+  display: block;
+  color: inherit;
+}
+
+.imageFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1.48;
+  background: #17201f;
+}
+
+.imageFrame::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4, 9, 9, 0.03), rgba(4, 9, 9, 0.28));
+  content: "";
+  pointer-events: none;
+}
+
+.image {
+  object-fit: cover;
+  filter: saturate(0.5) contrast(0.96) brightness(0.72);
+  transition: transform 200ms ease-out, filter 200ms ease-out;
+}
+
+.imageLink:hover .image {
+  filter: saturate(0.62) contrast(0.98) brightness(0.8);
+  transform: scale(1.018);
+}
+
+.issue {
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  bottom: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-geist-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 25px clamp(21px, 2vw, 30px) 28px;
+}
+
+.meta {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  justify-content: space-between;
+  color: #426e69;
+  font-family: var(--font-geist-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.meta time {
+  color: #777b77;
+  white-space: nowrap;
+}
+
+.card h2 {
+  margin: 20px 0 0;
+  font-size: clamp(23px, 2vw, 31px);
+  font-weight: 470;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card h2 a:hover {
+  color: #175f5a;
+}
+
+.card p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 17px 0 0;
+  color: #5f6461;
+  font-size: 14px;
+  line-height: 1.62;
+  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.readLink {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  width: fit-content;
+  margin-top: auto;
+  padding-top: 28px;
+  border-bottom: 1px solid #9ca5a0;
+  color: #171b1a;
+  font-size: 12px;
+  font-weight: 570;
+  text-decoration: none;
+}
+
+.arrow {
+  transition: transform 160ms ease-out;
+}
+
+.readLink:hover {
+  border-color: #175f5a;
+  color: #175f5a;
+}
+
+.readLink:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+.compact .content {
+  padding: 22px 0 0;
+}
+
+.compact {
+  background: transparent;
+}
+
+.compact h2 {
+  font-size: clamp(22px, 1.8vw, 29px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .arrow {
+    transition: none;
+  }
+}

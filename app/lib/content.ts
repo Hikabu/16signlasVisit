@@ -114,3 +114,10 @@ export function getTermsContent() {
     "utf8",
   ).trim();
 }
+
+export function getPrivacyContent() {
+  return readFileSync(
+    join(process.cwd(), "terms_conditions", "Privacy-Policy.md"),
+    "utf8",
+  ).trim();
+}

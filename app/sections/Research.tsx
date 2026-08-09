@@ -105,7 +105,7 @@ export function Research({ articles }: { articles: readonly ResearchArticle[] })
             Evidence, examined
           </h2>
           <p className={styles.description}>
-            Original research on how real engineering work can make hiring
+            Research on how real engineering work can make hiring
             faster, more accurate, and easier to verify.
           </p>
 
