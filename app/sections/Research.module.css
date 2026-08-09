@@ -208,7 +208,7 @@
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   padding: 0 clamp(24px, 5vw, 80px) 26px 0;
-  scroll-behavior: smooth;
+  scroll-behavior: "smooth";
   scroll-padding-inline: 0 clamp(24px, 5vw, 80px);
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
