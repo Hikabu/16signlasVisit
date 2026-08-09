@@ -5,272 +5,232 @@ summary: "Under the hood of the evidence-based candidate evaluation platform."
 ---
 # Why Proof Beats Opinion
 
-### Software development has changed. The way we evaluate software engineers has not changed at the same pace.
+### Hiring still runs on interpretation. Engineering does not.
 
-Modern engineering organizations do not operate production systems based on opinion. Production systems are operated through observable signals. These include logs, metrics, traces, pull requests, incident reports, code reviews, deployment histories, and experiment results. When something important happens in a system, engineering teams do not begin with interpretation. They begin with evidence.
+Modern engineering has become something you can observe.
 
-Hiring, however, still operates under a different logic.
+Not perfectly, not completely—but enough that decisions are rarely made in the dark anymore. Systems emit signals: logs, commits, pull requests, deployments, incidents, rollbacks. Work leaves traces.
 
-A candidate submits a résumé that describes past work. That document is reviewed and interpreted. Then, after one or two conversations, interviewers attempt to determine whether the candidate can actually perform the work required by the role. In practice, this means that engineering organizations rely on claims first and evidence second.
+Hiring, however, still behaves as if none of that exists.
 
-This sequence is increasingly misaligned with how engineering itself functions.
+It continues to rely on interpretation layered on top of interpretation: résumés, interviews, and narratives about past work that someone has to reconstruct in their head.
 
----
-
-## The résumé was designed for a world with limited visibility
-
-The resume was not designed as a measure of truth. It was designed as a coordination tool.
-
-Historically, companies had very limited access to the actual work a candidate had performed elsewhere. Engineering output was not publicly observable, and even within organizations, work was often difficult to inspect beyond direct collaborators. As a result, hiring systems relied on proxies.
-
-These proxies included:
-- -where someone worked
-- -how long they worked there
-- -their job title
-- -the technologies they listed
-- -the achievements they described
-
-
-The interview was then used to fill in the remaining uncertainty.
-
-This system was reasonable in an environment where engineering work was largely invisible to outsiders.
-
-However, that environment has changed.
-
-Modern software development produces a persistent technical footprint. Repositories, commits, pull requests, code reviews, issue histories, and deployment activity all create partial visibility into how work is performed over time.
-
-GitHub alone reports more than 180 million developers on its platform in its 2025 Octoverse, along with record levels of repository activity, pull requests, and code contributions. At the same time, AI-assisted development is increasing both the volume and speed of this activity.
-
-The result is a structural shift: engineering work has become more observable, while hiring systems have largely remained unchanged.
+That gap—between observable engineering and inferred hiring—is where most of the noise comes from.
 
 ---
 
-## AI has changed the cost of presenting competence
+## Résumés were designed for a world without visibility
 
-A second shift has occurred in parallel. The cost of producing a convincing narrative about experience has decreased significantly.
+The résumé was never meant to be a precise record of work. It was a workaround.
 
-With modern AI tools, a candidate can refine a résumé, structure achievements more clearly, rehearse interview responses, research unfamiliar domains, and translate informal experience into polished language. These capabilities are not inherently problematic. In fact, they reflect the increasing role of tools in all knowledge work, including engineering.
+When you could not see what someone actually built, you needed substitutes:
 
-The problem arises when presentation quality is treated as a proxy for underlying capability.
+job titles, company names, years of experience, and carefully written summaries of impact.
 
-The ability to articulate experience is not equivalent to the experience itself.
+These signals were not wrong. They were just incomplete. They existed because there was no alternative.
 
-A candidate may be able to describe distributed systems concepts fluently without having operated one in production. Another candidate may have spent years working on such systems but struggle to communicate that experience concisely in an interview setting.
+But the nature of engineering has changed.
 
-Traditional hiring processes often reward the former more than the latter, not because of intent, but because of structure. The system evaluates expression under time pressure rather than accumulated evidence over time.
+Today, real work is no longer hidden behind the curtain. It is distributed across systems that record it by default. You can see how a service evolved through commits. You can trace decisions through pull requests. You can observe ownership through incidents and production changes.
 
-However, companies are not hiring communication ability in isolation. They are hiring the ability to build, maintain, and operate systems.
-
----
-
-## Engineering roles are changing faster than static labels can describe
-
-This problem becomes more pronounced as engineering roles evolve.
-
-The World Economic Forum estimates that 39% of workers’ core skills will change by 2030, driven largely by technological change, including AI. This implies that static descriptions of experience will become less predictive over time, not more.
-
-Similarly, LinkedIn’s 2025 Future of Recruiting research reports that 93% of talent professionals consider accurate skills assessment critical to improving hiring outcomes. It also shows that organizations using skills-based approaches to candidate evaluation are more likely to report higher-quality hires.
-
-These findings point to a consistent issue: traditional role-based labels are becoming less sufficient as signals of capability.
-
-Statements such as:
-
-- -“five years of experience in X”
-- -“senior engineer at Y”
-- -“worked with technology Z”
-
-still provide context, but they do not answer the central question that modern engineering organizations face:
-
-**What has this person actually demonstrated that is relevant to the problems we need solved today?**
-
-Answering that question requires moving beyond résumé-level abstraction.
+The work is there. The question is whether hiring is willing to look at it.
 
 ---
 
-## An interview is a sample, not a complete record
+## The cost of “looking good” has collapsed
 
-Interviews remain an important part of hiring. When structured properly, they can provide meaningful insight into how a candidate thinks, communicates, and reasons about problems. Research consistently shows that structured interviews are more predictive of job performance than unstructured conversations, particularly when questions are grounded in job-relevant scenarios and past behavior.
+Something else changed along the way: the cost of presentation.
 
-However, interviews have a structural limitation: they are short samples of a long history.
+It is now extremely easy to make work look better than it was.
 
-A candidate may have ten years of engineering decisions, trade-offs, and system ownership behind them. The interview compresses this into a limited time window, often between 30 and 90 minutes.
+A résumé can be rewritten in minutes. A project can be reframed into stronger language. Weak contributions can be bundled into “ownership.” Strong but messy work can be cleaned up until it looks less significant than it actually was.
 
-Within that window, candidates are typically asked to reconstruct their experience from memory. For example:
+None of this is malicious. It is just the natural result of tools that make communication easier.
 
-> “Tell me about a difficult technical problem you solved.”
+But it creates a subtle distortion: hiring systems often end up rewarding the quality of the story, not the quality of the work behind it.
 
-At that point, the interview is no longer evaluating the work itself. It is evaluating the candidate’s ability to retrieve, structure, and present that work under artificial constraints.
+And once that happens, the signal starts to drift.
 
-This can still be useful, but it is incomplete as a primary source of evidence.
-
-The interview should not be the first time an organization encounters a candidate’s technical reality.
+People who are good at explaining their work outperform people who are good at doing the work. Clarity becomes confused with capability. Narrative becomes confused with evidence.
 
 ---
 
-## High-velocity engineering organizations cannot afford repeated rediscovery
+## Titles stopped meaning what we think they mean
 
-In fast-moving engineering environments, the inefficiency of this approach becomes more visible.
+At some point, job titles became too broad to carry real meaning.
 
-Modern teams deploy frequently, iterate continuously, and rely heavily on automation and AI-assisted workflows. Despite this, hiring a single engineer often requires multiple stakeholders to independently reconstruct the same baseline understanding of the candidate.
+“Senior Engineer” can describe someone who owns a distributed system at scale—or someone who has never touched production infrastructure. “Tech Lead” can mean architectural authority—or coordination responsibility. “Backend Engineer” can span everything from API glue code to system design at scale.
 
-A typical process may involve:
+The problem is not dishonesty. It is compression.
 
-- -a recruiter interpreting the résumé
-- -a hiring manager reviewing it again
-- -an initial screening interview
-- -technical preparation by engineers
-- -multiple interview rounds to validate assumptions
+A title is a label applied after the fact, across very different contexts. It tells you where someone sat in an organization, not what they actually did inside it.
 
-Each step re-examines information that may already exist in more detailed form elsewhere.
-
-The cost is not only time. The deeper issue is that senior engineering judgment is repeatedly used to rediscover information that could have been established earlier in the process.
-
-As a result, interview time is often spent on reconstructing context rather than evaluating depth.
+And when hiring leans too heavily on titles, it starts mistaking context for proof.
 
 ---
 
-## Proof changes the order of evaluation
+## Interviews are not a replay of reality
 
-When discussing “proof” in this context, the term does not refer to mathematical certainty or automated decision-making. It refers to a more fundamental shift in sequence:
+The interview is often treated as the moment where everything becomes clear.
 
-**observable evidence should precede opinion formation.**
+But in reality, it is a very small and very artificial slice of time.
 
-This changes the structure of hiring from:
+A candidate is asked to reconstruct years of work in under an hour. They rely on memory, framing, and communication under pressure. The interviewer relies on interpretation, intuition, and comparison to other candidates they have seen.
 
-> résumé → opinion → interview → refined opinion → decision
+What emerges is not a reconstruction of past engineering. It is a performance about past engineering.
 
-to:
+And like any performance, it captures something real—but not everything that matters.
 
-> résumé → evidence → informed interview → human decision
+It shows how someone thinks out loud. It shows how they structure ideas. It shows how they handle ambiguity in the moment.
 
-The difference is not the removal of judgment. It is the repositioning of judgment after exposure to relevant signals.
-
-This is the layer that 16signals is designed to introduce.
+But it does not show the long arc of ownership, the accumulation of decisions, or the actual behavior of systems they worked on.
 
 ---
 
-## What 16signals evaluates
+## Hiring ends up redoing the same work repeatedly
 
-16signals analyzes available, candidate-authorized engineering artifacts and interprets them in the context of a specific role. The goal is not to assign a score or replace human evaluation. The goal is to surface structured evidence before the interview begins.
+When you look at a typical hiring process, something becomes obvious: the same questions are asked again and again, just in different forms.
 
-This includes questions such as:
+A résumé is read. Then re-read. Then discussed. Then questioned in a screening call. Then revisited in a technical interview. Then reinterpreted in a final round.
 
-- -What systems has this candidate actually worked on?
-- -Which parts of their work are relevant to the target role?
-- -Where is there evidence of ownership versus participation?
-- -What technical patterns appear repeatedly in their history?
-- -Which claims are supported by observable artifacts?
-- -Which areas lack sufficient evidence for conclusion?
-- -What specific questions should the interviewer ask next?
+Each step is trying to solve the same underlying problem: *what did this person actually do?*
 
-The output is an evidence-linked analysis of engineering work, not a personality assessment.
+But because the process starts without direct evidence, every stage is forced to reconstruct context from scratch.
 
-Each observation is expected to remain traceable to underlying artifacts. Where evidence is incomplete, the system should explicitly indicate uncertainty rather than infer beyond what is available.
-
-This distinction is essential. The goal is not to replace human judgment with machine judgment, but to improve the quality of inputs that human judgment relies on.
+Time is spent not on evaluating depth, but on rebuilding history.
 
 ---
 
-## How evidence changes the interview itself
+## The real issue: interpretation comes too early
 
-To understand the impact of evidence, consider two interview scenarios.
+Most hiring systems follow a quiet but powerful sequence:
 
-In the first scenario, the interviewer has only a résumé:
+first the résumé, then the interpretation, then the interview, then the decision.
 
-- -Senior Backend Engineer
-- -7 years of experience
-- -Python, PostgreSQL, Kubernetes, AWS
+The problem is not interpretation itself. The problem is when interpretation happens before evidence is fully understood.
 
-The interview begins broadly, with general questions about system design, scalability, and past experience. The conversation is exploratory because there is limited prior context.
+Once a narrative forms early, everything that follows tends to reinforce it. Strong candidates get over-attributed. Weak signals get rationalized. Missing information gets filled in unconsciously.
 
-In the second scenario, the interviewer has access to structured evidence showing that the candidate has repeatedly worked on a specific subsystem, contributed to multiple refactors over time, and gradually increased ownership of a particular architectural area.
+The system becomes consistent—but not necessarily accurate.
 
-The nature of the questions changes.
+A better sequence is simpler:
 
-Instead of asking:
+first evidence, then interpretation, then interview, then decision.
 
-> “Do you understand system architecture?”
-
-the interviewer can ask:
-
-> “What changed in your understanding of this subsystem between the first and second refactor?”
-
-Instead of asking:
-
-> “How do you handle technical debt?”
-
-the interviewer can ask:
-
-> “What made this refactor necessary at that specific point in time rather than earlier?”
-
-Instead of testing general knowledge, the interview focuses on decision-making under real constraints.
-
-The interview becomes more precise because it begins with context rather than assumptions.
+Not because humans should be removed from the process, but because humans should not be forced to guess before they have seen enough.
 
 ---
 
-## Evidence also introduces necessary constraints
+## Proof is not about certainty. It is about grounding
 
-One of the less obvious benefits of evidence-based evaluation is that it limits overinterpretation.
+When we say “proof” in this context, we are not talking about mathematical certainty or automated judgment.
 
-Résumé language is inherently abstract:
+We are talking about something more practical: decisions anchored in observable work rather than narrative alone.
 
-- -“led architecture”
-- -“owned infrastructure”
-- -“built scalable systems”
+Proof, here, simply means that claims about a candidate can be traced back to something real—something that exists outside of memory, language, or interpretation.
 
-These statements may be accurate, but they do not specify the degree, scope, or nature of contribution.
-
-An evidence-based system can distinguish between:
-
-- -demonstrated
-- -partially supported
-- -suggested
-- -contradicted
-- -unknown
-- -insufficient evidence
-
-The last two categories are particularly important. Real engineering histories are incomplete. Work is distributed across teams, systems, and time. Not all contributions are visible in public artifacts, and not all responsibilities are captured in code.
-
-A system like 16signals must therefore avoid overclaiming certainty. Its purpose is not to complete the picture artificially, but to make the boundaries of knowledge explicit.
+It does not eliminate judgment. It gives judgment something stable to stand on.
 
 ---
 
-## Proof does not replace judgment. It improves its starting point.
+## What 16signals actually changes
 
-There are many aspects of engineering capability that cannot be derived from historical artifacts alone. These include motivation, communication style, adaptability to new environments, and interpersonal dynamics within a specific team.
+16signals is not trying to replace hiring decisions or score people into categories.
 
-This is why interviews remain necessary.
+It is trying to change what those decisions are based on.
 
-However, interviews become significantly more effective when they are not used to reconstruct an entire technical history from scratch.
+Instead of starting with a résumé and building a story around it, it starts with engineering artifacts and builds a structured view of what is actually visible.
 
-Instead, they can focus on higher-order evaluation:
-- -validating assumptions
-- -exploring decision-making
-- -examining trade-offs
-- -understanding reasoning under constraints
-- -identifying gaps in experience
+It surfaces what is clearly demonstrated in the work. It highlights what is implied but not confirmed. It makes explicit what is missing entirely. And it turns those gaps into questions rather than assumptions.
 
-In this structure, the interview is no longer a discovery mechanism. It becomes an evaluation mechanism.
+The output is not a verdict. It is a map of evidence.
+
+And importantly, that map is traceable. Every signal can be linked back to real work, not abstract interpretation.
 
 ---
 
-## Hiring systems should evolve alongside engineering systems
+## How evidence changes the nature of interviews
 
-Engineering organizations have already adopted a core principle: when systems become complex, observability must increase. Decisions should be based on signals rather than assumptions whenever possible.
+The difference becomes obvious in practice.
 
-Hiring has not fully adopted this principle.
+Without evidence, interviews tend to stay broad. Candidates are asked to describe system design experience in general terms. They are asked how they think about scalability, or how they handle complexity. The conversation floats above the actual work.
 
-The résumé remains a compressed narrative. The interview remains a constrained sample. Between them, there is often no structured representation of actual work.
+With evidence, the conversation changes shape.
 
-That missing layer is the work itself.
+Instead of asking what someone *usually does*, you can ask why a specific system was redesigned. Instead of asking how they think about trade-offs in theory, you can ask what trade-off changed between two real versions of a system they worked on. Instead of asking about ownership in abstract terms, you can ask what they personally changed in a concrete refactor.
 
-In many cases, that work already exists in observable form. The challenge is not its absence, but its underutilization.
+The interview stops being a search for context and becomes a validation of known work.
 
-The question is whether hiring systems will continue to rely primarily on reconstructed narratives, or whether they will incorporate evidence before interpretation.
+---
 
-This is the shift that 16signals is designed to support.
+## Evidence also limits overclaiming
 
-Applications describe how candidates present themselves. Interviews reveal how they perform in real time. Evidence shows what their work actually demonstrates.
+One of the quiet failures of résumé-driven hiring is how easily language expands beyond reality.
 
-Proof does not eliminate opinion. It ensures that opinion is formed on a more accurate foundation.
+People do not lie in most cases. They generalize. They compress. They describe impact in ways that sound larger than what is actually visible.
+
+“Led architecture” can mean many things. “Built scalable systems” can mean almost anything. “Owned infrastructure” can range from deep responsibility to peripheral involvement.
+
+Evidence forces those phrases back into shape.
+
+It does not punish ambition. It simply asks: what can actually be seen?
+
+And just as importantly, it allows for something often missing in hiring systems: the ability to say “we don’t know.”
+
+Missing evidence is not a negative signal. It is a boundary condition. It means the system should not guess.
+
+---
+
+## “Insufficient evidence” is not a failure state
+
+In most systems, uncertainty is treated as something to eliminate.
+
+But in hiring, uncertainty is unavoidable. The goal is not to pretend it does not exist. The goal is to handle it honestly.
+
+If there is not enough signal to support a conclusion, the correct output is not a forced score or a hidden penalty. It is simply: insufficient evidence.
+
+That is not avoidance. It is discipline.
+
+It prevents weak signals from being inflated into false confidence. It prevents absence of data from being misread as absence of ability. And it keeps the responsibility where it belongs: in the interview, where clarification is possible.
+
+---
+
+## Better input produces better interviews
+
+When evidence is structured properly, interviews change in a very practical way.
+
+They become less about discovery and more about validation.
+
+Instead of spending time uncovering what someone might have done, you spend time understanding what they actually did. Instead of covering basics repeatedly, you focus on decisions, trade-offs, and ownership boundaries.
+
+The interview becomes sharper, more specific, and more grounded in reality.
+
+Not because it is more aggressive, but because it starts from a better place.
+
+---
+
+## What proof does not replace
+
+None of this removes the human side of hiring.
+
+Communication still matters. Judgment still matters. Cultural alignment, adaptability, and real-time problem solving still matter.
+
+What changes is not what is evaluated, but what it is based on.
+
+Proof does not replace judgment. It removes the need for guesswork about the past so that judgment can focus on the present.
+
+---
+
+## The final shift
+
+Engineering already moved toward observability. Systems are expected to explain themselves through signals.
+
+Hiring has not fully made that shift yet.
+
+As a result, it still spends too much time reconstructing what could already be observed.
+
+Proof is not about removing humans from hiring. It is about changing the order in which decisions are made.
+
+Work first. Evidence first. Interpretation after.
+
+Not to make hiring mechanical—but to make it honest.
