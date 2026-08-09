@@ -1,7 +1,7 @@
 ---
 title: "Why Proof Beats Opinion"
 date: "2026-03-05"
-summary: "Under the hood of the evidence-based candidate evaluation platform."
+summary: "Hiring should rely on real work evidence, not résumés or subjective interpretation."
 ---
 # Why Proof Beats Opinion
 

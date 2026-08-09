@@ -15,6 +15,9 @@ export function ProblemValue() {
     const cards = Array.from(
       stack.querySelectorAll<HTMLElement>("[data-verification-folder]"),
     );
+    const intro = stack.parentElement?.querySelector<HTMLElement>(
+      "[data-problem-value-intro]",
+    );
     const mobileQuery = window.matchMedia("(max-width: 767px)");
     let animationFrame = 0;
     let previousIndex = -1;
@@ -25,6 +28,7 @@ export function ProblemValue() {
 
       if (mobileQuery.matches) {
         if (!wasMobile) cards.forEach((card) => card.setAttribute("data-current", "true"));
+        intro?.style.setProperty("--intro-release-offset", "0px");
         wasMobile = true;
         previousIndex = -1;
         return;
@@ -38,9 +42,25 @@ export function ProblemValue() {
       let currentIndex = 0;
 
       cards.forEach((card, index) => {
-        const stickyTop = 88 + index * 10;
-        if (card.getBoundingClientRect().top <= stickyTop + 12) currentIndex = index;
+        if (index === 0) return;
+
+        const cardRect = card.getBoundingClientRect();
+        const previousRect = cards[index - 1].getBoundingClientRect();
+        const previousMidpoint = previousRect.top + previousRect.height * 0.5;
+
+        if (cardRect.top <= previousMidpoint) currentIndex = index;
       });
+
+      const lastCard = cards[cards.length - 1];
+      const lastCardTop = lastCard.getBoundingClientRect().top;
+      const lastStickyTop = Number.parseFloat(
+        window.getComputedStyle(lastCard).top,
+      );
+      const releaseOffset = Math.min(0, lastCardTop - lastStickyTop);
+      intro?.style.setProperty(
+        "--intro-release-offset",
+        `${releaseOffset}px`,
+      );
 
       if (currentIndex === previousIndex) return;
 
@@ -62,6 +82,7 @@ export function ProblemValue() {
     return () => {
       window.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
+      intro?.style.removeProperty("--intro-release-offset");
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
   }, []);
@@ -72,13 +93,18 @@ export function ProblemValue() {
       className="problem-value-section landing-section relative isolate overflow-clip section-transition section-edge-highlight"
     >
       <div className="container">
-        <Reveal className="max-w-3xl">
-          <p className="section-label problem-value__eyebrow reveal-child">One brief. Clear answers</p>
-          <h2 className="section-title problem-value__title reveal-child mt-4 text-white">From application to interview brief</h2>
-          <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
-            Add the role. Invite the candidate. Receive the evidence. Use it in the interview.
-          </p>
-        </Reveal>
+        <div
+          className="problem-value__intro-sticky"
+          data-problem-value-intro
+        >
+          <Reveal className="problem-value__intro max-w-3xl">
+            <p className="section-label problem-value__eyebrow reveal-child">One brief. Clear answers</p>
+            <h2 className="section-title problem-value__title reveal-child mt-4 text-white">From application to interview brief</h2>
+            <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
+              Add the role. Invite the candidate. Receive the evidence. Use it in the interview.
+            </p>
+          </Reveal>
+        </div>
 
         <div ref={stackRef} className="verification-folder-stack mt-16 space-y-8">
           {PROCESS_FOLDERS.map((folder, index) => (
@@ -87,13 +113,14 @@ export function ProblemValue() {
               key={folder.title}
               className="verification-folder"
               data-verification-folder
-              threshold={0.22}
+              threshold={0.1}
+              rootMargin="0px 0px -8% 0px"
               style={
                 {
                   "--folder-index": index,
                   "--folder-total": PROCESS_FOLDERS.length,
-                  "--folder-top": `${88 + index * 10}px`,
-                  "--folder-shift": `${index * 2}px`,
+                  "--folder-top": `${332 + index * 10}px`,
+                  "--folder-shift": "0px",
                   "--reveal-delay": `${index * 70}ms`,
                   "--folder-accent-left": folder.accentOffset,
                 } as CSSProperties

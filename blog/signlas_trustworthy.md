@@ -1,7 +1,7 @@
 ---
 title: " What Makes a Talent Signal Trustworthy?"
 date: "2026-01-15"
-summary: "Hiring is full of signals."
+summary: "A signal is trustworthy when it is relevant, observable, contextualized, and clearly limited in what it can conclude."
 ---
 # What Makes a Talent Signal Trustworthy?
 

@@ -1,7 +1,7 @@
 ---
 title: " Why “Insufficient Evidence” Is a Trust Feature"
 date: "2026-02-10"
-summary: "Hiring systems are under pressure to produce answers."
+summary: "Recognizing weak or missing evidence prevents false confidence and leads to better interview questions."
 ---
 # Why “Insufficient Evidence” Is a Trust Feature
 

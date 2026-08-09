@@ -20,6 +20,18 @@ const articlePresentation: Record<
   string,
   { category: string; image: string }
 > = {
+  why_proof_beats: {
+    category: "Research",
+    image: "/articles/1.jpg",
+  },
+  signlas_trustworthy: {
+    category: "Research",
+    image: "/articles/2.jpg",
+  },
+  incuficient_evidence: {
+    category: "Research",
+    image: "/articles/5.jpg",
+  },
   "how-16signals-works": {
     category: "Methodology note",
     image: "/articles/1.jpg",
