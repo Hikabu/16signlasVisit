@@ -167,7 +167,6 @@ export function Research({ articles }: { articles: readonly ResearchArticle[] })
                       sizes="(max-width: 719px) 84vw, (max-width: 1199px) 60vw, 440px"
                       className={styles.coverImage}
                     />
-                    <span className={styles.coverTreatment} aria-hidden="true" />
                     <span className={styles.issueNumber} aria-hidden="true">
                       16S / 0{index + 1}
                     </span>

@@ -19,22 +19,14 @@
   background: #17201f;
 }
 
-.imageFrame::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(4, 9, 9, 0.03), rgba(4, 9, 9, 0.28));
-  content: "";
-  pointer-events: none;
-}
-
 .image {
   object-fit: cover;
-  filter: saturate(0.5) contrast(0.96) brightness(0.72);
+  filter: brightness(0.95);
   transition: transform 200ms ease-out, filter 200ms ease-out;
 }
 
 .imageLink:hover .image {
-  filter: saturate(0.62) contrast(0.98) brightness(0.8);
+  filter: brightness(1);
   transform: scale(1.018);
 }
 
@@ -96,7 +88,7 @@
   display: -webkit-box;
   overflow: hidden;
   margin: 17px 0 0;
-  color: #5f6461;
+  color: #17272f;
   font-size: 14px;
   line-height: 1.62;
   text-wrap: pretty;

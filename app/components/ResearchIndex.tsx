@@ -33,7 +33,6 @@ export function ResearchIndex({
 
       <section className={styles.collection} aria-label="All research articles">
         <div className={styles.collectionHeader}>
-          <p>Latest thinking</p>
           <span>{String(articles.length).padStart(2, "0")} articles</span>
         </div>
         <div className={styles.grid}>

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { EditorialArticleCard } from "@/app/components/EditorialArticleCard";
 import { MarkdownContent } from "@/app/components/MarkdownContent";
 import { getResearchArticle, getResearchArticles } from "@/app/lib/content";
+import { ArticleReadingSurface } from "./ArticleReadingSurface";
 import styles from "./page.module.css";
 
 type PageProps = {
@@ -56,12 +57,6 @@ export default async function ArticlePage({ params }: PageProps) {
     <main className={styles.page}>
       <article>
         <header className={styles.header}>
-          <div className={styles.headerTopline}>
-            <Link href="/research" className={styles.backLink}>
-              Research / Article
-            </Link>
-            <span>16S—Field note</span>
-          </div>
           <h1>{article.title}</h1>
           <div className={styles.heroFooter}>
             <div>
@@ -78,18 +73,11 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
         </header>
 
-        <section className={styles.readingSurface}>
-          <div className={styles.publisher}>
-            <Image src="/a16zero.png" alt="" width={42} height={42} />
-            <div>
-              <strong>16 Signals Research</strong>
-              <span>{article.category}</span>
-            </div>
-          </div>
-          <div className={styles.body}>
-            <MarkdownContent content={article.body} />
-          </div>
-        </section>
+        <ArticleReadingSurface category={article.category}>
+          <MarkdownContent
+            content={article.body.replace(/^#\s+.*\n+/, "")}
+          />
+        </ArticleReadingSurface>
 
         <section className={styles.moreArticles} aria-labelledby="more-articles-title">
           <div className={styles.moreHeader}>
