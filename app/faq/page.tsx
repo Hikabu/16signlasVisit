@@ -14,7 +14,7 @@ export default function FaqPage() {
   return (
     <main className={styles.page}>
       <header className={styles.hero}>
-        <h1>What you need to know.</h1>
+        <h1>What you need to know</h1>
         <p>
           Straight answers about the product, the analysis, candidate privacy,
           and what happens during the beta.
