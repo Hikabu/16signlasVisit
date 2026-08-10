@@ -1,0 +1,55 @@
+.contactSurface {
+  width: min(96vw, 1500px);
+  margin: var(--space-8) auto 0;
+}
+
+.methodPanel {
+  min-height: 680px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 24px;
+  background: #151515;
+}
+
+.view {
+  min-height: inherit;
+  animation: view-enter 320ms var(--ease-standard) both;
+}
+
+.calendarView {
+  width: 100%;
+}
+
+.formView {
+  display: flex;
+  align-items: center;
+}
+
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 639px) {
+  .contactSurface {
+    width: min(92vw, 1500px);
+  }
+
+  .methodPanel {
+    min-height: 620px;
+    border-radius: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view {
+    animation: none;
+  }
+}

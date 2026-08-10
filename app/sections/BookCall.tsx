@@ -1,11 +1,19 @@
 "use client";
 
 import Cal, { getCalApi } from "@calcom/embed-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ContactForm } from "@/app/components/ContactForm";
+import {
+  ContactMethodSwitch,
+  type ContactMethod,
+} from "@/app/components/ContactMethodSwitch";
 import { LargeWord } from "@/app/components/LargeWord";
 import { BOOK_CALL_CTA } from "@/app/data/landing";
+import styles from "./BookCall.module.css";
 
 export function BookCall() {
+  const [contactMethod, setContactMethod] = useState<ContactMethod>("call");
+
   useEffect(() => {
     const setupCal = async () => {
       const cal = await getCalApi({
@@ -50,22 +58,44 @@ export function BookCall() {
         </div>
       </div>
 
-      <div
-        id="booking-calendar"
-        className="mx-auto mt-8 w-[min(96vw,1500px)] overflow-hidden rounded-3xl border border-white/10 bg-[#151515]"
-      >
-        <Cal
-          namespace="product-explore"
-          calLink="16-signals/quick-chat"
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-          config={{
-            layout: "month_view",
-            useSlotsViewOnSmallScreen: "true",
-          }}
+      <div className={styles.contactSurface}>
+        <ContactMethodSwitch
+          value={contactMethod}
+          onChange={setContactMethod}
         />
+
+        <div
+          id="booking-calendar"
+          className={styles.methodPanel}
+          aria-live="polite"
+        >
+          {contactMethod === "call" ? (
+            <div
+              key="call"
+              className={`${styles.view} ${styles.calendarView}`}
+            >
+              <Cal
+                namespace="product-explore"
+                calLink="16-signals/quick-chat"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                config={{
+                  layout: "month_view",
+                  useSlotsViewOnSmallScreen: "true",
+                }}
+              />
+            </div>
+          ) : (
+            <div
+              key="write"
+              className={`${styles.view} ${styles.formView}`}
+            >
+              <ContactForm />
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

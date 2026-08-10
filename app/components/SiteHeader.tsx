@@ -132,7 +132,7 @@ export function SiteHeader() {
             href="/#book-call"
             aria-current={isBookCallActive ? "location" : undefined}
           >
-            Call us
+          Contact us
           </Link>
         </div>
       </div>

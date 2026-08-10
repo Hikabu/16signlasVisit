@@ -1,0 +1,141 @@
+.form {
+  width: min(100%, 760px);
+  margin-inline: auto;
+  padding: clamp(40px, 6vw, 88px) clamp(24px, 6vw, 72px);
+}
+
+.field + .field {
+  margin-top: var(--space-8);
+}
+
+.field label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--muted-strong);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.field label span {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+}
+
+.field input,
+.field textarea {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  outline: none;
+  color: var(--foreground);
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-base);
+  transition:
+    border-color var(--duration-ui) var(--ease-standard),
+    box-shadow var(--duration-ui) var(--ease-standard);
+}
+
+.field input {
+  min-height: 48px;
+  padding: 0 0 var(--space-3);
+}
+
+.field textarea {
+  min-height: 148px;
+  padding: var(--space-2) 0 var(--space-3);
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgb(139 148 158 / 0.68);
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 1px 0 rgb(64 224 216 / 0.18);
+}
+
+.error,
+.formError {
+  margin-top: var(--space-2);
+  color: #f0a09c;
+  font-size: var(--text-xs);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-10);
+}
+
+.actions button {
+  min-width: 160px;
+}
+
+.actions button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.actions p,
+.success p {
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.success {
+  display: flex;
+  min-height: inherit;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.success .successEyebrow {
+  margin-bottom: var(--space-3);
+  color: var(--accent-soft);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.success h3 {
+  margin-bottom: var(--space-3);
+  color: var(--foreground);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 500;
+  line-height: var(--leading-heading);
+}
+
+@media (max-width: 639px) {
+  .form {
+    padding-block: var(--space-10) var(--space-12);
+  }
+
+  .field + .field {
+    margin-top: var(--space-6);
+  }
+
+  .actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
