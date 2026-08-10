@@ -1,0 +1,145 @@
+.card {
+  display: flex;
+  overflow: hidden;
+  min-width: 0;
+  min-height: clamp(510px, 44vw, 610px);
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.045);
+  border-radius: clamp(24px, 2.5vw, 36px);
+  background: #151718;
+  color: #f4f5f3;
+}
+
+.imageLink {
+  display: block;
+  color: inherit;
+}
+
+.imageLink:focus-visible,
+.card h2 a:focus-visible,
+.readLink:focus-visible {
+  outline: 2px solid #40e0d8;
+  outline-offset: -3px;
+}
+
+.imageFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+  background: #0e1213;
+}
+
+.image {
+  object-fit: cover;
+  filter: brightness(0.95);
+  transition: transform 200ms ease-out, filter 200ms ease-out;
+}
+
+.imageLink:hover .image {
+  filter: brightness(1);
+  transform: scale(1.018);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(27px, 2.4vw, 36px) clamp(25px, 2.6vw, 38px)
+    clamp(26px, 2.5vw, 36px);
+}
+
+.category {
+  margin: 0 0 16px;
+  color: #77938f;
+  font-family: var(--font-geist-mono);
+  font-size: 9px;
+  font-weight: 540;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.card h2 {
+  margin: 0;
+  color: #f4f5f3;
+  font-size: clamp(24px, 2vw, 31px);
+  font-weight: 570;
+  letter-spacing: -0.04em;
+  line-height: 1.13;
+  text-wrap: balance;
+}
+
+.card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card h2 a:hover {
+  color: #c9f5ef;
+}
+
+.summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 18px 0 0;
+  color: #858b94;
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.58;
+  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.footer {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 34px;
+}
+
+.footer time {
+  color: #777d85;
+  font-size: 13px;
+}
+
+.readLink {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  color: #b8bfbd;
+  font-size: 12px;
+  font-weight: 560;
+  text-decoration: none;
+}
+
+.arrow {
+  transition: transform 160ms ease-out;
+}
+
+.readLink:hover {
+  color: #d8fffa;
+}
+
+.readLink:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 650px) {
+  .card {
+    min-height: 500px;
+    border-radius: 26px;
+  }
+
+  .imageFrame {
+    aspect-ratio: 1.9 / 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .arrow {
+    transition: none;
+  }
+}

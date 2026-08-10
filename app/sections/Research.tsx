@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -8,8 +8,9 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import { RESEARCH_ARTICLES } from "@/app/data/landing";
 import { useScrollReveal } from "@/app/hooks/useScrollReveal";
+import { EditorialArticleCard } from "@/app/components/EditorialArticleCard";
+import type { ResearchArticle } from "@/app/types/landing";
 import styles from "./Research.module.css";
 
 function ArrowIcon({ direction }: { direction: "previous" | "next" }) {
@@ -33,7 +34,7 @@ function ArrowIcon({ direction }: { direction: "previous" | "next" }) {
   );
 }
 
-export function Research() {
+export function Research({ articles }: { articles: readonly ResearchArticle[] }) {
   const { ref: sectionRef, isRevealed } = useScrollReveal<HTMLElement>({
     threshold: 0.14,
     rootMargin: "0px 0px -8% 0px",
@@ -104,7 +105,7 @@ export function Research() {
             Evidence, examined
           </h2>
           <p className={styles.description}>
-            Original research on how real engineering work can make hiring
+            Research on how real engineering work can make hiring
             faster, more accurate, and easier to verify.
           </p>
 
@@ -132,10 +133,10 @@ export function Research() {
               </button>
             </div>
 
-            <a className={styles.viewAllButton} href="/research">
+            <Link className={styles.viewAllButton} href="/research">
               View all research
               <span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           </div>
         </header>
 
@@ -146,47 +147,15 @@ export function Research() {
             className={styles.track}
             aria-label="Featured research"
           >
-            {RESEARCH_ARTICLES.map((article, index) => (
-              <article
-                key={article.title}
+            {articles.map((article, index) => (
+              <div
+                key={article.slug}
                 className={styles.card}
                 data-research-card
                 style={{ "--card-index": index } as CSSProperties}
               >
-                <a
-                  className={styles.coverLink}
-                  href={article.href}
-                  aria-label={`Read ${article.title}`}
-                >
-                  <span className={styles.cover}>
-                    <Image
-                      src={article.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 719px) 84vw, (max-width: 1199px) 60vw, 440px"
-                      className={styles.coverImage}
-                    />
-                    <span className={styles.coverTreatment} aria-hidden="true" />
-                    <span className={styles.issueNumber} aria-hidden="true">
-                      16S / 0{index + 1}
-                    </span>
-                  </span>
-                </a>
-
-                <div className={styles.cardBody}>
-                  <p className={styles.category}>{article.category}</p>
-                  <h3 className={styles.cardTitle}>
-                    <a href={article.href}>{article.title}</a>
-                  </h3>
-                  <p className={styles.cardDescription}>
-                    {article.description}
-                  </p>
-                  <a className={styles.readButton} href={article.href}>
-                    Read research
-                    <span aria-hidden="true">↗</span>
-                  </a>
-                </div>
-              </article>
+                <EditorialArticleCard article={article} index={index} />
+              </div>
             ))}
           </div>
         </div>

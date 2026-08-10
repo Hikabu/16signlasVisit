@@ -1,0 +1,78 @@
+.section {
+  padding-block: 72px 56px;
+}
+
+.sectionIntro {
+  display: block;
+}
+
+.introCopy {
+  max-width: 760px;
+  text-align: left;
+}
+
+.introSwitch {
+  max-width: 560px;
+  margin-top: var(--space-6);
+}
+
+.contactSurface {
+  width: min(96vw, 1500px);
+  margin: var(--space-6) auto 0;
+  scroll-margin-top: 72px;
+}
+
+.methodPanel {
+  min-height: 430px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 24px;
+  background: #151515;
+}
+
+.view {
+  min-height: inherit;
+  animation: view-enter 300ms var(--ease-standard) both;
+}
+
+.calendarView {
+  width: 100%;
+}
+
+.formView {
+  display: flex;
+  align-items: center;
+}
+
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 899px) {
+  .section {
+    padding-block: 52px 44px;
+  }
+
+  .contactSurface {
+    width: min(92vw, 1500px);
+  }
+
+  .methodPanel {
+    min-height: 420px;
+    border-radius: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view {
+    animation: none;
+  }
+}

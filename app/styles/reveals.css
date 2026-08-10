@@ -20,7 +20,7 @@
 }
 
 .verification-folder.scroll-reveal[data-visible="true"] {
-  transform: translateY(calc(var(--folder-shift, 0px) - 6px));
+  transform: translateY(var(--folder-shift, 0px));
 }
 
 .scroll-reveal .reveal-child {

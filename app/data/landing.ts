@@ -8,7 +8,6 @@ import type {
   PositioningCard,
   ProcessFolder,
   ReportSectionId,
-  ResearchArticle,
   TimelineStage,
 } from "@/app/types/landing";
 
@@ -30,6 +29,8 @@ export const LANDING_SECTION_IDS = [
   "research",
   "how-it-works",
   "book-call",
+  "faq",
+  "pricing",
 ] as const;
 
 export const POSITIONING_CARDS: Record<"screening" | "technical" | "signals", PositioningCard> = {
@@ -133,37 +134,6 @@ export const HOW_IT_WORKS_STEPS: readonly HowItWorksStep[] = [
     title: "Receive the shortlist.",
     body: "You get verified engineers, concise briefs, and targeted interview probes for the gaps that still matter.",
     chips: ["Shortlist ready", "Brief included", "Interview probes"],
-  },
-];
-
-export const RESEARCH_ARTICLES: readonly ResearchArticle[] = [
-  {
-    category: "Evidence systems",
-    title: "Why proof beats opinion in technical hiring",
-    description: "A practical account of how work evidence reduces interview noise without reducing engineering judgment to a score.",
-    image: "/articles/1.jpg",
-    href: "/research/why-proof-beats-opinion",
-  },
-  {
-    category: "Signal quality",
-    title: "What makes a talent signal trustworthy?",
-    description: "The conditions a hiring signal must meet before it can support a consequential decision about an engineer.",
-    image: "/articles/2.jpg",
-    href: "/research/trustworthy-talent-signals",
-  },
-  {
-    category: "Decision science",
-    title: "Explainability in hiring: fact, inference, recommendation",
-    description: "A method for separating observed work from interpretation, so every conclusion remains open to review.",
-    image: "/articles/3.jpg",
-    href: "/research/explainability-in-hiring",
-  },
-  {
-    category: "Methodology note",
-    title: "Why “insufficient evidence” is a trust feature",
-    description: "Responsible evaluation should expose what cannot be proven—not fill the gaps with confident prediction.",
-    image: "/articles/5.jpg",
-    href: "/research/insufficient-evidence",
   },
 ];
 

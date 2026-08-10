@@ -7,6 +7,15 @@
   background: #050506;
 }
 
+@media (min-width: 768px) {
+  .problem-value__intro-sticky {
+    position: sticky;
+    z-index: 5;
+    top: 88px;
+    transform: translate3d(0, var(--intro-release-offset, 0px), 0);
+  }
+}
+
 .verification-folder {
   position: sticky;
   z-index: calc(10 + var(--folder-index));

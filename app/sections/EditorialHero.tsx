@@ -1,46 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { EvidenceParticles } from "@/app/animations/EvidenceParticles";
-import { HERO_NAVIGATION, LANDING_SECTION_IDS } from "@/app/data/landing";
-import { useIsScrolled } from "@/app/hooks/useIsScrolled";
 import styles from "./EditorialHero.module.css";
 
 export function EditorialHero() {
   const frameRef = useRef<HTMLDivElement>(null);
   const cursorLightRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
-  const [activeSection, setActiveSection] = useState("hero");
-  const isScrolled = useIsScrolled(18);
-
-  useEffect(() => {
-    const updateActiveSection = () => {
-      const threshold = window.innerHeight * 0.38;
-      let currentSection = "hero";
-
-      for (const sectionId of LANDING_SECTION_IDS) {
-        const section = document.getElementById(sectionId);
-        if (section && section.getBoundingClientRect().top <= threshold) {
-          currentSection = sectionId;
-        }
-      }
-
-      setActiveSection((current) =>
-        current === currentSection ? current : currentSection,
-      );
-    };
-
-    updateActiveSection();
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", updateActiveSection);
-
-    return () => {
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", updateActiveSection);
-    };
-  }, []);
-
   useEffect(() => {
     const frame = frameRef.current;
     const cursorLight = cursorLightRef.current;
@@ -88,46 +55,7 @@ export function EditorialHero() {
   }, []);
 
   return (
-    <>
-      <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}>
-        <div className={styles.headerInner}>
-          <a href="#hero" className={styles.brand} aria-label="16 Signals home">
-            <Image
-              className={styles.brandMark}
-              src="/a16zero.png"
-              alt=""
-              width={1024}
-              height={1024}
-              priority
-            />
-            <span>16 Signals</span>
-          </a>
-
-          <nav className={styles.nav} aria-label="Main navigation">
-            {HERO_NAVIGATION.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className={activeSection === item.sectionId ? styles.activeNav : undefined}
-                aria-current={activeSection === item.sectionId ? "location" : undefined}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className={styles.headerActions}>
-            <a className={styles.headerCta} href="#book-call">
-              Run it on your work
-            </a>
-            <a className={styles.contactLink} href="#book-call">
-              Contact
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <section id="hero" className={styles.outer} aria-labelledby="hero-title">
+    <section id="hero" className={styles.outer} aria-labelledby="hero-title">
         <div className={styles.frame} ref={frameRef}>
           <div ref={cursorLightRef} className={styles.cursorLight} aria-hidden="true" />
 
@@ -178,7 +106,6 @@ export function EditorialHero() {
             </div>
           </div>
         </div>
-      </section>
-    </>
+    </section>
   );
 }

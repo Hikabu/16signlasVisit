@@ -113,8 +113,7 @@
 }
 
 .arrowButton,
-.viewAllButton,
-.readButton {
+.viewAllButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -159,10 +158,7 @@
 }
 
 .arrowButton:focus-visible,
-.viewAllButton:focus-visible,
-.coverLink:focus-visible,
-.cardTitle a:focus-visible,
-.readButton:focus-visible {
+.viewAllButton:focus-visible {
   outline: 2px solid #40e0d8;
   outline-offset: 3px;
 }
@@ -185,14 +181,12 @@
   color: #07100f;
 }
 
-.viewAllButton span,
-.readButton span {
+.viewAllButton span {
   font-size: 14px;
   transition: transform 180ms ease;
 }
 
-.viewAllButton:hover span,
-.readButton:hover span {
+.viewAllButton:hover span {
   transform: translate(2px, -2px);
 }
 
@@ -232,135 +226,13 @@
   transition-delay: calc(180ms + var(--card-index) * 85ms);
 }
 
+.card > * {
+  width: 100%;
+}
+
 .sectionRevealed .card {
   opacity: 1;
   transform: translateY(0);
-}
-
-.coverLink {
-  display: block;
-  border-radius: 3px;
-}
-
-.cover {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  aspect-ratio: 1.46;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  background: #0d1414;
-}
-
-.cover::after {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.075);
-  content: "";
-  pointer-events: none;
-}
-
-.coverImage {
-  object-fit: cover;
-  filter: saturate(0.52) contrast(1.04) brightness(0.78);
-  transform: scale(1.005);
-  transition:
-    filter 500ms var(--ease-standard),
-    transform 700ms var(--ease-standard);
-}
-
-.coverLink:hover .coverImage {
-  filter: saturate(0.62) contrast(1.04) brightness(0.84);
-  transform: scale(1.024);
-}
-
-.coverTreatment {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(135deg, rgba(1, 5, 6, 0.02), rgba(1, 5, 6, 0.24)),
-    linear-gradient(
-      180deg,
-      rgba(7, 58, 57, 0.05),
-      transparent 48%,
-      rgba(1, 5, 6, 0.3)
-    );
-  pointer-events: none;
-}
-
-.issueNumber {
-  position: absolute;
-  right: 15px;
-  bottom: 14px;
-  padding: 6px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(1, 5, 6, 0.72);
-  color: rgba(239, 247, 245, 0.8);
-  font-family: var(--font-geist-mono);
-  font-size: 9px;
-  letter-spacing: 0.13em;
-  line-height: 1;
-}
-
-.cardBody {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding-top: 23px;
-}
-
-.category {
-  margin: 0;
-  color: #79c8c2;
-  font-family: var(--font-geist-mono);
-  font-size: 10px;
-  font-weight: 520;
-  letter-spacing: 0.16em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.cardTitle {
-  max-width: 20ch;
-  margin: 16px 0 0;
-  color: #f0f3f2;
-  font-size: clamp(25px, 2.1vw, 31px);
-  font-weight: 430;
-  letter-spacing: -0.035em;
-  line-height: 1.13;
-  text-wrap: balance;
-}
-
-.cardTitle a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 180ms ease;
-}
-
-.cardTitle a:hover {
-  color: #b9fffb;
-}
-
-.cardDescription {
-  max-width: 43ch;
-  margin: 17px 0 0;
-  color: #8d9897;
-  font-size: 15px;
-  line-height: 1.62;
-}
-
-.readButton {
-  align-self: flex-start;
-  gap: 9px;
-  min-width: 142px;
-  margin-top: 27px;
-  padding: 0 18px;
-  background: #eef3f1;
-  color: #07100f;
-}
-
-.readButton:hover {
-  background: #b9fffb;
 }
 
 @media (max-width: 1199px) {
@@ -457,24 +329,14 @@
     flex-basis: min(84vw, 366px);
   }
 
-  .cover {
-    aspect-ratio: 1.36;
-  }
-
-  .cardTitle {
-    font-size: 25px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .intro,
   .card,
-  .coverImage,
   .arrowButton,
   .viewAllButton,
-  .readButton,
-  .viewAllButton span,
-  .readButton span {
+  .viewAllButton span {
     transition: none;
   }
 
@@ -486,9 +348,5 @@
 
   .track {
     scroll-behavior: auto;
-  }
-
-  .coverLink:hover .coverImage {
-    transform: none;
   }
 }
