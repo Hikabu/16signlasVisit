@@ -1,11 +1,11 @@
 .form {
   width: min(100%, 760px);
   margin-inline: auto;
-  padding: clamp(40px, 6vw, 88px) clamp(24px, 6vw, 72px);
+  padding: clamp(20px, 3vw, 32px) clamp(22px, 3.5vw, 44px);
 }
 
 .field + .field {
-  margin-top: var(--space-8);
+  margin-top: var(--space-4);
 }
 
 .field label {
@@ -13,7 +13,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   color: var(--muted-strong);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -43,13 +43,13 @@
 }
 
 .field input {
-  min-height: 48px;
-  padding: 0 0 var(--space-3);
+  min-height: 40px;
+  padding: 0 0 var(--space-2);
 }
 
 .field textarea {
-  min-height: 148px;
-  padding: var(--space-2) 0 var(--space-3);
+  min-height: 82px;
+  padding: var(--space-1) 0 var(--space-2);
   resize: vertical;
 }
 
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-5);
-  margin-top: var(--space-10);
+  margin-top: var(--space-5);
 }
 
 .actions button {
@@ -122,11 +122,11 @@
 
 @media (max-width: 639px) {
   .form {
-    padding-block: var(--space-10) var(--space-12);
+    padding-block: var(--space-5) var(--space-8);
   }
 
   .field + .field {
-    margin-top: var(--space-6);
+    margin-top: var(--space-4);
   }
 
   .actions {
