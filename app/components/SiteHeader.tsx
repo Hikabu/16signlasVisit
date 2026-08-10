@@ -120,10 +120,10 @@ export function SiteHeader() {
             className={`${styles.headerCta} ${
               isBookCallActive ? "activeNav" : ""
             }`}
-            href="/#book-call"
+            href="/#write-to-us"
             aria-current={isBookCallActive ? "location" : undefined}
           >
-            Run it on your work
+            Explore a real report
           </Link>
           <Link
             className={`${styles.contactLink} ${
@@ -132,7 +132,7 @@ export function SiteHeader() {
             href="/#book-call"
             aria-current={isBookCallActive ? "location" : undefined}
           >
-          Contact us
+            Contact us
           </Link>
         </div>
       </div>

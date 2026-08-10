@@ -1,3 +1,6 @@
+"use client";
+
+import { useId } from "react";
 import styles from "./ContactMethodSwitch.module.css";
 
 export type ContactMethod = "call" | "write";
@@ -16,17 +19,15 @@ export function ContactMethodSwitch({
   value,
   onChange,
 }: ContactMethodSwitchProps) {
+  const labelId = useId();
+
   return (
     <div className={styles.wrapper}>
-      <p className={styles.prompt} id="contact-method-label">
+      <p className={styles.prompt} id={labelId}>
         How would you like to talk?
       </p>
 
-      <div
-        className={styles.switch}
-        role="group"
-        aria-labelledby="contact-method-label"
-      >
+      <div className={styles.switch} role="group" aria-labelledby={labelId}>
         {OPTIONS.map((option) => {
           const isActive = option.value === value;
 
