@@ -11,6 +11,7 @@ const pages = [
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Contact us", href: "/#write-to-us" },
 ];
 
 export function SiteFooter() {
