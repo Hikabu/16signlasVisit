@@ -117,15 +117,6 @@ export function SiteHeader() {
 
         <div className={styles.headerActions}>
           <Link
-            className={`${styles.headerCta} ${
-              isBookCallActive ? "activeNav" : ""
-            }`}
-            href="/#write-to-us"
-            aria-current={isBookCallActive ? "location" : undefined}
-          >
-            Explore a real report
-          </Link>
-          <Link
             className={`${styles.contactLink} ${
               isBookCallActive ? "activeNav" : ""
             }`}

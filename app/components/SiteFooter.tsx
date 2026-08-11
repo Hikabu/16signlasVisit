@@ -8,7 +8,6 @@ import { useActiveLandingSection } from "@/app/hooks/useActiveLandingSection";
 import styles from "./SiteFooter.module.css";
 
 const pages = [
-  { label: "Research", href: "/research" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "Pricing", href: "/pricing" },
@@ -31,24 +30,6 @@ export function SiteFooter() {
         </div>
 
         <div className={styles.linkColumns}>
-          <div>
-            <p className={styles.columnTitle}>Page map</p>
-            <nav aria-label="Homepage sections">
-              {HERO_NAVIGATION.map((item) => {
-                const isActive = isHome && activeSection === item.sectionId;
-                return (
-                  <Link
-                    key={item.href}
-                    href={`/${item.href}`}
-                    className={isActive ? "activeNav" : undefined}
-                    aria-current={isActive ? "location" : undefined}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
 
           <div>
             <p className={styles.columnTitle}>Pages</p>
