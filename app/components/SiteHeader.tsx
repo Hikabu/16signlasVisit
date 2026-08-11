@@ -23,6 +23,11 @@ export function SiteHeader() {
   const activeSection = useActiveLandingSection(isHome);
   const hasSolidBackground = pathname !== "/" || isScrolled;
   const isBookCallActive = isHome && activeSection === "book-call";
+  const activeNavigationItem = HERO_NAVIGATION.find(
+    (item) => item.sectionId === activeSection,
+  );
+
+  const toggleHomeMenu = () => setIsHomeMenuOpen((open) => !open);
 
   return (
     <header
@@ -48,19 +53,50 @@ export function SiteHeader() {
             className={styles.homeMenu}
             onMouseEnter={() => setIsHomeMenuOpen(true)}
             onMouseLeave={() => setIsHomeMenuOpen(false)}
+            onFocus={() => setIsHomeMenuOpen(true)}
+            onBlur={(event) => {
+              if (
+                !event.currentTarget.contains(
+                  event.relatedTarget as Node | null,
+                )
+              ) {
+                setIsHomeMenuOpen(false);
+              }
+            }}
           >
             <div className={styles.homeMenuTrigger}>
-              <Link
-                href="/"
-                className={isHome ? "activeNav" : undefined}
-                aria-current={isHome ? "page" : undefined}
-              >
-                What is 16Signals
-              </Link>
+              {isHome ? (
+                <button
+                  type="button"
+                  className={`${styles.homeMenuLabel} activeNav`}
+                  onClick={toggleHomeMenu}
+                  aria-expanded={isHomeMenuOpen}
+                  aria-controls="homepage-section-menu"
+                >
+                  <span>What is 16Signals</span>
+                  {activeNavigationItem ? (
+                    <span
+                      className={styles.activeSectionSlot}
+                      aria-live="polite"
+                    >
+                      <span
+                        key={activeNavigationItem.sectionId}
+                        className={`${styles.activeSection} activeNav`}
+                      >
+                        {activeNavigationItem.label}
+                      </span>
+                    </span>
+                  ) : null}
+                </button>
+              ) : (
+                <Link href="/" className={styles.homeMenuLabel}>
+                  <span>What is 16Signals</span>
+                </Link>
+              )}
               <button
                 type="button"
                 className={styles.menuToggle}
-                onClick={() => setIsHomeMenuOpen((open) => !open)}
+                onClick={toggleHomeMenu}
                 aria-expanded={isHomeMenuOpen}
                 aria-controls="homepage-section-menu"
                 aria-label="Show homepage sections"

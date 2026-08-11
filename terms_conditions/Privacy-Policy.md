@@ -76,10 +76,10 @@ You have the right to: **access** your data; **rectify** inaccurate data; **eras
 You have the right to: **know** what categories of personal information we collect, use, and disclose; **delete** personal information, subject to exceptions; **correct** inaccurate information; **opt out of sale or sharing** — we do not sell or share personal information for cross-context behavioral advertising; **limit use of sensitive personal information** where applicable; **non-discrimination** for exercising these rights; and **appeal** a denial.
 
 ### 4.3 Candidate-Specific Controls
-You can, at any time, without a formal request: **disconnect** your account through your code hosting provider or the Candidate Portal; **request deletion** of your Vault data via the Candidate Portal or [privacy@company.com]; and **view** a summary of your own Evidence.
+You can, at any time, without a formal request: **disconnect** your account through your code hosting provider or the Candidate Portal; **request deletion** of your Vault data via the Candidate Portal or info@16signals.com; and **view** a summary of your own Evidence.
 
 ### 4.4 How to Exercise Your Rights
-Email [privacy@company.com] or use in-product controls. We may verify your identity before fulfilling a request. We respond within the timeframe required by law — generally 30 days for GDPR-based requests and 45 days (extendable by 45 days) for CCPA-based requests, at no cost, subject to limited exceptions for manifestly unfounded or excessive requests.
+Email info@16signals.com or use in-product controls. We may verify your identity before fulfilling a request. We respond within the timeframe required by law — generally 30 days for GDPR-based requests and 45 days (extendable by 45 days) for CCPA-based requests, at no cost, subject to limited exceptions for manifestly unfounded or excessive requests.
 
 ---
 
@@ -101,7 +101,7 @@ The Brief is generated through a combination of our internal analysis process an
 - The internal analysis process identifies only measurable, code-derived indicators — it does not "decide" anything about a Candidate.
 - The downstream text-generation step operates solely on already-extracted Evidence to produce readable narrative; it does not access repository content and does not itself determine the underlying Evidence.
 - The Platform does not rank, score, compare, sort, or shortlist Candidates against one another, and the Brief does not constitute, automate, or substitute for a hiring decision. It is supplementary context provided to an Employer about a single Candidate the Employer has already chosen to evaluate further; the Employer's own personnel make all hiring decisions.
-- Where applicable law (such as GDPR Article 22) provides rights regarding decisions based solely on automated processing with legal or similarly significant effects, you may contact [privacy@company.com] to ask about the human-review practices in place or to raise questions about a specific Brief.
+- Where applicable law (such as GDPR Article 22) provides rights regarding decisions based solely on automated processing with legal or similarly significant effects, you may contact info@16signals.com to ask about the human-review practices in place or to raise questions about a specific Brief.
 - Employers are separately responsible for determining whether laws governing automated tools in hiring apply to their specific use of the Platform and for complying with any applicable requirements — see Section 2.5 of the Terms of Service.
 
 ---
@@ -133,8 +133,7 @@ We may update this Policy from time to time. Material changes will be reflected 
 ## 11. Contact Us
 
 **[Company Name]**
-[Address]
-Email: [privacy@company.com]
+Email: info@16signals.com
 
 If you are located in the EEA or UK, you may also contact our representative (if applicable): [Representative Name/Contact], or lodge a complaint with your local data protection authority.
 

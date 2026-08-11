@@ -89,6 +89,67 @@
   align-items: center;
 }
 
+.homeMenuLabel {
+  display: flex;
+  min-height: 60px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 16px 0 12px;
+  border: 0;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 520;
+  letter-spacing: 0.025em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.homeMenuLabel:hover {
+  color: #fff;
+}
+
+.homeMenuLabel:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid #40e0d8;
+  outline-offset: 4px;
+}
+
+.activeSectionSlot {
+  position: relative;
+  display: block;
+  min-height: 13px;
+  margin-left: 13px;
+  padding-left: 11px;
+  perspective: 120px;
+  overflow: hidden;
+}
+
+.activeSection {
+  display: block;
+  color: transparent;
+  font-size: 10px;
+  font-weight: 560;
+  letter-spacing: 0.045em;
+  line-height: 1.25;
+  transform-origin: 50% 0;
+  animation: active-section-roll-in 340ms var(--ease-standard) both;
+}
+
+.activeSectionSlot::before {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 5px;
+  height: 1px;
+  background: rgba(185, 255, 251, 0.48);
+  content: "";
+}
+
 .menuToggle {
   display: grid;
   width: 20px;
@@ -121,21 +182,25 @@
 
 .dropdown {
   position: absolute;
-  top: calc(100% - 3px);
+  top: calc(100% - 4px);
   left: 50%;
   display: grid;
-  min-width: 232px;
-  padding: 18px 20px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0;
-  background: rgba(2, 3, 4, 0.72);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  min-width: 244px;
+  padding: 17px 18px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  background: rgba(9, 11, 14, 0.88);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.28),
+    0 2px 0 rgba(255, 255, 255, 0.04) inset;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -7px);
+  visibility: hidden;
+  transform: translate(-50%, -9px) scale(0.985);
   transition:
     opacity 180ms ease,
-    transform 220ms var(--ease-standard);
+    transform 240ms var(--ease-standard),
+    visibility 0s linear 180ms;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -149,35 +214,56 @@
   content: "";
 }
 
-.dropdownOpen,
-.homeMenu:hover .dropdown,
-.homeMenu:focus-within .dropdown {
+.dropdownOpen {
   opacity: 1;
   pointer-events: auto;
-  transform: translate(-50%, 0);
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1);
 }
 
 .dropdown p {
-  margin: 0 0 10px;
+  margin: 0 0 9px 2px;
   color: rgba(255, 255, 255, 0.56);
   font-family: inherit;
   font-size: 12px;
   font-weight: 520;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   text-transform: none;
 }
 
 .nav .dropdown a {
-  padding: 8px 0;
+  padding: 9px 10px;
+  border-radius: 10px;
   color: rgba(255, 255, 255, 0.76);
   font-family: inherit;
   font-size: 14px;
   font-weight: 520;
   letter-spacing: 0;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
 }
 
 .nav .dropdown a:hover {
   color: #fff;
+  background-color: rgba(255, 255, 255, 0.055);
+}
+
+@keyframes active-section-roll-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0) rotateX(-52deg) scale(0.97);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translate3d(0, 2px, 0) rotateX(8deg) scale(1.01);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0) scale(1);
+  }
 }
 
 .headerActions {
@@ -234,13 +320,11 @@
     right: 16px;
     left: auto;
     min-width: min(260px, calc(100vw - 32px));
-    transform: translateY(-7px);
+    transform: translateY(-9px) scale(0.985);
   }
 
-  .dropdownOpen,
-  .homeMenu:hover .dropdown,
-  .homeMenu:focus-within .dropdown {
-    transform: translateY(0);
+  .dropdownOpen {
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -262,10 +346,17 @@
     font-size: 11px;
   }
 
-  .homeMenuTrigger > a {
+  .homeMenuTrigger > .homeMenuLabel {
     max-width: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .homeMenuLabel > span:first-child {
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .headerActions {
@@ -275,7 +366,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .dropdown,
-  .menuToggle span {
+  .menuToggle span,
+  .activeSection {
     transition: none;
+    animation: none;
   }
 }

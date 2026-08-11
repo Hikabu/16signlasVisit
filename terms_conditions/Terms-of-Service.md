@@ -1,6 +1,6 @@
 
-**Effective Date:** [DATE]
-**Last Updated:** [DATE]
+<!-- **Effective Date:** [DATE] -->
+**Last Updated:** [01.07.2026]
 
 These Terms of Service ("**Terms**") are a binding agreement between 16signlas ("**Company**," "**we**," "**us**," or "**our**") and the person or entity accessing or using the EBTA platform, including its website, dashboard, and related applications (collectively, the "**Platform**"). By accessing or using the Platform, you agree to be bound by these Terms.
 
@@ -112,7 +112,7 @@ Once Evidence has been produced for a repository, it is retained in your Vault s
 You may disconnect the Platform's access to your repositories at any time, either directly through your code hosting provider's own settings or through the Candidate Portal. Disconnecting stops all **future** access and analysis. It does not, by itself, delete Evidence already produced before disconnection — see Section 3.7 to request deletion of that data.
 
 ### 3.7 Deletion of Vault Data
-You may request deletion of your Vault data at any time through the Candidate Portal or by contacting [privacy@company.com]. We will process verified requests within [30] days. Deletion prevents future use of that Evidence but does not retroactively remove Briefs already delivered to an Employer before your request; those are subject to the Employer's own obligations under Section 2.
+You may request deletion of your Vault data at any time through the Candidate Portal or by contacting info@16signals.com. We will process verified requests within 30 days. Deletion prevents future use of that Evidence but does not retroactively remove Briefs already delivered to an Employer before your request; those are subject to the Employer's own obligations under Section 2.
 
 ### 3.8 Candidate Self-View
 Through the Candidate Portal, you may view a summary of your own Evidence. Certain sections generated for Employers, intended solely for internal Employer use, are not shown to you.
@@ -139,14 +139,15 @@ You may deactivate your Candidate account at any time. Deactivation alone does n
 (c) **Candidate Repository Content.** You retain all ownership of your code. You grant us a limited, revocable license to access designated repository content solely to perform the analysis described in Section 3.4. We do not retain your code after analysis, as described there.
 (d) **Feedback.** Feedback you provide about the Platform may be used by us without restriction or obligation to you.
 
-### 4.2 Third-Party Services
-The Platform integrates with third-party services, including your code hosting provider, whose own terms and privacy practices govern your relationship with them. We are not responsible for third-party services we do not control.
+### 4.2 Third-party services
+The platform integrates with third-party services, including your code hosting provider, whose own terms and privacy practices govern your relationship with them. We are not responsible for third-party services we do not control.
 
-### 4.3 Disclaimer of Warranties
-THE PLATFORM AND ALL OUTPUTS ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. WE DO NOT WARRANT THAT ANY BRIEF ACCURATELY OR COMPLETELY REFLECTS A CANDIDATE'S SKILLS OR SUITABILITY FOR ANY ROLE. EMPLOYERS ARE SOLELY RESPONSIBLE FOR ALL HIRING DECISIONS.
+### 4.3 Disclaimer of warranties
+The platform and all outputs are provided "as is" and "as available," without warranties of any kind, express, implied, or statutory, including merchantability, fitness for a particular purpose, or non-infringement. We do not warrant that any brief accurately or completely reflects a candidate's skills or suitability for any role. Employers are solely responsible for all hiring decisions.
 
-### 4.4 Limitation of Liability
-TO THE MAXIMUM EXTENT PERMITTED BY LAW: (A) NEITHER PARTY WILL BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR LOSS OF PROFITS, REVENUE, DATA, OR GOODWILL; AND (B) OUR AGGREGATE LIABILITY WILL NOT EXCEED THE GREATER OF (I) FEES PAID IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (II) ONE HUNDRED U.S. DOLLARS ($100). These limits do not apply to indemnification obligations, breaches of confidentiality, gross negligence or willful misconduct, or liability that cannot be limited by law.
+### 4.4 Limitation of liability
+To the maximum extent permitted by law: (a) neither party will be liable for indirect, incidental, special, consequential, or punitive damages, or loss of profits, revenue, data, or goodwill; and (b) our aggregate liability will not exceed the greater of (i) fees paid in the twelve (12) months preceding the claim, or (ii) one hundred u.s. dollars ($100). These limits do not apply to indemnification obligations, breaches of confidentiality, gross negligence or willful misconduct, or liability that cannot be limited by law.
+
 
 ### 4.5 Indemnification
 (a) **By Employer**, for breach of Section 2 or hiring decisions you make.
@@ -158,10 +159,10 @@ Each party will protect the other's non-public business information with reasona
 
 ### 4.7 Dispute Resolution; Arbitration
 *[Jurisdiction-dependent; confirm enforceability against Candidates before finalizing.]*
-(a) **Informal Resolution.** Contact [legal@company.com] and attempt good-faith resolution for at least 30 days before filing a claim.
+(a) **Informal Resolution.** Contact info@16signals.com and attempt good-faith resolution for at least 30 days before filing a claim.
 (b) **Binding Arbitration.** Except for small-claims or injunctive-relief claims regarding IP misuse, disputes will be resolved by binding arbitration administered by [JAMS/AAA] in [City, State].
 (c) **Class Action Waiver.** Disputes will be resolved individually, not as part of a class or representative action, to the extent permitted by law.
-(d) **Opt-Out.** You may opt out by written notice to [legal@company.com] within 30 days of first agreeing to these Terms.
+(d) **Opt-Out.** You may opt out by written notice to info@16signals.com within 30 days of first agreeing to these Terms.
 
 ### 4.8 Governing Law and Venue
 Governed by the laws of [Governing Law State/Country]. Non-arbitrable disputes are subject to the exclusive jurisdiction of courts in [City, State].
@@ -182,13 +183,13 @@ Neither party is liable for delay caused by events outside its reasonable contro
 These Terms, the Privacy Policy, and any Order Form constitute the entire agreement between the parties.
 
 ### 4.14 Notices
-Legal notices to us: [legal@company.com]. We may notify you via your account email or in-app notification.
+Legal notices to us: info@16signals.com. We may notify you via your account email or in-app notification.
 
 ### 4.15 Survival
 Sections 2.4, 2.5, 3.7, 4.1, 4.3, 4.4, 4.5, 4.6, 4.7, and 4.8 survive termination.
 
 ### 4.16 Contact Us
-[legal@company.com]
+info@16signals.com
 
 ---
 
