@@ -5,30 +5,41 @@ import styles from "./ContactMethodSwitch.module.css";
 
 export type ContactMethod = "call" | "write";
 
-type ContactMethodSwitchProps = {
-  value: ContactMethod;
-  onChange: (method: ContactMethod) => void;
+export type ContactMethodOption<T extends string> = {
+  label: string;
+  value: T;
 };
 
-const OPTIONS: { label: string; value: ContactMethod }[] = [
+type ContactMethodSwitchProps<T extends string> = {
+  value: T;
+  onChange: (method: T) => void;
+  prompt?: string;
+  options?: readonly ContactMethodOption<T>[];
+};
+
+const DEFAULT_OPTIONS: readonly ContactMethodOption<ContactMethod>[] = [
   { label: "Book a call", value: "call" },
   { label: "Write to us", value: "write" },
 ];
 
-export function ContactMethodSwitch({
+export function ContactMethodSwitch<T extends string>({
   value,
   onChange,
-}: ContactMethodSwitchProps) {
+  prompt = "How would you like to talk?",
+  options,
+}: ContactMethodSwitchProps<T>) {
   const labelId = useId();
+  const switchOptions: readonly ContactMethodOption<T>[] =
+    options ?? (DEFAULT_OPTIONS as readonly ContactMethodOption<T>[]);
 
   return (
     <div className={styles.wrapper}>
       <p className={styles.prompt} id={labelId}>
-        How would you like to talk?
+        {prompt}
       </p>
 
       <div className={styles.switch} role="group" aria-labelledby={labelId}>
-        {OPTIONS.map((option) => {
+        {switchOptions.map((option) => {
           const isActive = option.value === value;
 
           return (

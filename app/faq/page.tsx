@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FaqAccordion } from "@/app/components/FaqAccordion";
+import { FaqContent } from "@/app/faq/FaqContent";
 import { getFaqItems } from "@/app/lib/content";
 import styles from "./page.module.css";
 
@@ -21,13 +21,7 @@ export default function FaqPage() {
         </p>
       </header>
 
-      <section className={styles.faqs} aria-label="Frequently asked questions">
-        <div className={styles.sideNote}>
-          <p>{String(items.length).padStart(2, "0")} questions</p>
-          <span>General · Technical · Legal</span>
-        </div>
-        <FaqAccordion items={items} />
-      </section>
+      <FaqContent items={items} />
     </main>
   );
 }
