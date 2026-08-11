@@ -1,6 +1,5 @@
 
-<!-- **Effective Date:** [DATE] -->
-**Last Updated:** [01.07.2026]
+**Last Updated:** 01.07.2026
 
 These Terms of Service ("**Terms**") are a binding agreement between 16signlas ("**Company**," "**we**," "**us**," or "**our**") and the person or entity accessing or using the EBTA platform, including its website, dashboard, and related applications (collectively, the "**Platform**"). By accessing or using the Platform, you agree to be bound by these Terms.
 
