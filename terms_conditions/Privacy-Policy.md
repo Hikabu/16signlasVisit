@@ -134,7 +134,6 @@ We may update this Policy from time to time. Material changes will be reflected 
 **16signals**
 Email: info@16signals.com
 
-If you are located in the EEA or UK, you may also contact our representative (if applicable): [Representative Name/Contact], or lodge a complaint with your local data protection authority.
 
 ---
 
