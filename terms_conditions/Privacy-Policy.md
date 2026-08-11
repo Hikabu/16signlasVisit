@@ -1,6 +1,5 @@
 
-<!-- **Effective Date:** [DATE] -->
-**Last Updated:** [01.07.2026]
+**Last Updated:** 01.07.2026
 
 16signlas ("**Company**," "**we**," "**us**," or "**our**") operates the EBTA platform (the "**Platform**"), which helps Employers obtain supplementary, evidence-based context about a Candidate they are already considering. This Policy explains what personal data we collect from **Employers** and **Candidates**, how we use it, how long we keep it, and your rights.
 
@@ -132,7 +131,7 @@ We may update this Policy from time to time. Material changes will be reflected 
 
 ## 11. Contact Us
 
-**[Company Name]**
+**16signals**
 Email: info@16signals.com
 
 If you are located in the EEA or UK, you may also contact our representative (if applicable): [Representative Name/Contact], or lodge a complaint with your local data protection authority.
