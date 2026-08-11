@@ -18,6 +18,7 @@ export const HERO_NAVIGATION: readonly NavigationItem[] = [
   { label: "Principles", href: "#problem-value", sectionId: "problem-value" },
   { label: "Research", href: "#research", sectionId: "research" },
   { label: "Method", href: "#how-it-works", sectionId: "how-it-works" },
+  { label: "Contact us", href: "#write-to-us", sectionId: "book-call" },
 ];
 
 export const LANDING_SECTION_IDS = [
