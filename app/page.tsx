@@ -18,9 +18,9 @@ export default function Home() {
     <>
       <main id="main" className="page-shell pb-[var(--space-16)] md:pb-0">
         <EditorialHero />
-        <PreparedInterview />
         <Positioning />
         <CvMisses />
+        <PreparedInterview />
         <ProblemValue />
         <Research articles={articles} />
         <HowItWorks />

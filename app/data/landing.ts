@@ -12,9 +12,9 @@ import type {
 } from "@/app/types/landing";
 
 export const HERO_NAVIGATION: readonly NavigationItem[] = [
-  { label: "Report", href: "#prepared-interview", sectionId: "prepared-interview" },
   { label: "Problem", href: "#the-shift", sectionId: "the-shift" },
   { label: "CV never shows", href: "#cv-misses", sectionId: "cv-misses" },
+  { label: "Report", href: "#prepared-interview", sectionId: "prepared-interview" },
   { label: "Principles", href: "#problem-value", sectionId: "problem-value" },
   { label: "Research", href: "#research", sectionId: "research" },
   { label: "Method", href: "#how-it-works", sectionId: "how-it-works" },

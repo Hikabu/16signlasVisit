@@ -486,3 +486,10 @@
     transform: translateY(0);
   }
 }
+
+/* Keep the complete product preview visible together on typical desktop screens. */
+@media (min-width: 1101px) {
+  .reportWorkspace {
+    min-height: 610px;
+  }
+}
