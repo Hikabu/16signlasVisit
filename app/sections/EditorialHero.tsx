@@ -65,12 +65,12 @@ export function EditorialHero() {
                 <h1 id="hero-title" className={styles.headline} aria-label="Hiring layer for teams that ship fast">
                   <span className={styles.headlineLine}>
                     <span className={styles.headlineWord} style={{ animationDelay: "0ms" }} aria-hidden="true">
-                      The hiring layer for{" "}
+                      Know their work{" "}
                     </span>
                   </span>
                   <span className={styles.headlineLine}>
                     <span className={styles.headlineWord} style={{ animationDelay: "120ms" }} aria-hidden="true">
-                      teams that ship fast
+                      before you meet them
                     </span>{" "}
                   </span>
                 </h1>
