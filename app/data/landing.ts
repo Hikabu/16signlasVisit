@@ -52,18 +52,18 @@ export const POSITIONING_CARDS: Record<"screening" | "technical" | "signals", Po
 export const CV_TIMELINE_STAGES: readonly TimelineStage[] = [
   {
     number: "01",
-    title: "What candidate's work actually shows",
-    sentence: "See which parts of their experience are supported by work they have already done",
+    title: "What their work shows",
+    sentence: "Evidence behind the experience they describe",
   },
   {
     number: "02",
-    title: "What you still don't know",
-    sentence: "See where the evidence stops, instead of guessing from a CV.",
+    title: "What remains unknown",
+    sentence: "What their work cannot tell you yet",
   },
   {
     number: "03",
     title: "What is worth asking",
-    sentence: "Walk into the interview with questions based on their actual work, not generic interview prompts",
+    sentence: "Questions grounded in what they actually did",
   },
 ];
 

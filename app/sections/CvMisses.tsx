@@ -223,7 +223,7 @@ export function CvMisses() {
           label="known → unknown → conversation"
           id="ts-engineering"
           stages={CV_TIMELINE_STAGES}
-          headline="Before you meet them, know three things"
+          headline="Know before you interview"
           body="You don't have much time with this person → arrive already knowing something real"
         />
       </div>
