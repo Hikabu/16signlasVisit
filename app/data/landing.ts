@@ -13,7 +13,7 @@ import type {
 
 export const HERO_NAVIGATION: readonly NavigationItem[] = [
   { label: "Problem", href: "#the-shift", sectionId: "the-shift" },
-  { label: "CV never shows", href: "#cv-misses", sectionId: "cv-misses" },
+  { label: "I will know", href: "#cv-misses", sectionId: "cv-misses" },
   { label: "Report", href: "#prepared-interview", sectionId: "prepared-interview" },
   { label: "Principles", href: "#problem-value", sectionId: "problem-value" },
   { label: "Research", href: "#research", sectionId: "research" },
@@ -71,55 +71,34 @@ export const PROCESS_FOLDERS: readonly ProcessFolder[] = [
   {
     label: "01",
     accentOffset: "8%",
-    step: "DEFINE THE ROLE",
-    title: "Add the role",
-    body: "Share the job description or define the stack, responsibilities, and experience your team needs.",
-    note: "Takes a few minutes.",
+    step: "ROLE",
+    title: "Define what you need",
+    body: "Add the role, stack, and responsibilities.",
+    note: "A few minutes.",
   },
   {
     label: "02",
     accentOffset: "27%",
-    step: "INVITE THE CANDIDATE",
+    step: "CANDIDATE",
     title: "Invite the candidate",
-    body: "Send a secure link. The candidate chooses and connects the professional work they want assessed.",
-    note: "Candidate-controlled access.",
+    body: "They securely connect the work they want reviewed.",
+    note: "Candidate-controlled.",
   },
   {
     label: "03",
     accentOffset: "54%",
-    step: "REVIEW THE EVIDENCE",
-    title: "16Signals reads the work",
-    body: "We examine relevant contributions, technical decisions, code quality, collaboration, and evidence over time.",
-    note: "Analysis runs automatically.",
+    step: "EVIDENCE",
+    title: "We examine the work",
+    body: "16Signals traces contributions, decisions, collaboration, and work over time.",
+    note: "Evidence, not self-description.",
   },
   {
     label: "04",
     accentOffset: "73%",
-    step: "PREPARE THE INTERVIEW",
+    step: "INTERVIEW",
     title: "Open the brief",
-    body: "See what matches the role, what is supported by evidence, what remains unclear, and what to ask next.",
+    body: "See what is supported, what is unclear, and what to ask.",
     note: "Ready before the interview.",
-  },
-];
-
-export const HOW_IT_WORKS_STEPS: readonly HowItWorksStep[] = [
-  {
-    number: "01",
-    title: "Send the candidate pool.",
-    body: "Applications, work links, GitHub profiles, and role context become a clean evidence set.",
-    chips: ["Claims split", "Sources mapped", "Role context"],
-  },
-  {
-    number: "02",
-    title: "16 Signals verifies what is real.",
-    body: "Independent checks score authenticity, depth, ownership, collaboration, consistency, and AI-assisted work.",
-    chips: ["16 checks", "Risk flags", "Confidence score"],
-  },
-  {
-    number: "03",
-    title: "Receive the shortlist.",
-    body: "You get verified engineers, concise briefs, and targeted interview probes for the gaps that still matter.",
-    chips: ["Shortlist ready", "Brief included", "Interview probes"],
   },
 ];
 

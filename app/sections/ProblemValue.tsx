@@ -98,7 +98,7 @@ export function ProblemValue() {
           data-problem-value-intro
         >
           <Reveal className="problem-value__intro max-w-3xl">
-            <p className="section-label problem-value__eyebrow reveal-child">One brief. Clear answers</p>
+            <p className="section-label problem-value__eyebrow reveal-child">How it works</p>
             <h2 className="section-title problem-value__title reveal-child mt-4 text-white">From application to interview brief</h2>
             <p className="reveal-child mt-5 max-w-2xl text-lg leading-[var(--leading-body)] text-[color:var(--muted-strong)]">
               Add the role. Invite the candidate. Receive the evidence. Use it in the interview.
