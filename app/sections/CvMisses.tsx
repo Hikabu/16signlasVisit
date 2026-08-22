@@ -220,11 +220,11 @@ export function CvMisses() {
 
       <div className="ts-inner">
         <VerticalTimeline
+          label="known → unknown → conversation"
           id="ts-engineering"
           stages={CV_TIMELINE_STAGES}
-          label="16SIGNALS ADDS"
-          headline="What the CV leaves out"
-          body="One brief shows what matches the role, where evidence is missing, and where the interview should go deeper."
+          headline="Know before you interview"
+          body="You don't have much time with this person → arrive already knowing something real"
         />
       </div>
     </section>
