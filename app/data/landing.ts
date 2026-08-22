@@ -15,7 +15,7 @@ export const HERO_NAVIGATION: readonly NavigationItem[] = [
   { label: "Problem", href: "#the-shift", sectionId: "the-shift" },
   { label: "I will know", href: "#cv-misses", sectionId: "cv-misses" },
   { label: "Report", href: "#prepared-interview", sectionId: "prepared-interview" },
-  { label: "Principles", href: "#problem-value", sectionId: "problem-value" },
+  { label: "How it worksn", href: "#problem-value", sectionId: "problem-value" },
   { label: "Research", href: "#research", sectionId: "research" },
   { label: "Method", href: "#how-it-works", sectionId: "how-it-works" },
   { label: "Contact us", href: "#write-to-us", sectionId: "book-call" },

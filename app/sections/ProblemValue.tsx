@@ -21,23 +21,9 @@ export function ProblemValue() {
     const mobileQuery = window.matchMedia("(max-width: 767px)");
     let animationFrame = 0;
     let previousIndex = -1;
-    let wasMobile = false;
 
     const updateCurrentFolder = () => {
       animationFrame = 0;
-
-      if (mobileQuery.matches) {
-        if (!wasMobile) cards.forEach((card) => card.setAttribute("data-current", "true"));
-        intro?.style.setProperty("--intro-release-offset", "0px");
-        wasMobile = true;
-        previousIndex = -1;
-        return;
-      }
-
-      if (wasMobile) {
-        wasMobile = false;
-        previousIndex = -1;
-      }
 
       let currentIndex = 0;
 
@@ -51,16 +37,20 @@ export function ProblemValue() {
         if (cardRect.top <= previousMidpoint) currentIndex = index;
       });
 
-      const lastCard = cards[cards.length - 1];
-      const lastCardTop = lastCard.getBoundingClientRect().top;
-      const lastStickyTop = Number.parseFloat(
-        window.getComputedStyle(lastCard).top,
-      );
-      const releaseOffset = Math.min(0, lastCardTop - lastStickyTop);
-      intro?.style.setProperty(
-        "--intro-release-offset",
-        `${releaseOffset}px`,
-      );
+      if (mobileQuery.matches) {
+        intro?.style.setProperty("--intro-release-offset", "0px");
+      } else {
+        const lastCard = cards[cards.length - 1];
+        const lastCardTop = lastCard.getBoundingClientRect().top;
+        const lastStickyTop = Number.parseFloat(
+          window.getComputedStyle(lastCard).top,
+        );
+        const releaseOffset = Math.min(0, lastCardTop - lastStickyTop);
+        intro?.style.setProperty(
+          "--intro-release-offset",
+          `${releaseOffset}px`,
+        );
+      }
 
       if (currentIndex === previousIndex) return;
 
@@ -120,6 +110,7 @@ export function ProblemValue() {
                   "--folder-index": index,
                   "--folder-total": PROCESS_FOLDERS.length,
                   "--folder-top": `${332 + index * 10}px`,
+                  "--folder-mobile-top": `${88 + index * 8}px`,
                   "--folder-shift": "0px",
                   "--reveal-delay": `${index * 70}ms`,
                   "--folder-accent-left": folder.accentOffset,
