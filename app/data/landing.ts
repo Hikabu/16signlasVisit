@@ -52,33 +52,18 @@ export const POSITIONING_CARDS: Record<"screening" | "technical" | "signals", Po
 export const CV_TIMELINE_STAGES: readonly TimelineStage[] = [
   {
     number: "01",
-    title: "What have they used?",
-    sentence: "- See the languages, systems, and technical complexity demonstrated in their work",
+    title: "What candidate's work actually shows",
+    sentence: "See which parts of their experience are supported by work they have already done",
   },
   {
     number: "02",
-    title: "What is relevant?",
-    sentence: "- Find the experience that directly relates to the role your team is hiring for",
+    title: "What you still don't know",
+    sentence: "See where the evidence stops, instead of guessing from a CV.",
   },
   {
     number: "03",
-    title: "What does the code show?",
-    sentence: "- Review evidence of structure, testing, maintainability, security, and technical complexity",
-  },
-  {
-    number: "04",
-    title: "Working style",
-    sentence: "- See how they communicate, review work, solve problems, and take ownership",
-  },
-  {
-    number: "05",
-    title: "Evidence gaps",
-    sentence: "- See which role requirements are supported by their work and which still need to be checked",
-  },
-  {
-    number: "06",
-    title: "What should you ask next?",
-    sentence: "- Enter the interview knowing what is already supported and where to go deeper",
+    title: "What is worth asking",
+    sentence: "Walk into the interview with questions based on their actual work, not generic interview prompts",
   },
 ];
 
