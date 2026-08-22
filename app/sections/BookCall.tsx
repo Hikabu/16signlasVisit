@@ -91,17 +91,17 @@ export function BookCall() {
             <p className={styles.eyebrow}>Behind every application</p>
 
             <h2 id="closing-title" className={styles.statementTitle}>
-              Don&apos;t interview<br />a résumé.
+              Don't interview<br />a resume
             </h2>
 
             <p className={styles.statementBody}>
               There is a real person behind the application. Their work already
-              contains years of decisions, mistakes, trade&#8209;offs,
+              contains years of decisions, mistakes, trade-offs,
               collaboration and progress.
             </p>
 
             <p className={styles.statementCloser}>
-              <strong>16Signals doesn&apos;t decide who they are.</strong>
+              <strong>16Signals doesn't decide who they are.</strong>
               It helps you see enough of their work to ask better questions
               when you meet them.
             </p>
@@ -109,9 +109,9 @@ export function BookCall() {
 
           <div className={styles.ctaBlock}>
             <div className={styles.ctaCopy}>
-              <h3>Bring us one candidate you&apos;re actually considering.</h3>
+              <h3>Bring us one candidate you're actually considering.</h3>
               <p>
-                We&apos;ll show you what you could have known before the interview.
+                We'll show you what you could have known before the interview.
               </p>
 
               <div className={styles.ctaActions}>
