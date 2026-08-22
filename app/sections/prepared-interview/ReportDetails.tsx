@@ -1,7 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import { ReportIcon } from "./ReportIcon";
 import { styles } from "./styles";
 
 export function ReportDetails() {
+  const [isAssistantOpen, setIsAssistantOpen] = useState(true);
+
   return (
     <>
       <aside className={styles.detailPanel} aria-label="Candidate report details">
@@ -49,7 +54,7 @@ export function ReportDetails() {
         </div>
       </aside>
 
-      <aside
+      {isAssistantOpen && <aside
         className={styles.floatingAssistant}
         aria-label="16Signals evidence analysis"
       >
@@ -60,7 +65,17 @@ export function ReportDetails() {
           />
           <span>16Signals</span>
           <small>Evidence analysis</small>
-          <b>−　↗　×</b>
+          <div className={styles.assistantActions}>
+            <span aria-hidden="true">−　↗</span>
+            <button
+              type="button"
+              className={styles.assistantClose}
+              aria-label="Close evidence analysis"
+              onClick={() => setIsAssistantOpen(false)}
+            >
+              ×
+            </button>
+          </div>
         </div>
         <div className={styles.assistantContent}>
           <div className={styles.evidenceFeed}>
@@ -96,7 +111,7 @@ export function ReportDetails() {
         <div className={styles.promptBox}>
           Search this candidate&apos;s evidence… <span>⌕　↑</span>
         </div>
-      </aside>
+      </aside>}
     </>
   );
 }

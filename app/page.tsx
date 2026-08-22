@@ -2,7 +2,6 @@ import { BookCall } from "@/app/sections/BookCall";
 import { getFaqItems, getResearchArticles } from "@/app/lib/content";
 import { CvMisses } from "@/app/sections/CvMisses";
 import { EditorialHero } from "@/app/sections/EditorialHero";
-import { HowItWorks } from "@/app/sections/HowItWorks";
 import { Positioning } from "@/app/sections/Positioning";
 import { PreparedInterview } from "@/app/sections/prepared-interview/PreparedInterview";
 import { ProblemValue } from "@/app/sections/ProblemValue";
@@ -18,12 +17,11 @@ export default function Home() {
     <>
       <main id="main" className="page-shell pb-[var(--space-16)] md:pb-0">
         <EditorialHero />
-        <PreparedInterview />
         <Positioning />
         <CvMisses />
+        <PreparedInterview />
         <ProblemValue />
         <Research articles={articles} />
-        <HowItWorks />
         {/* <FaqSection items={faqs} /> */}
         {/* <PricingSection /> */}
         <BookCall />
