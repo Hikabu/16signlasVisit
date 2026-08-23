@@ -5,9 +5,53 @@ import { EvidenceParticles } from "@/app/animations/EvidenceParticles";
 import styles from "./EditorialHero.module.css";
 
 export function EditorialHero() {
+  const outerRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+  const atmosphereRef = useRef<HTMLDivElement>(null);
   const cursorLightRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = outerRef.current;
+    const atmosphere = atmosphereRef.current;
+    if (!hero || !atmosphere) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let animationFrame = 0;
+
+    const interpolateOpacity = (progress: number) => {
+      if (progress <= 0.4) return 1 - (progress / 0.4) * 0.3;
+      if (progress <= 0.75) return 0.7 - ((progress - 0.4) / 0.35) * 0.5;
+      return Math.max(0, 0.2 - ((progress - 0.75) / 0.25) * 0.2);
+    };
+
+    const updateAtmosphere = () => {
+      const bounds = hero.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, -bounds.top / bounds.height));
+
+      atmosphere.style.setProperty("--atmosphere-opacity", interpolateOpacity(progress).toFixed(3));
+      atmosphere.style.setProperty("--atmosphere-shift", reducedMotion.matches ? "0px" : `${(progress * 28).toFixed(1)}px`);
+      atmosphere.style.setProperty("--atmosphere-scale", reducedMotion.matches ? "1" : (1 + progress * 0.025).toFixed(4));
+      animationFrame = 0;
+    };
+
+    const requestUpdate = () => {
+      if (!animationFrame) animationFrame = requestAnimationFrame(updateAtmosphere);
+    };
+
+    updateAtmosphere();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    reducedMotion.addEventListener("change", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      reducedMotion.removeEventListener("change", requestUpdate);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   useEffect(() => {
     const frame = frameRef.current;
     const cursorLight = cursorLightRef.current;
@@ -55,8 +99,9 @@ export function EditorialHero() {
   }, []);
 
   return (
-    <section id="hero" className={styles.outer} aria-labelledby="hero-title">
+    <section id="hero" ref={outerRef} className={styles.outer} aria-labelledby="hero-title">
         <div className={styles.frame} ref={frameRef}>
+          <div ref={atmosphereRef} className={styles.atmosphere} aria-hidden="true" />
           <div ref={cursorLightRef} className={styles.cursorLight} aria-hidden="true" />
 
           <div className={styles.heroGrid}>
