@@ -1,206 +1,81 @@
-"use client";
+import { useId } from "react";
 
-import { useEffect, useRef } from "react";
-
-const TAU = Math.PI * 2;
-
-function softEase(progress: number) {
-  const x = Math.max(0, Math.min(1, progress));
-  // Cubic-bezier(.2, .7, .2, 1), solved with a short binary search.
-  let low = 0;
-  let high = 1;
-  for (let step = 0; step < 12; step++) {
-    const t = (low + high) / 2;
-    const xAtT = 3 * (1 - t) * (1 - t) * t * 0.2 + 3 * (1 - t) * t * t * 0.2 + t * t * t;
-    if (xAtT < x) low = t;
-    else high = t;
-  }
-  const t = (low + high) / 2;
-  return 3 * (1 - t) * (1 - t) * t * 0.7 + 3 * (1 - t) * t * t + t * t * t;
-}
-
+// A machined bezel: concentric surfaces, engraved divisions, and reflected light.
+// SVG keeps the fine marks crisp without a continuously repainting canvas.
 export function EvidenceParticles() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const id = useId();
+  const paint = (name: string) => `url(#${id}-${name})`;
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
-  
-    let animId: number;
-    const startTime = performance.now();
+  return (
+    <svg viewBox="0 0 720 470" fill="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id={`${id}-body`} x1="180" y1="60" x2="515" y2="420" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#333d3d" />
+          <stop offset="0.36" stopColor="#171c1d" />
+          <stop offset="0.68" stopColor="#252728" />
+          <stop offset="1" stopColor="#39302c" />
+        </linearGradient>
+        <linearGradient id={`${id}-edge`} x1="150" y1="95" x2="490" y2="390" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#627375" stopOpacity="0.38" />
+          <stop offset="0.45" stopColor="#929b9c" stopOpacity="0.05" />
+          <stop offset="1" stopColor="#ac9a8d" stopOpacity="0.25" />
+        </linearGradient>
+        <linearGradient id={`${id}-silver`} x1="430" y1="389" x2="652" y2="239" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#bec6c4" stopOpacity="0" />
+          <stop offset="0.23" stopColor="#c9cecc" stopOpacity="0.45" />
+          <stop offset="0.62" stopColor="#e7e9e3" stopOpacity="0.86" />
+          <stop offset="0.88" stopColor="#b4bfbd" stopOpacity="0.5" />
+          <stop offset="1" stopColor="#b4bfbd" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id={`${id}-cool`} x1="74" y1="201" x2="236" y2="103" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#7194a9" stopOpacity="0" />
+          <stop offset="0.42" stopColor="#7194a9" stopOpacity="0.32" />
+          <stop offset="1" stopColor="#7194a9" stopOpacity="0" />
+        </linearGradient>
+        <filter id={`${id}-soft`} x="-30%" y="-50%" width="160%" height="200%">
+          <feGaussianBlur stdDeviation="5" />
+        </filter>
+        <filter id={`${id}-ambient`} x="-30%" y="-50%" width="160%" height="200%">
+          <feGaussianBlur stdDeviation="12" />
+        </filter>
+      </defs>
 
-    const draw = (now: number) => {
-      const elapsed = (now - startTime) / 1000; // seconds
+      <ellipse cx="355" cy="249" rx="298" ry="164" stroke="#020505" strokeOpacity="0.5" strokeWidth="25" filter={paint("ambient")} />
+      <ellipse cx="350" cy="212" rx="269" ry="157" stroke="#64848e" strokeOpacity="0.07" strokeWidth="7" filter={paint("soft")} />
 
-      const bounds = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = Math.max(1, Math.round(bounds.width));
-      const height = Math.max(1, Math.round(bounds.height));
-      if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-      }
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-      context.clearRect(0, 0, width, height);
+      <ellipse cx="360" cy="244" rx="305" ry="174" stroke={paint("body")} strokeWidth="25" />
+      <ellipse cx="360" cy="235" rx="294" ry="163" stroke={paint("body")} strokeWidth="27" />
+      <ellipse cx="360" cy="235" rx="309" ry="179" stroke={paint("edge")} />
+      <ellipse cx="360" cy="235" rx="294" ry="163" stroke="#84918e" strokeOpacity="0.2" />
+      <ellipse cx="360" cy="235" rx="274" ry="144" stroke="#8e9996" strokeOpacity="0.13" />
+      <ellipse cx="360" cy="242" rx="268" ry="142" stroke="#060b0b" strokeOpacity="0.8" strokeWidth="7" />
+      <ellipse cx="360" cy="246" rx="267" ry="140" stroke="#81918d" strokeOpacity="0.1" />
 
-      const cx = width * 0.51;
-      const cy = height * 0.45;
-      // Elliptical radii
-      const rx = width * 0.415;
-      const ry = height * 0.32;
+      {Array.from({ length: 80 }, (_, index) => {
+        const angle = (index / 80) * Math.PI * 2;
+        const major = index % 10 === 0;
+        const middle = index % 5 === 0;
+        const depth = major ? 18 : middle ? 13 : 8;
+        const point = (radius: number, center: number, trig: number) =>
+          Number((center + radius * trig).toFixed(3));
+        return (
+          <line
+            key={index}
+            x1={point(294, 360, Math.cos(angle))}
+            y1={point(163, 235, Math.sin(angle))}
+            x2={point(294 - depth, 360, Math.cos(angle))}
+            y2={point(163 - depth, 235, Math.sin(angle))}
+            stroke={major ? "#a9b7b3" : "#899590"}
+            strokeOpacity={major ? 0.47 : middle ? 0.27 : 0.17}
+            strokeWidth={major ? 1.4 : 0.8}
+          />
+        );
+      })}
 
-      // ── Soft ambient outer glow ──────────────────────────────────────────
-      // We fake a 3D torus by layering elliptical gradients
-      const glowRadial = context.createRadialGradient(cx, cy, ry * 0.55, cx, cy, ry * 1.35);
-      glowRadial.addColorStop(0, "rgba(74, 144, 217, 0.00)");
-      glowRadial.addColorStop(0.55, "rgba(74, 144, 217, 0.04)");
-      glowRadial.addColorStop(0.82, "rgba(107, 140, 174, 0.10)");
-      glowRadial.addColorStop(1, "rgba(74, 144, 217, 0.00)");
-      context.save();
-      context.scale(1, ry / rx); // squish to ellipse
-      const sqCx = cx;
-      const sqCy = cy / (ry / rx);
-      context.fillStyle = glowRadial;
-      context.beginPath();
-      context.ellipse(sqCx, sqCy, rx * 1.35, rx * 1.35, 0, 0, TAU);
-      context.fill();
-      context.restore();
-
-      // ── Concentric tick marks (precision instrument) ─────────────────────
-      const tickCount = 72;
-      const tickInner = 0.93;
-      const tickOuter = 1.0;
-      for (let i = 0; i < tickCount; i++) {
-        const angle = (i / tickCount) * TAU;
-        const isMajor = i % 9 === 0;
-        const isMid = !isMajor && i % 3 === 0;
-        const innerScale = isMajor ? tickInner - 0.045 : isMid ? tickInner - 0.018 : tickInner;
-
-        const x1 = cx + Math.cos(angle) * rx * innerScale;
-        const y1 = cy + Math.sin(angle) * ry * innerScale;
-        const x2 = cx + Math.cos(angle) * rx * tickOuter;
-        const y2 = cy + Math.sin(angle) * ry * tickOuter;
-
-        // Tick groups arrive after the copy, finishing within the first 900ms.
-        const tickProgress = softEase((elapsed - 0.44 - (i % 12) * 0.025) / 0.14);
-        const alpha = (isMajor ? 0.45 : isMid ? 0.25 : 0.12) * tickProgress;
-        context.strokeStyle = `rgba(255,255,255,${alpha})`;
-        context.lineWidth = isMajor ? 1.2 : 0.7;
-        context.beginPath();
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.stroke();
-      }
-
-      // ── Main elliptical ring (stroke, not fill) ──────────────────────────
-      // Outer boundary of the ring
-      context.save();
-      context.beginPath();
-      context.ellipse(cx, cy, rx, ry, 0, 0, TAU);
-      context.strokeStyle = "rgba(255,255,255,0.08)";
-      context.lineWidth = 28;
-      context.stroke();
-
-      // Inner crisp edge
-      context.beginPath();
-      context.ellipse(cx, cy, rx * 0.88, ry * 0.88, 0, 0, TAU);
-      context.strokeStyle = "rgba(255,255,255,0.05)";
-      context.lineWidth = 28;
-      context.stroke();
-      context.restore();
-
-      // ── Outer ring stroke — muted silver ────────────────────────────────
-      context.beginPath();
-      context.ellipse(cx, cy, rx * 1.0, ry * 1.0, 0, 0, TAU);
-      context.strokeStyle = "rgba(200,210,225,0.14)";
-      context.lineWidth = 1.2;
-      context.stroke();
-
-      // ── Inner ring stroke ────────────────────────────────────────────────
-      context.beginPath();
-      context.ellipse(cx, cy, rx * 0.87, ry * 0.87, 0, 0, TAU);
-      context.strokeStyle = "rgba(180,195,215,0.09)";
-      context.lineWidth = 0.8;
-      context.stroke();
-
-      // ── Rotating highlight arc (watch bezel catching light) ──────────────
-      const highlightSpeed = 0.08; // very slow rotation
-      const highlightAngle = elapsed * highlightSpeed * TAU - Math.PI * 0.5;
-      const arcSpan = Math.PI * 0.38; // ~68°
-
-      context.save();
-      // Clip to the ring band
-      context.beginPath();
-      context.ellipse(cx, cy, rx * 1.035, ry * 1.035, 0, 0, TAU);
-      context.ellipse(cx, cy, rx * 0.835, ry * 0.835, 0, TAU, 0); // reverse = hole
-      context.clip("evenodd");
-
-      // Draw the highlight as a series of thin arc strokes for the ellipse
-      const steps = 120;
-      for (let s = 0; s < steps; s++) {
-        const t = s / steps;
-        const a = highlightAngle + t * arcSpan;
-        const tFade = Math.sin(t * Math.PI); // bell curve fade
-        const hAlpha = tFade * 0.55;
-        const px = cx + Math.cos(a) * rx * 0.935;
-        const py = cy + Math.sin(a) * ry * 0.935;
-        const gradient = context.createRadialGradient(px, py, 0, px, py, rx * 0.1);
-        gradient.addColorStop(0, `rgba(255,255,255,${hAlpha})`);
-        gradient.addColorStop(1, "rgba(255,255,255,0)");
-        context.fillStyle = gradient;
-        context.beginPath();
-        context.arc(px, py, rx * 0.1, 0, TAU);
-        context.fill();
-      }
-      context.restore();
-
-      // ── Second smaller accent arc (180° offset, blue-tinted) ─────────────
-      const accent2Angle = highlightAngle + Math.PI + Math.PI * 0.05;
-      const accent2Span = Math.PI * 0.18;
-      context.save();
-      context.beginPath();
-      context.ellipse(cx, cy, rx * 1.035, ry * 1.035, 0, 0, TAU);
-      context.ellipse(cx, cy, rx * 0.835, ry * 0.835, 0, TAU, 0);
-      context.clip("evenodd");
-      const steps2 = 60;
-      for (let s = 0; s < steps2; s++) {
-        const t = s / steps2;
-        const a = accent2Angle + t * accent2Span;
-        const tFade = Math.sin(t * Math.PI);
-        const hAlpha = tFade * 0.11;
-        const px = cx + Math.cos(a) * rx * 0.935;
-        const py = cy + Math.sin(a) * ry * 0.935;
-        const gradient = context.createRadialGradient(px, py, 0, px, py, rx * 0.09);
-        gradient.addColorStop(0, `rgba(107,140,174,${hAlpha})`);
-        gradient.addColorStop(1, "rgba(107,140,174,0)");
-        context.fillStyle = gradient;
-        context.beginPath();
-        context.arc(px, py, rx * 0.09, 0, TAU);
-        context.fill();
-      }
-      context.restore();
-
-      // ── Subtle inner-edge glow ───────────────────────────────────────────
-      context.save();
-      context.beginPath();
-      context.ellipse(cx, cy, rx * 0.88, ry * 0.88, 0, 0, TAU);
-      context.strokeStyle = "rgba(107,140,174,0.06)";
-      context.lineWidth = 6;
-      context.shadowColor = "rgba(107,140,174,0.175)";
-      context.shadowBlur = 12;
-      context.stroke();
-      context.restore();
-
-      animId = requestAnimationFrame(draw);
-    };
-
-    animId = requestAnimationFrame(draw);
-
-    return () => {
-      cancelAnimationFrame(animId);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} aria-hidden="true" />;
+      <path d="M 647 236 A 287 157 0 0 1 436 386" stroke={paint("silver")} strokeWidth="23" filter={paint("soft")} />
+      <path d="M 647 236 A 287 157 0 0 1 436 386" stroke={paint("silver")} strokeOpacity="0.7" strokeWidth="10" />
+      <path d="M 641 250 A 294 163 0 0 1 452 390" stroke={paint("silver")} strokeOpacity="0.5" strokeWidth="1.2" />
+      <path d="M 78 207 A 287 157 0 0 1 241 92" stroke={paint("cool")} strokeWidth="22" filter={paint("soft")} />
+    </svg>
+  );
 }
