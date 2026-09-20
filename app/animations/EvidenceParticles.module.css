@@ -1,0 +1,29 @@
+.rings {
+  pointer-events: none;
+}
+
+.channelLights {
+  isolation: isolate;
+}
+
+.brightSegment,
+.shadowSegment {
+  stroke-linecap: round;
+  animation: lightOrbit 4.6s linear infinite;
+}
+
+.shadowSegment {
+  animation-delay: 0s;
+}
+
+@keyframes lightOrbit {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -100; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brightSegment,
+  .shadowSegment {
+    animation: none;
+  }
+}
