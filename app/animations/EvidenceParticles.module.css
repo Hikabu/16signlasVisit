@@ -12,8 +12,24 @@
   animation: lightOrbit 4.6s linear infinite;
 }
 
+/* halo (soft outer glow), was strokeWidth 26 → ×3 */
+.brightSegment use:nth-child(1) {
+  stroke-width: 70;
+  filter: blur(60px);
+}
+
+/* bright core line, was strokeWidth 11 → ×3 — blurred so it fogs at the tips */
+.brightSegment use:nth-child(2) {
+  stroke-width: 33;
+  filter: blur(70px);
+}
+
+/* shadow segment: greyed instead of blue, and softened at the edges */
 .shadowSegment {
-  animation-name: lightOrbit, shadowBlink;
+  stroke: #8da6ad;
+  stroke-width: 60;
+  filter: blur(26px);
+  animation-name: lightOrbit;
   animation-duration: 4.6s, 1.9s;
   animation-timing-function: linear, ease-in-out;
   animation-iteration-count: infinite, infinite;
@@ -22,12 +38,6 @@
 @keyframes lightOrbit {
   from { stroke-dashoffset: 0; }
   to { stroke-dashoffset: -100; }
-}
-
-@keyframes shadowBlink {
-  0%, 100% { opacity: 0.38; }
-  42% { opacity: 0.9; }
-  58% { opacity: 0.5; }
 }
 
 @media (prefers-reduced-motion: reduce) {
