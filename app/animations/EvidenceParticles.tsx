@@ -81,8 +81,8 @@ export function EvidenceParticles() {
       <g data-ring="main">
         <use href={`#${id}-bezel`} />
         <g className={styles.channelLights} clipPath={`url(#${id}-channel)`}>
-          <ellipse className={styles.brightSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#f4faf7" strokeOpacity="0.82" strokeWidth="13" strokeDasharray="28 72" filter={paint("light")} />
-          <ellipse className={styles.shadowSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#060b0b" strokeOpacity="0.78" strokeWidth="25" strokeDasharray="28 72" transform="rotate(180 360 235)" filter={paint("light")} />
+          <ellipse className={styles.brightSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#f4faf7" strokeOpacity="0.88" strokeWidth="12" strokeDasharray="21 79" filter={paint("light")} />
+          <ellipse className={styles.shadowSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#4f98bd" strokeOpacity="0.84" strokeWidth="10" strokeDasharray="7 93" transform="rotate(180 360 235)" filter={paint("soft")} />
         </g>
         <g className={styles.channelEdge} aria-hidden="true">
           <ellipse cx="360" cy="235" rx="294" ry="163" stroke={paint("edge")} strokeOpacity="0.42" strokeWidth="1.5" />

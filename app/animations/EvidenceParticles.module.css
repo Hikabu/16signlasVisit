@@ -13,7 +13,10 @@
 }
 
 .shadowSegment {
-  animation-delay: 0s;
+  animation-name: lightOrbit, shadowBlink;
+  animation-duration: 4.6s, 1.9s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
 }
 
 @keyframes lightOrbit {
@@ -21,9 +24,19 @@
   to { stroke-dashoffset: -100; }
 }
 
+@keyframes shadowBlink {
+  0%, 100% { opacity: 0.38; }
+  42% { opacity: 0.9; }
+  58% { opacity: 0.5; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .brightSegment,
   .shadowSegment {
     animation: none;
+  }
+
+  .shadowSegment {
+    opacity: 0.6;
   }
 }
