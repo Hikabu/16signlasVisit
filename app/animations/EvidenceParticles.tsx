@@ -11,6 +11,15 @@ export function EvidenceParticles() {
   return (
     <svg className={styles.rings} viewBox="0 0 720 470" fill="none" aria-hidden="true" focusable="false">
       <defs>
+        <filter id={`${id}-haloBlur`} x="-150%" y="-400%" width="400%" height="900%">
+          <feGaussianBlur stdDeviation="20" />
+        </filter>
+        <filter id={`${id}-coreBlur`} x="-150%" y="-400%" width="400%" height="900%">
+          <feGaussianBlur stdDeviation="20" />
+        </filter>
+        <filter id={`${id}-shadowBlur`} x="-150%" y="-400%" width="400%" height="900%">
+          <feGaussianBlur stdDeviation="26" />
+        </filter>
         <linearGradient id={`${id}-body`} x1="180" y1="60" x2="515" y2="420" gradientUnits="userSpaceOnUse">
           <stop stopColor="#333d3d" />
           <stop offset="0.36" stopColor="#171c1d" />
@@ -81,8 +90,8 @@ export function EvidenceParticles() {
       <g data-ring="main">
         <use href={`#${id}-bezel`} />
         <g className={styles.channelLights} clipPath={`url(#${id}-channel)`}>
-          <ellipse className={styles.brightSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#f4faf7" strokeOpacity="0.88" strokeWidth="12" strokeDasharray="21 79" filter={paint("light")} />
-          <ellipse className={styles.shadowSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#4f98bd" strokeOpacity="0.84" strokeWidth="10" strokeDasharray="7 93" transform="rotate(180 360 235)" filter={paint("soft")} />
+          <ellipse className={styles.brightSegment} cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#f4faf7" strokeOpacity="0.88" strokeWidth="12" strokeDasharray="21 79" filter={paint("light") } />
+          <ellipse className={styles.shadowSegment}  cx="360" cy="235" rx="281" ry="151" pathLength="100" stroke="#4f98bd" strokeOpacity="0.84" strokeWidth="10" strokeDasharray="7 93" transform="rotate(180 360 235)" filter={paint("shadowBlur")} />
         </g>
         <g className={styles.channelEdge} aria-hidden="true">
           <ellipse cx="360" cy="235" rx="294" ry="163" stroke={paint("edge")} strokeOpacity="0.42" strokeWidth="1.5" />
